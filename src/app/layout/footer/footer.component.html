@@ -1,0 +1,62 @@
+<footer class="footer-section" [class.in-view]="isInView">
+    <div class="footer-container">
+      <!-- Logo y nombre de la empresa -->
+      <div class="footer-column">
+        <img src="img/cara blanco.png" alt="Logo" class="footer-logo" />
+        <h3>CHEVALIER</h3>
+      </div>
+  
+      <!-- Información de contacto -->
+      <div class="footer-column contact-info">
+        <h4>{{ 'FOOTER.CONTACT_INFO' | translate }}</h4>
+        <p>{{ 'FOOTER.PHONE' | translate }}: {{personalDAta.phone}}</p>
+        <p>{{ 'FOOTER.ADDRESS' | translate }}: {{personalDAta.adress}}</p>
+        <p>{{ 'FOOTER.EMAIL' | translate }}: {{personalDAta.email}}</p>
+      </div>
+  
+      <!-- Enlaces útiles -->
+      <div class="footer-column">
+        <h4>{{ 'FOOTER.LINKS' | translate }}</h4>
+        <ul>
+          <li><a routerLink="">{{ 'NAVBAR.HOME' | translate  }}</a></li>
+          <li><a routerLink="/aboutus">{{ 'NAVBAR.ABOUT' | translate}}</a></li>
+          <li><a routerLink="/ourservices">{{ 'NAVBAR.SERVICES' | translate }}</a></li>
+          <li><a routerLink="/products">{{ 'NAVBAR.PRODUCTS' | translate }}</a></li>
+          <li><a routerLink="/comments">{{ 'NAVBAR.COMMENTS' | translate }}</a></li>
+          <li><a routerLink="/linkssocial">{{ 'NAVBAR.SOCIAL' | translate }}</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>{{ 'FOOTER.LEGAL.NAME' | translate }}</h4>
+        <ul>
+          <li><a routerLink="/terms-of-service">{{ 'FOOTER.LEGAL.TERMS_OF_SERVICE' | translate }}</a></li>
+          <li><a routerLink="/privacy-policy">{{ 'FOOTER.LEGAL.PRIVACY_POLICY' | translate }}</a></li>
+          <li><a routerLink="/data-deletion">{{ 'FOOTER.LEGAL.DATA_DELETION' | translate }}</a></li> 
+        </ul>
+      </div>
+      <!-- Redes sociales -->
+      <div class="footer-column">
+        <h4>{{ 'FOOTER.SOCIAL' | translate }}</h4>
+        <a mat-icon-button [href]="socialLinks.facebook" target="_blank">
+          <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/7.0.0/facebook.svg" alt="Facebook" width="24">
+        </a>
+        <a mat-icon-button [href]="socialLinks.instagram" target="_blank">
+          <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/7.0.0/instagram.svg" alt="Instagram" width="24">
+        </a>
+        <a mat-icon-button [href]="socialLinks.tiktok" target="_blank">
+          <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/7.0.0/tiktok.svg" alt="TikTok" width="24">
+        </a>
+        <a mat-icon-button [href]="socialLinks.youtube" target="_blank">
+          <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/7.0.0/youtube.svg" alt="YouTube" width="24">
+        </a>
+        <a mat-icon-button href="https://wa.me/593963607460?text=Hola,%20me%20gustaría%20realizar%20una%20reservación.%20¿Podrías%20darme%20más%20información,%20por%20favor?" target="_blank">
+          <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/7.0.0/whatsapp.svg" alt="WhatsApp" width="24">
+        </a>
+      </div>
+    </div>
+  
+    <!-- Copyright -->
+    <div class="footer-copyright">
+      <p>&copy; 2024 CHEVALIER. {{ 'FOOTER.COPYRIGHT' | translate }}.</p>
+    </div>
+  </footer>

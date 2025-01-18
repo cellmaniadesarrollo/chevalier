@@ -1,0 +1,50 @@
+.topbar {
+  height: 60px;
+  background-color: #2e2e2e;
+  color: #d4af37;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para darle más elegancia */
+  padding: 0 20px;
+}
+
+.branding {
+  display: flex;
+  align-items: center;
+
+  .logo {
+    height: 40px;
+  }
+
+  .chevalier {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+
+  .notifications {
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .btn-outline-warning {
+    color: #d4af37;
+    border-color: #d4af37;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #d4af37;
+      color: #2e2e2e;
+    }
+  }
+
+  .toggle-sidebar-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+}

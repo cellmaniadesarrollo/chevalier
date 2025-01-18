@@ -1,0 +1,13 @@
+.erp-content {
+    transition: margin-left 0.3s ease; /* Animación suave cuando cambie el margen */
+  }
+  
+  .erp-content.full-width {
+    margin-left: 80px; /* Margen cuando la sidebar está minimizada */
+  }
+  
+  .erp-content.reduced-width {
+    margin-left: 250px; /* Margen cuando la sidebar está maximizada */
+  }
+ 
+ 

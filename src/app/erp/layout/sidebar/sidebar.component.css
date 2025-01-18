@@ -1,0 +1,83 @@
+.sidebar {
+  width: 250px;
+  background-color: #333;
+  color: #d4af37;
+  transition: width 0.3s ease, box-shadow 0.3s ease;
+  height: 100vh;
+  position: fixed;
+  z-index: 1000; /* Aseguramos que esté encima del contenido */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Sombra elegante */
+
+  &.minimized {
+    width: 80px;
+    overflow: hidden;
+  }
+
+  .user-section {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #444;
+
+    .user-image {
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .user-name {
+      font-size: 1.2rem;
+      margin-left: 10px;
+    }
+  }
+
+  .sidebar-button {
+    padding: 15px;
+    color: #d4af37;
+    text-align: left;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #444;
+    }
+
+    i {
+      font-size: 1.2rem;
+      margin-right: 10px;
+    }
+  }
+}
+
+.sidebar.minimized:hover {
+  width: 250px; /* Maximiza al pasar el mouse */
+  transition: width 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    width: 80px; /* Predeterminado a minimizada en pantallas pequeñas */
+    z-index: 1000;
+
+    &.minimized {
+      width: 80px;
+    }
+  }
+
+  .sidebar.minimized:hover {
+    width: 250px; /* Maximiza temporalmente al hover en pantallas pequeñas */
+  }
+}
+
+
+.erp-content {
+  margin-left: 250px; /* Espacio para el contenido cuando la sidebar está maximizada */
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar.minimized + .erp-content {
+  margin-left: 80px; /* Ajuste cuando la sidebar está minimizada */
+}

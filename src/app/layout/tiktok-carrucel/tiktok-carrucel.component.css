@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-height: 700px;
+}
+
+.dots-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background-color: #f8e1b4;
+  border-radius: 50%;
+  margin: 0 5px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.dot.active {
+  background-color: #b08b51;
+}
+
+.custom-container {
+  max-width: 1115px;
+  margin-left: auto;
+  margin-right: auto;
+ 
+}

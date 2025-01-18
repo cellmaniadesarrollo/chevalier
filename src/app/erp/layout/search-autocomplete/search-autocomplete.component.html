@@ -1,0 +1,21 @@
+<div class="row"><mat-form-field appearance="fill">
+    <mat-label>{{ label }}</mat-label>
+    <input
+      type="text"
+      matInput
+      [placeholder]="placeholder"
+      [matAutocomplete]="auto"
+      [formControl]="control"
+      (focus)="onFocus()"  
+    />
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      [displayWith]="displayWith"
+      (optionSelected)="onOptionSelected($event)"
+    >
+      <mat-option *ngFor="let item of (filteredData$ | async)" [value]="item">
+        {{ displayWith(item) }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>

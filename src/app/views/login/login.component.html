@@ -1,0 +1,33 @@
+<div class="login-container">
+    <div class="card login-card">
+      <div class="card-body text-left">
+        <!-- Sección solo con el icono de la barbería -->
+        <div class="brand-logo">
+          <img src="img/Chevalier blanco.png" alt="Barbería Icono" class="barber-icon">
+        </div>
+        <h3 class="mb-1 text-center text-white">Login</h3>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="form-group mb-3">
+            <label for="email" class="text-white">Email</label>
+            <input type="email" id="email" class="form-control" formControlName="email" placeholder="Ingrese su correo">
+          </div>
+          <div class="form-group mb-3 position-relative">
+            <label for="password" class="text-white">Password</label>
+            <input [type]="hide ? 'password' : 'text'" id="password" class="form-control" formControlName="password" placeholder="Ingrese su contraseña">
+            <button type="button" class="btn btn-link text-white position-absolute eye-button" (click)="hide = !hide">
+              <i [ngClass]="hide ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+            </button>
+          </div>
+  
+          <!-- Checkbox de "Recuérdame" -->
+          <div class="form-group form-check mb-3">
+            <input type="checkbox" id="rememberMe" class="form-check-input" formControlName="rememberMe">
+            <label class="form-check-label text-white" for="rememberMe">Recuérdame</label>
+          </div>
+  
+          <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+      </div>
+    </div>
+  </div> 
+ 

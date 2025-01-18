@@ -1,0 +1,30 @@
+ 
+  <div class="row align-items-center">
+    <!-- Sección de texto -->
+    <div class="col-md-6">
+      <h2 class="mb-3">Bienvenido a Chevalier</h2>
+      <p>En Chevalier, ofrecemos una experiencia de barbería premium. Desde cortes de cabello clásicos y modernos hasta
+        perfilados de barba y tratamientos faciales, nos dedicamos a hacer que nuestros clientes se vean y se sientan lo
+        mejor posible. ¡Ven a visitarnos y descubre la verdadera elegancia en el cuidado masculino!</p>
+    </div>
+
+    <!-- Sección de video con barra de puntos y botones -->
+    <div class="col-md-6 h-100">
+
+      <!-- Barra de puntos en la parte superior -->
+       
+      <div class="dots-container">
+        <div *ngFor="let video of videoIds; let i = index" 
+             class="dot" 
+             [class.active]="i === currentIndex"
+             (click)="selectVideo(i)">
+        </div>
+      </div>
+
+      <!-- Video TikTok -->
+      <app-tiktok-video [videoId]="currentVideoId"></app-tiktok-video>
+
+
+    </div>
+  </div>
+ 

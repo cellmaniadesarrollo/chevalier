@@ -1,0 +1,13 @@
+<app-banner [title]="'NAVBAR.PRODUCTS'" [pageName]="'NAVBAR.PRODUCTS'"></app-banner>
+<div class="services-container custom-container">
+  <mat-card *ngFor="let product of products" class="service-card">
+    <mat-card-header>
+      <mat-card-title>{{ product.name | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ product.price | currency }}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image class="service-image" [src]="product.image" alt="{{ product.name }}">
+    <mat-card-content class="service-content">
+      <p>{{ product.description | translate }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>

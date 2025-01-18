@@ -1,0 +1,106 @@
+<app-carrucelwelcome></app-carrucelwelcome>
+
+
+<div class="container-fluid mt-4 custom-container">
+
+  <!-- Seccion del carrucel ticktock -->
+  <app-tiktok-carrucel></app-tiktok-carrucel>
+  <!-- Seccion del carrucel facebook -->
+  <app-fb-photodisplay></app-fb-photodisplay>
+
+  <!-- Sección sobre nuestra experiencia -->
+  <section class="experience-section py-5">
+    <div class="container text-center">
+      <h2>{{ experienceTitleKey | translate }}</h2>
+      <p class="lead">{{ experienceDescriptionKey | translate }}</p>
+    </div>
+  </section>
+
+  <section class="media-gallery">
+    <div class="media-item">
+      <div class="image-container">
+        <img src="img/gallery/1.jpg" alt="Modern kitchen flooring">
+      </div>
+      <p>{{ 'GALLERY.MEDIA_DESCRIPTION_1' | translate }}</p>
+    </div>
+    <div class="media-item">
+      <div class="image-container">
+        <img src="img/gallery/2.jpg" alt="Luxurious carpet installation">
+      </div>
+      <p>{{ 'GALLERY.MEDIA_DESCRIPTION_2' | translate }}</p>
+    </div>
+    <div class="media-item">
+      <div class="image-container">
+        <img src="img/gallery/3.jpg" alt="Custom tile work">
+      </div>
+      <p>{{ 'GALLERY.MEDIA_DESCRIPTION_3' | translate }}</p>
+    </div>
+  </section>
+
+  <!-- relacion de aspecto de las imagenes 4:3 -->
+  <section class="services-section">
+    <h2>{{ 'SERVICES.TITLE' | translate }}</h2>
+
+    <div class="services-container">
+      <mat-card class="service-card" *ngFor="let service of services">
+        <mat-card-header>
+          <mat-card-title>{{ service.name | translate }}</mat-card-title>
+          <mat-card-subtitle>{{ service.price | translate }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="service.image" alt="{{ service.name }}">
+        <mat-card-content>
+          <p>{{ service.description | translate }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+
+  <div class="products-section">
+    <h2>{{ 'PRODUCTS.TITLE' | translate }}</h2>
+    <div class="products-container">
+      <div class="product-card" *ngFor="let product of products">
+        <mat-card>
+          <img mat-card-image [src]="product.image" alt="{{ product.name | translate }}">
+          <mat-card-title>{{ product.name | translate }}</mat-card-title>
+          <mat-card-subtitle>{{ product.price | currency }}</mat-card-subtitle>
+          <mat-card-content>
+            <p>{{ product.description | translate }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <section class="contact-section">
+    <h2>{{ 'CONTACT.TITLE' | translate }}</h2>
+    <div class="contact-container">
+      <div class="contact-item">
+        <h3>{{ 'CONTACT.PHONE' | translate }}</h3>
+        <p>{{personalDAta.phone}}</p>
+      </div>
+  
+      <div class="contact-item">
+        <h3>{{ 'CONTACT.ADDRESS' | translate }}</h3>
+        <p>{{personalDAta.adress}}</p>
+      </div>
+  
+      <div class="contact-item">
+        <h3>{{ 'CONTACT.EMAIL' | translate }}</h3>
+        <p>{{personalDAta.email}}</p>
+      </div>
+  
+      <div class="contact-item">
+        <h3>{{ 'CONTACT.HOURS' | translate }}</h3>
+        <div class="hours-section">
+          <p>{{ 'CONTACT.HOURS_WEEKDAYS' | translate }}</p>
+          <p>8:00 AM - 8:00 PM</p>
+          <p>{{ 'CONTACT.HOURS_WEEKENDS' | translate }}</p>
+          <p>9:00 AM - 7:00 PM</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <app-feedback-form></app-feedback-form>
+  
+</div>

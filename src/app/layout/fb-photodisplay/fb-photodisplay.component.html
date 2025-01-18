@@ -1,0 +1,80 @@
+ 
+  <div class="row">
+    <!-- Mitad izquierda con el carrusel -->
+    <div class="col-md-6">
+      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+<!-- Indicadores -->
+<div class="carousel-indicators">
+  <button *ngFor="let photo of photos; let i = index" type="button" data-bs-target="#carouselExampleControls" 
+    [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-label]="'Slide ' + (i + 1)">
+  </button>
+</div>
+        <div class="carousel-inner">
+          <div class="carousel-item" *ngFor="let photo of photos; let i = index" [ngClass]="{ 'active': i === 0 }">
+            <div class="photo-container position-relative">
+              
+              <!-- Imagen distorsionada de fondo -->
+              <div class="distorted-background" [ngStyle]="{'background-image': 'url(' + photo.source + ')'}"></div>
+              
+              <!-- Imagen principal -->
+              <a [href]="photo.link" target="_blank" rel="noopener noreferrer">
+                <img [src]="photo.source" alt="Photo" class="d-block w-100 fixed-size-photo">
+              </a>
+
+              <!-- Imagen del usuario y nombre en la esquina superior izquierda -->
+              <div *ngIf="photo.from"
+                class="position-absolute top-0 start-0 p-2 d-flex align-items-center profile-container"
+                 >
+                <a [href]="profileLink(photo.from.id)" target="_blank" rel="noopener noreferrer">
+                  <img [src]="profilePictureUrl(photo.from.id)" alt="{{ photo.from.name }}" class="profile-img me-2">
+                </a>
+                <!-- Nombre del usuario que solo se mostrará al hacer hover sobre la imagen -->
+                <a [href]="profileLink(photo.from.id)" target="_blank" rel="noopener noreferrer"
+                  class="profile-name-link">
+                  <p class="mb-0 text-white profile-name">{{ photo.from.name }}</p>
+                </a>
+              </div>
+
+              <!-- Ícono de Facebook en la esquina superior derecha -->
+              <div class="position-absolute top-0 end-0 p-2 icon-facebook">
+                <a [href]="profileLink(photo.from.id)" target="_blank" rel="noopener noreferrer">
+                  <i class="fab fa-facebook text-white fa-2x"></i>
+                </a>
+              </div>
+
+<!-- Información sobre la imagen (título, likes) dentro de la foto -->
+<div class="photo-overlay position-absolute bottom-0 start-0 p-3 text-white" style="z-index: 11;">
+  <!-- Número de likes con icono clicable -->
+  <div *ngIf="photo.likes" class="photo-likes d-flex align-items-center">
+    <a [href]="photo.link" target="_blank" rel="noopener noreferrer" class="likes-link d-flex align-items-center">
+      <i class="fas fa-thumbs-up me-2"></i> <!-- Icono de me gusta -->
+      <p class="mb-0">{{ photo.likes.summary.total_count }} {{ 'FACEBOOK.LIKES' | translate }}</p>
+    </a>
+  </div>
+</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controles del carrusel -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+          data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+          data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mitad derecha con el texto centrado de Chevalier -->
+    <div class="col-md-6 d-flex justify-content-center align-items-center">
+      <div class="chevalier-info text-center">
+        <p>{{ 'FACEBOOK.CHEVALIER_INFO' | translate }}</p>
+      </div>
+    </div>
+  </div>
+ 

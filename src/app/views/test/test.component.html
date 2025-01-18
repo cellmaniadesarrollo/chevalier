@@ -1,0 +1,34 @@
+<div *ngFor="let photo of photos" class="photo-container">
+  <!-- Enlace a la foto en Facebook -->
+  <a [href]="photo.link" target="_blank" rel="noopener noreferrer">
+    <div class="image-wrapper">
+      <img [src]="photo.source" alt="Photo">
+    </div>
+  </a>
+
+  <!-- Título de la foto -->
+  <div class="photo-name" *ngIf="photo.name">
+    <h4>{{ photo.name }}</h4>
+  </div>
+  <p *ngIf="!photo.name">No title available</p>
+
+  <!-- Imagen del usuario y enlace al perfil -->
+  <div *ngIf="photo.from">
+    <a [href]="profileLink(photo.from.id)" target="_blank" rel="noopener noreferrer">
+      <img [src]="profilePictureUrl(photo.from.id)" alt="{{ photo.from.name }}" class="profile-pic">
+    </a>
+    <p>{{ photo.from.name }}</p>
+  </div>
+
+  <!-- Número de likes -->
+  <div *ngIf="photo.likes">
+    <p>{{ photo.likes.summary.total_count }} Likes</p>
+  </div>
+
+  <!-- Enlace a la foto en Facebook para que el usuario dé "like" -->
+  <div>
+    <a [href]="photo.link" target="_blank" rel="noopener noreferrer">
+      Dar Like en Facebook
+    </a>
+  </div>
+</div>

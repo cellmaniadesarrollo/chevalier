@@ -1,0 +1,153 @@
+/* Estilos generales para navbar */
+.navbar-container {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  transition: background-color 0.3s ease;
+}
+
+/* Estilos para la navbar en pantallas normales */
+.navbar-title {
+  font-size: 1.5rem;
+  color: #1a1a1a; 
+  font-weight: bold;
+}
+
+.custom-select {
+  width: 75px; /* Ajusta el ancho según sea necesario */
+  color: #1a1a1a; /* Color negro para el texto del select */
+}
+
+.mat-select .mat-select-value-text {
+  color: #1a1a1a; /* Color negro para el valor seleccionado */
+}
+
+.mat-option-text {
+  color: #1a1a1a; /* Color negro para las opciones en el menú desplegable */
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  opacity: 0.96; /* Opacidad del 50% */
+  background-color: rgb(255, 255, 255); /* Color de fondo opaco */
+  backdrop-filter: blur(10px); /* Filtro de distorsión */
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.navbar-title {
+  font-size: 1.5rem;
+  color: #1a1a1a;
+  font-weight: bold;
+}
+
+/* Estilos de los enlaces en la navbar */
+.navbar-center a {
+  color: #1a1a1a;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.navbar-center a:hover {
+  color: #5A7D9A; /* Cambia el color de los enlaces al pasar el mouse por encima */
+  border-bottom: 2px solid #5A7D9A; /* Añadir borde al pasar el mouse */
+}
+
+/* Estilos de la parte derecha (iconos y select) */
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+/* Estilos de los iconos de redes sociales */
+.navbar-right a img {
+  width: 16px; /* Tamaño más pequeño para los íconos */
+  height: 16px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.navbar-right a:hover img {
+  filter: brightness(0) saturate(100%) invert(80%) sepia(47%) saturate(2436%) hue-rotate(6deg) brightness(102%) contrast(106%);
+  /* Aplicar color dorado (#FFD700) en hover */
+  transform: scale(1.1); /* Efecto de agrandamiento al hacer hover */
+}
+.navbar-logo, .navbar-title {
+  cursor: pointer; /* Cambia el cursor a una mano al pasar sobre estos elementos */
+}
+/* Reglas para pantallas pequeñas */
+@media (max-width: 768px) {
+  .navbar-title {
+    display: none; /* Ocultar el texto 'CHEVALIER' en pantallas estrechas */
+  }
+  
+  .custom-select {
+    width: 100%; /* Se adapta a pantallas móviles */
+  }
+
+  /* Ocultamos el navbar-center y mostramos el toggle button */
+  .navbar-center {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: 99;
+  }
+
+  .navbar-center.mobile {
+    display: flex;
+  }
+ 
+  /* Mostrar el botón "hamburger" */
+  .navbar-toggle {
+    display: block;
+    font-size: 24px;
+    cursor: pointer;
+    color: #1a1a1a;
+  }
+
+  .navbar-toggle:hover {
+    color: #FFD700;
+  }
+
+  .navbar-right {
+    flex-direction: row-reverse;
+  }
+ 
+}
+.navbar-center a.active {
+  color: #5A7D9A; /* Azul claro suave para el enlace activo */
+  border-bottom: 2px solid #5A7D9A; /* Borde suave debajo del enlace activo */
+}
+/* Reglas para pantallas grandes */
+@media (min-width: 769px) {
+
+  .navbar-center {
+    display: flex;
+  }
+
+  /* Ocultamos el botón "hamburger" en pantallas grandes */
+  .navbar-toggle {
+    display: none;
+  }
+ 
+
+  .mat-select {
+    width: 100%; /* Asegúrate de que el select también se ajuste */
+  }
+
+}

@@ -1,0 +1,88 @@
+.form-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+}
+
+.invoice-header {
+  margin-bottom: 24px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.totales-container {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.subtotal-container,
+.descuento-container,
+.total-container {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+
+
+
+
+.elegant-card {
+  border-radius: 10px;
+  background-color: #f8f9fa; /* Fondo suave */
+  transition: transform 0.2s ease-in-out;
+  padding: 10px; /* Reduce padding */
+}
+
+.elegant-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Título alineado a la izquierda */
+.elegant-card h6 {
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.5px;
+  text-align: left;
+  margin: 0; /* Sin margen para ahorrar espacio */
+}
+
+/* Línea dorada decorativa */
+.full-width-divider {
+  border: none;
+  border-top: 2px solid #d4af37;
+  margin: 5px 0; /* Reduce márgenes verticales */
+}
+
+/* Fondo dorado claro */
+.bg-light-gold {
+  background-color: #f9e6b3; /* Color dorado claro */
+  font-size: 0.9rem;
+  font-weight: bold;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Texto compacto */
+.custom-heading {
+  font-size: 0.95rem; /* Ajusta para un diseño más compacto */
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Botón pequeño */
+button.btn-sm {
+  padding: 2px 8px;
+  font-size: 0.85rem;
+  line-height: 1.2;
+}

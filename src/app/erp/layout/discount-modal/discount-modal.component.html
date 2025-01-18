@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Descuentos</h2> 
+<mat-dialog-content>
+  <p>{{auxData.dni}}-{{auxData.names}} {{auxData.lastNames}}</p>
+  <p>El cliente tiene los siguientes descuentos</p>
+  <table mat-table [dataSource]="nonGlobalDiscounts" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let descuento"> {{ descuento.name }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Descripción </th>
+      <td mat-cell *matCellDef="let descuento"> {{ descuento.description }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="value">
+      <th mat-header-cell *matHeaderCellDef> Valor </th>
+      <td mat-cell *matCellDef="let descuento">
+        {{ descuento.discountType === 'PERCENTAGE' ? '%' : '$' }}{{ descuento.value }} ({{ descuento.discountType === 'PERCENTAGE' ? 'Porcentaje' : 'Monto fijo' }})
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="products">
+      <th mat-header-cell *matHeaderCellDef> Productos Aplicables </th>
+      <td mat-cell *matCellDef="let descuento">
+        {{ getProductsAsString(descuento.productsOrServices) }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Cerrar</button>
+</mat-dialog-actions>

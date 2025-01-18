@@ -1,0 +1,30 @@
+<div class="sidebar d-flex flex-column"
+     [class.minimized]="sidebarService.isMinimized()" 
+     (mouseenter)="onMouseEnter()" 
+     (mouseleave)="onMouseLeave()">
+ 
+  <!-- Sección del usuario -->
+  <div class="user-section d-flex align-items-center p-3 border-bottom">
+    <img [src]="userImage" class="user-image me-3" alt="User">
+    <span class="user-name" *ngIf="!sidebarService.isMinimized()">{{ userName }}</span>
+  </div>
+
+  <!-- Botón de Dashboard -->
+  <button routerLink="/erp/dashboard" class="btn btn-dark sidebar-button d-flex align-items-center p-3 w-100">
+    <i class="bi bi-grid me-3"></i>
+    <span *ngIf="!sidebarService.isMinimized()">Dashboard</span>
+  </button>
+    <!-- Botón de Cortes-->
+    <button routerLink="/erp/serviceandcuts" class="btn btn-dark sidebar-button d-flex align-items-center p-3 w-100">
+      <i class="bi bi-scissors me-3"></i>
+      <span *ngIf="!sidebarService.isMinimized()">Servicios y Cortes</span>
+    </button>
+    <button routerLink="/erp/saleslist" class="btn btn-dark sidebar-button d-flex align-items-center p-3 w-100">
+      <i class="bi bi-file-text me-3"></i> 
+      <span *ngIf="!sidebarService.isMinimized()">Ventas</span>
+    </button>
+    <button *ngIf="isUserAdminOrSupervisor()" routerLink="/erp/reports" class="btn btn-dark sidebar-button d-flex align-items-center p-3 w-100">
+      <i class="bi bi-clipboard-data me-3"></i>
+      <span *ngIf="!sidebarService.isMinimized()">reportes</span>
+    </button>
+</div>

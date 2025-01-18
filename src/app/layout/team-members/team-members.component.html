@@ -1,0 +1,16 @@
+ <!-- relacion de aspecto de las imagenes 4:3 -->
+ <section>
+  <h2>{{ 'ABOUT_US.TEAM.TITLE' | translate }}</h2>
+  <div class="team-members">
+    <mat-card *ngFor="let member of teamMembers" class="team-card">
+      <div class="image-container">
+        <img mat-card-image [src]="member.photo" alt="{{ member.name }}">
+      </div>
+      <mat-card-title class="custom-title">{{ member.name }}</mat-card-title>
+      <mat-card-subtitle class="custom-subtitle">{{ member.specialty }}</mat-card-subtitle>
+      <mat-card-content class="custom-content">
+        <p>{{ member.bio }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>

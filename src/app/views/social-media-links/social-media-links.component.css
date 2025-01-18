@@ -1,0 +1,57 @@
+/* Estilo para pantallas grandes (desktop, tablets, etc.) */
+.responsive-background {
+    background-image: url('/img/tcm.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%; /* Usa 100% para evitar problemas con la barra de desplazamiento */
+    height: calc(100vw * 0.5625); /* Relación de aspecto 16:9 */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative; /* Para que los iconos se posicionen respecto a este contenedor */
+}
+
+/* Contenedor de los íconos */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 5vw; /* Espacio entre iconos, relativo al ancho de la ventana */
+    position: absolute;
+    top: 65%; /* Usa unidades porcentuales relativas al contenedor */
+    left: 50%; /* Usa unidades porcentuales relativas al contenedor */
+    transform: translate(-50%, -50%); /* Centra los iconos horizontal y verticalmente */
+    width: 40vw; /* Ancho del contenedor de iconos proporcional al ancho de la ventana */
+}
+
+/* Estilo de las imágenes de redes sociales */
+.social-icons a img {
+    width: 8vw; /* Mantiene el tamaño de los iconos relativo al ancho de la ventana */
+    height: auto; /* Mantiene la proporción del icono */
+    transition: transform 0.3s ease, filter 0.3s ease; /* Animación suave */
+}
+
+/* Animación al pasar el mouse */
+.social-icons a img:hover {
+    transform: scale(1.2); /* Aumenta el tamaño al pasar el mouse */
+    filter: brightness(1.2); /* Aumenta el brillo */
+}
+
+/* Media query para pantallas móviles */
+@media only screen and (max-width: 768px) {
+    .responsive-background {
+        background-image: url('/img/cv.jpg');
+        background-size: cover;
+        background-position: center;
+        height: calc(100vw * 0.75); /* Ajusta la relación de aspecto en pantallas pequeñas */
+    }
+
+    .social-icons a img {
+        width: 12vw; /* Ajusta el tamaño de los iconos en pantallas móviles */
+    }
+
+    .social-icons {
+        top: 60%; /* Ajusta la posición relativa en móviles */
+        width: 50vw; /* Ajusta el ancho del contenedor de los iconos en móviles */
+    }
+}

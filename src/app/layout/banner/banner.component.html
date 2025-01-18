@@ -1,0 +1,12 @@
+<div class="banner">
+  <img src="img/banner.jpg" alt="Banner Image">
+  <div class="banner-content">
+    <h1>{{ title | translate }}</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li><a [routerLink]="['/']">{{ 'NAVBAR.HOME' | translate }}</a></li>
+        <li>{{ pageName | translate }}</li>
+      </ol>
+    </nav>
+  </div>
+</div>

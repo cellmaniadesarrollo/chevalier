@@ -1,0 +1,49 @@
+<div *ngIf="hasRole(['ADMIN', 'SUPERVISOR']) && isDataLoaded" class="row">
+    <div class="col-6">
+      <app-custom-chart 
+        [series]="[
+          { name: 'Semana Actual', color: '#1f77b4', data: getSemanaSalesData() },
+          { name: 'Semana Anterior', color: '#ff7f0e', data: getSemanaAnteriorData() }
+        ]"
+        [type]="'line'"
+        [title]="'Comparativa de Ventas Semanales'">
+      </app-custom-chart>
+    </div>
+    <div class="col-6">
+      <app-custom-chart 
+      [series]="[
+      { name: 'Semana Actual', color: '#1f77b4', data:  summarizedData },
+      { name: 'Semana anterior', color: '#ff7f0e', data:  summarizedDatalastweek } 
+    ]"
+        [type]="'bar'"
+        [title]="'Comparativa de Ventas Totales por barbero de esta semana y semana anterior'">
+      </app-custom-chart>
+    </div>
+    <div class="col-6">
+        <app-custom-chart 
+          [series]="transformedData"
+          [type]="'line'"
+          [title]="'Comparativa de Ventas de esta semana'">
+        </app-custom-chart>
+      </div>
+      
+      <div class="col-6">
+        <app-custom-chart 
+          [series]="transformedDatalastweek"
+          [type]="'line'"
+          [title]="'Comparativa de Ventas de semana anterior'">
+        </app-custom-chart>
+      </div>
+
+      <div class="col-6">
+        <app-custom-chart 
+        [series]="[
+        { name: 'Semana Actual', color: '#1f77b4', data:  summarizedDataservices } 
+      ]"
+          [type]="'bar'"
+          [title]="'Comparativa de Ventas Servicios y precios de esta semana'">
+        </app-custom-chart>
+      </div>
+      
+
+  </div>

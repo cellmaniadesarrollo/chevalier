@@ -1,0 +1,92 @@
+<h2 mat-dialog-title class="d-flex justify-content-between align-items-center">
+    <span class="mx-auto">Registrar Cliente</span>
+   
+    <button mat-icon-button (click)="onCancel()" aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </h2>
+
+<div mat-dialog-content>
+
+  <form [formGroup]="clientForm">
+    <mat-error *ngIf=" cedulaExists" >Cédula ya registrada</mat-error>
+    <div class="row"> 
+        <div class="col-sm-6">
+          <div class="row"> 
+            <mat-form-field appearance="fill">
+              <mat-label>Cédula</mat-label>
+              
+              <input matInput formControlName="cedula" placeholder="Ingrese la cédula" (focusout)="checkCedula()">
+              <mat-error *ngIf="clientForm.get('cedula')?.invalid  ">Cédula inválida o ya registrada</mat-error>
+              
+            </mat-form-field>
+          </div></div>
+          <div class="col-sm-6">
+            <div class="row">
+              <mat-form-field appearance="fill">
+                <mat-label>Nombres</mat-label>
+                <input matInput formControlName="nombres" [disabled]="cedulaExists" placeholder="Ingrese nombres">
+                <mat-error *ngIf="clientForm.get('nombres')?.invalid">Nombres requeridos</mat-error>
+              </mat-form-field>
+                 </div>  
+          </div>
+        </div>
+        <div class="row"> 
+            <div class="col-sm-6">
+              <div class="row"> 
+                <mat-form-field appearance="fill"  >
+                    <mat-label>Apellidos</mat-label>
+                    <input matInput formControlName="apellidos" [disabled]="cedulaExists" placeholder="Ingrese apellidos">
+                    <mat-error *ngIf="clientForm.get('apellidos')?.invalid">Apellidos requeridos</mat-error>
+                  </mat-form-field>
+              </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row"> 
+                    <mat-form-field appearance="fill"  >
+                        <mat-label>Dirección</mat-label>
+                        <input matInput formControlName="direccion" [disabled]="cedulaExists" placeholder="Ingrese dirección">
+                      </mat-form-field>
+                </div>
+              </div>
+        </div>
+        <div class="row"> 
+            <div class="col-sm-6"> 
+              <div class="row"> 
+                <mat-form-field appearance="fill"  >
+                    <mat-label>Teléfono</mat-label>
+                    <input matInput formControlName="telefono" [disabled]="cedulaExists" placeholder="Ingrese teléfono">
+                    <mat-error *ngIf="clientForm.get('telefono')?.invalid">Teléfono inválido</mat-error>
+                  </mat-form-field>
+              </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row"> 
+                    <mat-form-field appearance="fill"  >
+                        <mat-label>Correo</mat-label>
+                        <input matInput formControlName="correo" [disabled]="cedulaExists" placeholder="Ingrese correo">
+                        <mat-error *ngIf="clientForm.get('correo')?.invalid">Correo inválido</mat-error>
+                      </mat-form-field>
+                </div>
+              </div>
+        </div>
+        <div class="row"> 
+            <div class="col-sm-6">
+              <div class="row"> 
+                <mat-form-field appearance="fill"  >
+                    <mat-label>Fecha de Nacimiento</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento" [disabled]="cedulaExists" placeholder="DD/MM/AAAA">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+              </div>
+            </div> 
+        </div>
+     </form>
+</div>
+
+<div mat-dialog-actions class="d-flex justify-content-center">
+  <button mat-button color="warn" (click)="onCancel()">Cancelar</button>
+  <button mat-button color="primary" cdkFocusInitial (click)="saveClient()" [disabled]="cedulaExists || clientForm.invalid">Guardar</button>
+
+</div>

@@ -1,0 +1,70 @@
+ 
+<app-banner [title]="'ABOUT_US.TITLE'" [pageName]="'ABOUT_US.TITLE'"></app-banner>
+   
+ <!-- relacion de aspecto de las imagenes 4:3 -->
+
+ <div class="about-us-container">
+  <mat-card class="about-us-card">
+    <mat-card-content>
+      <!-- Grupo de secciones (pares) -->
+      <div class="about-us-sections-group">
+        <section>
+          <h2>{{ 'ABOUT_US.HISTORY.TITLE' | translate }}</h2>
+          <p>{{ 'ABOUT_US.HISTORY.DESCRIPTION' | translate }}</p>
+        </section>
+
+        <section>
+          <h2>{{ 'ABOUT_US.MISSION.TITLE' | translate }}</h2>
+          <p>{{ 'ABOUT_US.MISSION.DESCRIPTION' | translate }}</p>
+        </section>
+
+        <section>
+          <h2>{{ 'ABOUT_US.VISION.TITLE' | translate }}</h2>
+          <p>{{ 'ABOUT_US.VISION.DESCRIPTION' | translate }}</p>
+        </section>
+
+        <section>
+          <h2>{{ 'ABOUT_US.VALUES.TITLE' | translate }}</h2>
+          <p>{{ 'ABOUT_US.VALUES.DESCRIPTION' | translate }}</p>
+        </section>
+
+        <section>
+          <h2>{{ 'ABOUT_US.VALUES.TITLE' | translate }}</h2>
+          <p>{{ 'ABOUT_US.VALUES.DESCRIPTION' | translate }}</p>
+        </section>
+  
+        <section>
+          <h2>{{ 'ABOUT_US.EXPERIENCE.TITLE' | translate }}</h2>
+          <p>{{ 'ABOUT_US.EXPERIENCE.DESCRIPTION' | translate }}</p>
+        </section>
+  
+        <section>
+          <h2>{{ 'CONTACT.TITLE' | translate }}</h2>
+      
+              <div class="hours-section">
+              <p>{{ 'CONTACT.PHONE' | translate }}: {{personalDAta.phone}}</p> 
+              <p>{{ 'CONTACT.ADDRESS' | translate }}: {{personalDAta.adress}}</p> 
+              <p>{{ 'CONTACT.EMAIL' | translate }}: {{personalDAta.email}}</p>
+         
+     
+
+          </div>
+        </section>
+        <section>
+           
+            <h2>{{ 'CONTACT.HOURS' | translate }}</h2>
+            <div class="hours-section">
+              <p>{{ 'CONTACT.HOURS_WEEKDAYS' | translate }}: 8:00 - 20:00</p> 
+              <p>{{ 'CONTACT.HOURS_WEEKENDS' | translate }}: 9:00 - 19:00</p>
+            </div>
+          
+        </section>
+      </div>
+      <div>
+        <app-team-members></app-team-members>
+      </div>
+      
+    </mat-card-content>
+  </mat-card>
+</div>
+

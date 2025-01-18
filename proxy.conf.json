@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://tikapis.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

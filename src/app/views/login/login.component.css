@@ -1,0 +1,85 @@
+/* Estilo para los placeholders */
+input::placeholder {
+  color: #cccccc; /* Un gris claro */
+  opacity: 1; /* Asegura que el color tenga buena visibilidad */
+}
+/* Fondo con imagen solo para el componente */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url('/img/logindashboard.jpg'); /* Cambia por la ruta de tu imagen */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Estilos del contenedor del formulario */
+.login-card {
+  background-color: rgba(66, 66, 66, 0.85); /* Fondo semitransparente para resaltar el formulario */
+  border: 2px solid #b8860b; /* Bordes dorados */
+  border-radius: 10px;
+  width: 400px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para el icono de la barbería */
+.brand-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.barber-icon {
+  width:208px;
+  height: 130px;
+}
+
+/* Estilos para el texto y los inputs */
+.text-white {
+  color: #fff;
+}
+
+.form-control {
+  background-color: transparent;
+  color: white;
+  border: 1px solid #b8860b; /* Borde dorado */
+}
+
+.form-control:focus {
+  border-color: #b8860b;
+  box-shadow: none;
+}
+
+/* Posición y estilos del botón de mostrar/ocultar contraseña */
+.eye-button {
+  right: 10px;
+  top: 70%;
+  transform: translateY(-50%);
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 1.2rem;
+  color: white;
+}
+
+/* Estilos para el botón de login */
+.btn-primary {
+  background-color: #b8860b;
+  border-color: #b8860b;
+}
+
+.btn-primary:hover {
+  background-color: #daaa1b;
+  border-color: #daaa1b;
+}
+/* Alineación del checkbox y su etiqueta */
+.form-check-input {
+  margin-right: 10px;
+}
+
+.form-check-label {
+  cursor: pointer;
+}

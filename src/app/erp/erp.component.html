@@ -1,0 +1,6 @@
+ 
+<app-topbar></app-topbar> 
+<app-sidebar></app-sidebar>
+<div [ngClass]="{'full-width': sidebarService.isMinimized(), 'reduced-width': !sidebarService.isMinimized()}" class="erp-content">
+  <router-outlet></router-outlet>
+</div> 

@@ -1,0 +1,31 @@
+<app-banner *ngIf="isCommentsPage()" [title]="'NAVBAR.COMMENTS'" [pageName]="'NAVBAR.COMMENTS'"></app-banner>
+<div class="container-fluid mt-4 custom-container">
+  <section class="feedback-section">
+
+    <div class="feedback-container">
+      <div class="feedback-description">
+        <div class="feedback-left">
+          <p>{{ 'FEEDBACK.DESCRIPTION' | translate }}</p>
+          <p>{{ 'FEEDBACK.DETAILS' | translate }}</p>
+          <p>{{ 'FEEDBACK.DETAILS1' | translate }}</p>
+        </div>
+      </div>
+      <!-- Mostrar el formulario si el comentario no ha sido enviado -->
+      <form *ngIf="!isFeedbackSent" id="demo-form" [formGroup]="commentsForm" class="custom-feedback-form">
+        <label for="comments" class="custom-feedback-form-label">{{ 'FEEDBACK.LABEL' | translate }}</label>
+        <textarea formControlName="comment" placeholder="{{ 'FEEDBACK.PLACEHOLDER' | translate }}"
+          class="custom-feedback-textarea"></textarea>
+        <p class="custom-anonymous-message">{{ 'FEEDBACK.ANONYMOUS_MESSAGE' | translate }}</p>
+        <button (click)="onSubmit()" type="submit" class="custom-feedback-button" [disabled]="isSubmitting">
+          <!-- Cambiar el texto del botón mientras se envía el formulario -->
+          {{ isSubmitting ? ('FEEDBACK.SUBMITTING' | translate) : ('FEEDBACK.SUBMIT' | translate) }}
+        </button>
+      </form>
+      <!-- Mostrar la animación de éxito si el comentario fue enviado -->
+      <div *ngIf="isFeedbackSent" class="success-message">
+        <div class="success-icon">✔️</div>
+        <p>{{ 'FEEDBACK.SUCCESS_MESSAGE' | translate }}</p>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,32 @@
+<!-- relacion de imagenes  11:5-->
+
+<div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+  <!-- Indicadores -->
+  <div class="carousel-indicators">
+    <button *ngFor="let image of images; let i = index" type="button" data-bs-target="#carouselExample" 
+      [attr.data-bs-slide-to]="i" [class.active]="i === 0" [attr.aria-label]="'Slide ' + (i + 1)">
+    </button>
+  </div>
+
+  <div class="carousel-inner">
+    <div *ngFor="let image of images; let i = index" class="carousel-item" [class.active]="i === 0">
+      <!-- Imagen principal -->
+      <img [src]="image.path" class="d-block w-100" alt="Slide">
+      
+      <div class="carousel-caption d-none d-md-block">
+        <h5>{{ image.titleKey | translate }}</h5>
+        <p>{{ image.descriptionKey | translate }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controles de navegación -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>

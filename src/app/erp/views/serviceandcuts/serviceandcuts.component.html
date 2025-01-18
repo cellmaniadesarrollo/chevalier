@@ -1,0 +1,334 @@
+<div class="row">
+  <div class="col-sm-8">
+    <form [formGroup]="corteForm">
+      <div class="form-container">
+        <!-- Encabezado de la factura -->
+        <div class="invoice-header">
+          <div class="row">
+            <div class="col-sm-4">
+              <label>Fecha: <strong>{{ facturaInfo.fecha }}</strong></label>
+            </div>
+            <div class="col-sm-4">
+              <label>Número de Comprobante: <strong>{{ facturaInfo.comprobante }}</strong></label>
+            </div>
+            <div class="col-sm-4">
+              <label>Cobrado por: <strong>{{ facturaInfo.cobrador }}</strong></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-2">
+                <button type="button" mat-raised-button color="primary" (click)="openDialog()">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+
+              <div class="col-sm-10">
+                <div class="row">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Buscar Cliente</mat-label>
+                    <input type="text" matInput placeholder="Buscar Cliente" [matAutocomplete]="autoCliente"
+                      formControlName="clienteBuscador" (keyup.enter)="searchclients()">
+                    <!-- Aquí se agrega el botón con el icono de lupa -->
+                    <button mat-icon-button matSuffix (click)="searchclients()" aria-label="Buscar cliente">
+                      <mat-icon>search</mat-icon>
+                    </button>
+                    <mat-autocomplete #autoCliente="matAutocomplete" [displayWith]="displayCliente"
+                      (optionSelected)="onClienteSelected($event.option.value)">
+                      <mat-option *ngFor="let cliente of clientes" [value]="cliente">
+                        {{cliente.dni}} {{ cliente.names }} {{cliente.lastNames}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="row">
+
+              <div class="col-sm-12">
+                <div class="row">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Buscar Servicio</mat-label>
+                    <input type="text" matInput #searchInput placeholder="Buscar Servicio" [matAutocomplete]="autoServicio"
+                      formControlName="servicioBuscador" (keyup.enter)="searchproducts()">
+                    <!-- Aquí se agrega el botón con el icono de lupa -->
+                    <button mat-icon-button matSuffix (click)="searchproducts()" aria-label="Buscar cliente">
+                      <mat-icon>search</mat-icon>
+                    </button>
+                    <mat-autocomplete #autoServicio="matAutocomplete" [displayWith]="displayServicio"
+                      (optionSelected)="agregarServicio($event.option.value)">
+                      <mat-option *ngFor="let servicio of servicios" [value]="servicio">
+                        {{ displayServicio(servicio) }}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="row">
+              <mat-form-field appearance="fill">
+                <mat-label>Buscar Barbero</mat-label>
+                <input type="text" matInput placeholder="Buscar Barbero" [matAutocomplete]="autoBarbero"
+                  formControlName="barberoBuscador">
+                <mat-autocomplete #autoBarbero="matAutocomplete" [displayWith]="displayBarbero">
+                  <mat-option *ngFor="let barbero of barberos" [value]="barbero">
+                    {{ barbero.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <!-- <app-search-autocomplete
+              [label]="'Buscar Barbero'"
+              [placeholder]="'Buscar Barbero'"
+              [data]="barberos"
+              [displayWithFn]="displayHairdresser"
+              [control]="barberoControl"
+              
+              (optionSelected)="onHairdresserSelected($event)"
+            ></app-search-autocomplete> -->
+
+
+
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="row">
+              <mat-form-field appearance="fill">
+                <mat-label>Buscar Forma de Pago</mat-label>
+                <input type="text" matInput placeholder="Buscar Forma de Pago" [matAutocomplete]="autoFormaPago"
+                  formControlName="formaPagoBuscador">
+                <mat-autocomplete #autoFormaPago="matAutocomplete" [displayWith]="displayFormaPago"
+                  (optionSelected)="onFormaPagoSeleccionada($event.option.value)">
+                  <mat-option *ngFor="let formaPago of formasPagosFiltradas" [value]="formaPago">
+                    {{ formaPago.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </div>
+
+        </div>
+        <!-- Div condicional que aparece solo si se selecciona "TRANSFERENCIA" -->
+        <div *ngIf="formaPagoSeleccionada" class="row">
+          <div class="col-md-6">
+            <div class="row">
+              <mat-form-field appearance="fill">
+                <mat-label>Buscar Entidad Bancaria</mat-label>
+                <input type="text" matInput placeholder="Buscar Entidad Bancaria"
+                  [matAutocomplete]="autoEntidadBancaria" formControlName="entidadBancariaBuscador">
+                <mat-autocomplete #autoEntidadBancaria="matAutocomplete" [displayWith]="displayEntidadBancaria"
+                  (optionSelected)="onEntidadBancariaSeleccionada($event.option.value)">
+                  <mat-option *ngFor="let banco of bancosFiltrados" [value]="banco">
+                    {{ banco.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <mat-form-field appearance="fill">
+                <mat-label>Número de Transferencia</mat-label>
+                <input matInput placeholder="Ingrese el número de transferencia" formControlName="numeroTransferencia">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="row">
+              <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Observaciones</mat-label>
+                <textarea matInput placeholder="Añadir observaciones" formControlName="observaciones"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabla de servicios agregados -->
+        <div class="table-container">
+          <table mat-table [dataSource]="serviciosAgregados" class="mat-elevation-z8 full-width-table">
+
+            <!-- Servicio Column -->
+            <ng-container matColumnDef="servicio">
+              <th mat-header-cell *matHeaderCellDef> Servicio </th>
+              <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+            </ng-container>
+
+            <!-- Precio Column -->
+            <!-- Precio Column -->
+            <ng-container matColumnDef="precio">
+              <th mat-header-cell *matHeaderCellDef> Precio </th>
+              <td mat-cell *matCellDef="let element">
+                <!-- Si tiene múltiples precios -->
+                <ng-container *ngIf="element.prices && element.prices.length > 0">
+                  <mat-form-field appearance="fill">
+                    <mat-select [(value)]="element.selectedPrice" placeholder="Selecciona un precio"
+                      (selectionChange)="handlePriceChange(element)">
+                      <mat-option *ngFor="let price of element.prices" [value]="price">{{ price }}</mat-option>
+                      <mat-option value="custom">Otro valor</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <!-- Campo de precio personalizado -->
+                  <input *ngIf="element.selectedPrice === 'custom'" matInput placeholder="Ingrese un valor"
+                    type="number" [(ngModel)]="element.customPrice" (ngModelChange)="updateCustomPrice(element) "
+                    [ngModelOptions]="{standalone: true}">
+                </ng-container>
+
+                <!-- Si tiene un único precio -->
+                <ng-container *ngIf="!element.prices || element.prices.length === 0">
+                  ${{ element.price}}
+                  <button mat-icon-button color="primary" (click)="element.selectedPrice = 'custom'">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <!-- Campo de precio personalizado -->
+                  <input *ngIf=" element.selectedPrice === 'custom'" matInput placeholder="Ingrese un valor"
+                    type="number" [(ngModel)]="element.customPrice" (ngModelChange)="updateCustomPrice(element) "
+                    [ngModelOptions]="{standalone: true} " min={{element.price}}>
+
+
+
+                </ng-container>
+              </td>
+            </ng-container>
+            <!-- descuento columna -->
+            <ng-container matColumnDef="descuento">
+              <th mat-header-cell *matHeaderCellDef> Descuentos </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-form-field appearance="fill">
+                  <mat-select [(ngModel)]="element.selectedDiscount" [ngModelOptions]="{standalone: true}"
+                    placeholder="Selecciona un descuento" (selectionChange)="calcularTotal() " >
+                    <mat-option *ngFor="let discount of element.discount" [value]="discount">
+                      <strong>{{ discount.discountType === 'PERCENTAGE' ? '%' : discount.discountType === 'FIXED' ? '$' : '' }}</strong>{{ discount.value }} ({{ discount.name | slice:0:10 }})
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+            </ng-container>
+            <!-- Acciones Column -->
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef> Acciones </th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-raised-button color="warn" (click)="eliminarServicio(element)">Eliminar</button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+
+        <!-- Total de los Servicios -->
+        <div class="row">
+          <div class="totales-container">
+            <div class="subtotal-container">
+              <label>Subtotal: {{ totales.subtotal | currency }}</label>
+            </div>
+            <div class="descuento-container">
+              <label>Descuento total: {{ totales.totalDescuento | currency }}</label>
+            </div>
+            <div class="total-container">
+              <label>Total: {{ totales.total | currency }}</label>
+            </div>
+          </div>
+        </div>
+        <!-- Botón para registrar corte -->
+        <div class="form-group">
+          <button mat-raised-button color="primary" (click)="onSubmit()"
+            [disabled]="!corteForm.valid || isSubmitting">Registrar Corte</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+  <!-- tabla de los ultimos cortes -->
+
+  <div class="col">
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-12" *ngFor="let sale of groupedSales">
+          <mat-card class="shadow-sm border-primary elegant-card p-3">
+            <!-- Cabecera de la tarjeta -->
+            <div class="d-flex justify-content-between align-items-center">
+              <h6 class="custom-heading text-primary m-0">
+                #{{ sale.saleNumber }}
+              </h6>
+              <small class="text-secondary">{{ sale.saleDate }}</small>
+            </div>
+
+            <!-- Línea decorativa -->
+            <hr class="full-width-divider my-2" />
+
+            <!-- Contenido compactado -->
+            <div class="row">
+              <div class="col-12">
+                <span>{{ sale.client.names }} {{ sale.client.lastNames }} - {{ sale.paymentMethod.name }}</span>
+              </div>
+              <div class="col-12">
+                <strong> {{ sale.barber.firstname }} {{ sale.barber.lastname }} </strong> -
+                <span>{{ sale.cashier.firstname }} {{ sale.cashier.lastname }}</span>
+              </div>
+            </div>
+
+            <!-- Productos -->
+            <div class="mt-2">
+              <strong>Productos:</strong>
+              <ul class="list-unstyled mb-1">
+                <li *ngFor="let product of sale.productsOrServices">
+                  <small>
+                    - {{ product.productName }} (${{ product.price }})
+                    <span *ngIf="product.discountDetails.value > 0">
+                      - Descuento:
+                      {{ product.discountDetails.type === 'PERCENTAGE'
+                      ? product.discountDetails.value + '%'
+                      : '$' + product.discountDetails.value }}
+                      <small class="text-muted">
+                        ({{ product.discountDetails.type === 'PERCENTAGE' ? 'Porcentual' : 'Fijo' }})
+                      </small>
+                    </span>
+                  </small>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Subtotal y total -->
+            <div class="mt-2">
+              <strong>Subtotal:</strong>
+              ${{ getSubtotal(sale.productsOrServices) | number: '1.2-2' }}
+            </div>
+            <!-- Total Descuentos -->
+            <div class="mt-2">
+              <strong>Total Descuentos:</strong>
+              ${{ getTotalDiscounts(sale.productsOrServices) | number: '1.2-2' }}
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <div class="bg-light-gold px-2 py-1 rounded">
+                <strong>Total:</strong> ${{ getTotalWithDiscounts(sale.productsOrServices) | number: '1.2-2' }}
+              </div>
+              <button mat-raised-button color="primary" class="btn-sm" (click)="getdataprinttiket(sale._id)">
+                <mat-icon>print</mat-icon> Imprimir
+              </button>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

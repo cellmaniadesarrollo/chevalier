@@ -1,0 +1,61 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.grecaptcha-badge {
+    visibility: hidden;
+  }
+ 
+  .success-snackbar {
+    background-color: rgba(40, 167, 69, 0.9); /* Verde con 50% de transparencia */
+    color: rgba(255, 255, 255, 1); /* Blanco con 80% de transparencia */
+    font-weight: bold;
+  }
+  
+  .error-snackbar {
+    background-color: rgba(220, 53, 69, 0.9); /* Rojo con 50% de transparencia */
+    color: rgba(255, 255, 255,1); /* Blanco con 80% de transparencia */
+    font-weight: bold;
+  }
+  /* Estilos específicos para sobrescribir el color de fondo en éxito */
+.mat-mdc-snack-bar-container.success-snackbar .mat-mdc-snackbar-surface {
+  background-color: rgba(40, 167, 69, 0.5) !important; /* Verde con 50% de transparencia */
+  color: rgba(255, 255, 255, 0.8) !important; /* Blanco con 80% de transparencia */
+  font-weight: bold;
+}
+
+/* Estilos específicos para sobrescribir el color de fondo en error */
+.mat-mdc-snack-bar-container.error-snackbar .mat-mdc-snackbar-surface {
+  background-color: rgba(220, 53, 69, 0.5) !important; /* Rojo con 50% de transparencia */
+  color: rgba(255, 255, 255, 0.8) !important; /* Blanco con 80% de transparencia */
+  font-weight: bold;
+}
+
+.success-snackbar-icon {
+  margin-right: 16px;
+  font-size: 24px;
+  color: #ffffff; /* Verde */
+}
+
+.success-snackbar-icon::before {
+  content: "\E5CA"; /* Icono de éxito (verdadero) */
+  font-family: 'Material Icons';
+}
+
+.error-snackbar-icon {
+  margin-right: 16px;
+  font-size: 24px;
+  color: #ffffff; /* Rojo */
+}
+
+.error-snackbar-icon::before {
+  content: "\E5CD"; /* Icono de error (advertencia) */
+  font-family: 'Material Icons';
+}
+.custom-snackbar-width {
+  max-width: 400px; /* Ajusta el ancho según prefieras */
+  width: 100%;
+  padding: 8px 16px; /* Ajusta el padding para cambiar el alto */
+  font-size: 14px; /* Cambia el tamaño de fuente si quieres afectar el alto */
+  line-height: 1.5; /* Ajusta el interlineado si deseas más control sobre el alto */
+}

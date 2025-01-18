@@ -1,0 +1,44 @@
+<header class="navbar-container" >
+  <nav mat-toolbar class="navbar">
+    <div class="navbar-left" routerLink="">
+      
+      <img src="img/caranav.png" routerLink="/home" alt="Logo" class="navbar-logo">
+      <span class="navbar-title" routerLink="/home">CHEVALIER</span>
+    </div>
+
+    <!-- Botón del menú hamburguesa para dispositivos móviles -->
+    
+
+    <div class="navbar-center" [ngClass]="{ 'mobile': isMenuOpen }">
+      <a mat-button routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"  (click)="closeMenu()">{{ 'NAVBAR.HOME' | translate }}</a>
+      <a mat-button routerLink="/aboutus" routerLinkActive="active"  (click)="closeMenu()">{{ 'NAVBAR.ABOUT' | translate }}</a>
+      <a mat-button routerLink="/ourservices" routerLinkActive="active" (click)="closeMenu()">{{ 'NAVBAR.SERVICES' | translate }}</a>
+      <a mat-button routerLink="/products" routerLinkActive="active" (click)="closeMenu()">{{ 'NAVBAR.PRODUCTS' | translate }}</a>
+      <a mat-button routerLink="/comments" routerLinkActive="active" (click)="closeMenu()">{{ 'NAVBAR.COMMENTS' | translate }}</a>
+    </div>
+
+    <div class="navbar-right">
+      <!-- Ajuste de ancho del mat-select -->
+      <mat-select [(value)]="selectedLanguage" (selectionChange)="changeLanguage($event.value)" class="custom-select">
+        <mat-option *ngFor="let lang of languages" [value]="lang">{{ lang | uppercase }}</mat-option>
+      </mat-select>
+
+      <a mat-icon-button [href]="socialLinks.facebook" target="_blank">
+        <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/7.0.0/facebook.svg" alt="Facebook" width="24">
+      </a>
+      <a mat-icon-button [href]="socialLinks.instagram" target="_blank">
+        <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/7.0.0/instagram.svg" alt="Instagram" width="24">
+      </a>
+      <a mat-icon-button [href]="socialLinks.tiktok" target="_blank">
+        <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/7.0.0/tiktok.svg" alt="TikTok" width="24">
+      </a>
+      <a mat-icon-button [href]="socialLinks.youtube" target="_blank">
+        <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/7.0.0/youtube.svg" alt="YouTube" width="24">
+      </a>
+      <a mat-icon-button href="https://wa.me/593963607460?text=Hola,%20me%20gustaría%20realizar%20una%20reservación.%20¿Podrías%20darme%20más%20información,%20por%20favor?" target="_blank">
+        <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/7.0.0/whatsapp.svg" alt="WhatsApp" width="24">
+      </a>
+      <div class="navbar-toggle" (click)="toggleMenu()">&#9776;</div>
+    </div>
+  </nav>
+</header>

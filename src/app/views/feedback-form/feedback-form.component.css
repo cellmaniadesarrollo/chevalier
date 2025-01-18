@@ -1,0 +1,145 @@
+.feedback-section {
+  padding: 40px;
+  background-color: #f9f9f9;
+  min-height: 500px; /* Cambia de 'height' a 'min-height' */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.feedback-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 20px;
+  height: 100%; /* Asegúrate de que el contenedor ocupe todo el alto de la sección */
+}
+
+.feedback-description {
+  flex: 1;
+  padding: 20px;
+  max-width: 50%; /* Ocupa la mitad izquierda */
+}
+
+.custom-feedback-form {
+  flex: 1;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  max-width: 50%; /* Ocupa la mitad derecha */
+  height: 100%; /* Ocupa todo el alto */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Asegura que el contenido esté espaciado */
+}
+
+.custom-feedback-form-label {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.custom-feedback-textarea {
+  width: 100%;
+  height: 150px;
+  padding: 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.custom-feedback-textarea:focus {
+  border-color: #007bff;
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+  outline: none;
+}
+
+.custom-anonymous-message {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.custom-feedback-button {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.custom-feedback-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.custom-feedback-button:active {
+  transform: translateY(0);
+}
+
+/* Mensaje de éxito */
+.success-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 30px;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  height: 100%; /* Ocupa el mismo espacio que el formulario */
+}
+
+.success-icon {
+  font-size: 3rem;
+  color: #28a745;
+  margin-bottom: 20px;
+}
+
+.success-message p {
+  font-size: 1.5rem;
+  color: #28a745;
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .feedback-description, .custom-feedback-form {
+    max-width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
+  }
+  .feedback-section {
+    flex-direction: column; /* Apilar los elementos en lugar de mantenerlos en una fila */
+    align-items: stretch;
+  }
+
+  .feedback-container {
+    flex-direction: column;
+    gap: 20px; /* Añadir espacio entre los elementos */
+  }
+
+  .feedback-description, .custom-feedback-form {
+    max-width: 100%;
+    height: auto; /* Elimina la altura fija para pantallas pequeñas */
+  }
+}
+
+
+/*  */
+  .custom-container {
+    max-width: 1115px;
+    margin-left: auto;
+    margin-right: auto;
+   
+  }

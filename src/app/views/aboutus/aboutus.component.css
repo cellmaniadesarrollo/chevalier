@@ -1,0 +1,57 @@
+.about-us-container {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 1200px;
+}
+
+.about-us-card {
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+.about-us-sections-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.about-us-sections-group section {
+  flex: 1 1 45%; /* Las secciones ocuparán el 45% del ancho en pantallas grandes */
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.about-us-sections-group section:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.about-us-sections-group h2 {
+  text-align: center;
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.about-us-sections-group p {
+  color: #555;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+/* Responsive design: para pantallas pequeñas */
+@media (max-width: 768px) {
+  .about-us-sections-group section {
+    flex: 1 1 100%; /* Las secciones ocuparán el 100% del ancho en pantallas pequeñas */
+  }
+  .contact-container {
+    flex-direction: column; /* Apila los elementos verticalmente */
+  }
+ 
+}
+ 

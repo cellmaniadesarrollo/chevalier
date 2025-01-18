@@ -1,0 +1,27 @@
+<div class="container">
+    <!-- Título del informe -->
+    <div class="row">
+      <div class="col text-center">
+        <h2>Barbero: {{ datos.title }}</h2>
+        <p>Fecha del informe: {{ datos.date  }}</p>
+      </div>
+    </div>
+  
+ 
+  
+    <!-- Botones alineados en el centro -->
+    <div class="row mt-4">
+      <div class="col text-center">
+        <button mat-button color="primary" (click)="generarReporteResumido()" class="mx-2">
+          Reporte Resumido
+        </button>
+        <button mat-button color="warn"  (click)="generarReporteMedio()" class="mx-2">
+          Reporte Balanceado
+        </button>
+        <button mat-button color="accent" (click)="generarReporteDetallado()" class="mx-2">
+          Reporte Detallado
+        </button> 
+      </div>
+    </div>
+  </div>
+  

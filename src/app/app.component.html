@@ -1,0 +1,14 @@
+ 
+
+
+<div class="page-container">
+  <!-- Muestra la navbar solo si no estamos en el módulo ERP -->
+  <app-navbar *ngIf="showNavAndFooter"></app-navbar>
+
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+
+  <!-- Muestra el footer solo si no estamos en el módulo ERP -->
+  <app-footer *ngIf="showNavAndFooter"></app-footer>
+</div>
