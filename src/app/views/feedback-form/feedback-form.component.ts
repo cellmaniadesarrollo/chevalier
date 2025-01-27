@@ -21,7 +21,7 @@ export class FeedbackFormComponent {
 
   isCommentsPage(): boolean {
     return this.router.url === '/comments';
-  }
+  } 
 
   async onSubmit() {
     console.log('asdaqqq')
