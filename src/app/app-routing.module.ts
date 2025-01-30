@@ -12,6 +12,7 @@ import { FeedbackFormComponent } from './views/feedback-form/feedback-form.compo
 import { TermsComponent } from './views/terms/terms.component';
 import { SocialMediaLinksComponent } from './views/social-media-links/social-media-links.component';
 import { LoginComponent } from './views/login/login.component';
+import { QueriesComponent } from './views/queries/queries.component';
 import { authGuard } from './guards/auth.guard';
 const routes: Routes = [
   
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path:'terms-of-service',component:TermsOfServiceComponent },
   {path:'data-deletion',component:DataDeletionComponent },
   {path:'comments',component:FeedbackFormComponent  },
+  {path:'queries',component:QueriesComponent  },
   {path:'terms',component:TermsComponent  },
   {path:'linkssocial',component:SocialMediaLinksComponent  },
   {path:'login',component:LoginComponent },

@@ -1,0 +1,60 @@
+<app-banner *ngIf="isConsultaPage()" [title]="'NAVBAR.QUERIES'" [pageName]="'NAVBAR.QUERIES'"></app-banner>
+<div class="container-fluid mt-4 custom-container">
+  <section class="consulta-section">
+
+    <div class="consulta-container">
+      <div class="consulta-description">
+        <div class="consulta-left">
+          <p>{{ 'Querie.Title' | translate }}</p>
+          <p>{{ 'Querie.Description' | translate }}</p>
+          <p>{{ 'Querie.Detail' | translate }}</p>
+        </div>
+      </div>
+      <!-- Mostrar el formulario si la consulta no ha sido realizada -->
+      <form *ngIf="!isConsultaRealizada" id="demo-form" [formGroup]="consultaForm" class="custom-consulta-form">
+        <label for="cedula" class="custom-consulta-form-label">{{ 'Querie.Label' | translate }}</label>
+        <input type="text" formControlName="cedula" placeholder="{{ 'Querie.Placeholder' | translate }}"
+          class="custom-consulta-input" />
+          
+        <button (click)="onConsultar()" type="submit" class="custom-consulta-button" [disabled]="isConsultando">
+          <!-- Cambiar el texto del botón mientras se realiza la consulta -->
+          {{ isConsultando ? ('Querie.Button2' | translate) : ('Querie.Button' | translate) }}
+        </button>
+      </form>
+      <!-- Mostrar el mensaje de éxito si la consulta fue realizada -->
+      <div *ngIf="isConsultaRealizada" class="success-message">
+        <div class="success-icon">✔️</div>
+        <p>{{ 'Querie.Success' | translate }}</p>
+      </div>
+      
+    </div>
+    <div class="cards" *ngIf="areNames || areLastnames">
+      <p *ngIf="areNames">{{ 'Querie.Names' | translate }} {{ namesHTML }}</p>
+      <p *ngIf="areLastnames">{{ 'Querie.LastNames' | translate }} {{ lastNamesHTML }}</p>
+      <p *ngIf="isCounter && Counter !== '0'">{{ 'Querie.RestCuts' | translate }} {{ Counter }}</p>
+      <p *ngIf="Counter === '0'">{{ 'Querie.Congratulations' | translate }}</p>
+    </div> 
+
+    <!-- Mostrar el mensaje de error si el cliente no fue encontrado y no hay nombres o apellidos -->
+    <div *ngIf="errorMessage && !areNames && !areLastnames" class="error-message">
+      <p>{{ 'Querie.NoClient' | translate }}</p>
+    </div>
+
+    <table *ngIf="(isService || isBarber || isDate) && Counter !== '5'" class="data-table">
+      <thead>
+        <tr>
+          <th>{{ 'Querie.Service' | translate }}</th>
+          <th>{{ 'Querie.Barber' | translate }}</th>
+          <th>{{ 'Querie.Date' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+         <tr *ngFor="let sale of sales">
+          <td>{{ 'Querie.GenCut' | translate }}</td>
+          <td>{{ sale.barber.firstnames }} {{ sale.barber.firstnames1 }} {{ sale.barber.lastnames }} {{ sale.barber.lastnames1 }}</td>
+          <td>{{ sale.saleDate | date: 'yyyy-MM-dd' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>

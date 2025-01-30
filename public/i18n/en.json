@@ -5,6 +5,7 @@
     "SERVICES": "Our Services",
     "PRODUCTS": "Products",
     "COMMENTS": "Commnets",
+    "QUERIES": "Queries",
     "LANGUAGE": "Language",
     "SOCIAL": "Social Media"
   },
@@ -269,5 +270,24 @@
     
     "TERM_10_TITLE": "Contact",
     "TERM_10_DESC": "If you have any questions or concerns about these Terms of Service, you can contact us at chevalierbarbershop13@gmail.com."
+  },
+  "Querie": {
+    "Title": "Don't forget your free haircut",
+    "Description": "Remember that for every five haircuts, the sixth one is free. Don't miss the chance to always look impeccable!",
+    "Detail": "Enter your ID number to check how many haircuts you need to get a completely free one.",
+    "Placeholder": "Enter your ID number",
+    "Button": "Check",
+    "Button2": "Checking...",
+    "Label": "Check your haircuts here:",
+    "Success": "Query successfully completed.",
+    "Names": "Names:",
+    "LastNames": "Last Names:",
+    "RestCuts": "Remaining cuts for a free haircut:",
+    "NoClient": "Client not found. We invite you to become our client and enjoy our services!",
+    "Service": "Service",
+    "Date": "Date",
+    "Barber": "Barber",
+    "GenCut": "General Cut",
+    "Congratulations": "Congratulations! You have accumulated enough cuts to get a free haircut."
   }
 }

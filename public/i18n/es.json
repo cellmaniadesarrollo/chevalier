@@ -5,6 +5,7 @@
     "SERVICES": "Servicios",
     "PRODUCTS": "Productos",
     "COMMENTS": "Comentarios",
+    "QUERIES": "Consultas",
     "LANGUAGE": "Idioma",
     "SOCIAL": "Redes Sociales"
   },
@@ -274,6 +275,24 @@
     
     "TERM_10_TITLE": "Contacto",
     "TERM_10_DESC": "Si tienes alguna pregunta o inquietud sobre estas Condiciones del Servicio, puedes contactarnos en chevalierbarbershop13@gmail.com."
+  },
+  "Querie": {
+    "Title": "No olvides tu corte gratis",
+    "Description": "Recuerda que por cada cinco cortes de cablello, el sexto es gratis. ¡No pierdas la oportunidad de lucir siempre impecable!",
+    "Detail": "Ingresa tu número de cédula para consultar cuántos cortes te faltan para obtener un corte totalmente gratis.",
+    "Placeholder": "Ingresa tu número de cédula",
+    "Button": "Consultar",
+    "Button2": "Consultando...",
+    "Label": "Consulta tus cortes aquí:",
+    "Success": "Consulta realizada con éxito.",
+    "Names": "Nombre:",
+    "LastNames": "Apellidos:",
+    "RestCuts": "Cortes restantes para un corte gratis:",
+    "NoClient": "Cliente no encontrado. ¡Te invitamos a convertirte en nuestro cliente y disfrutar de nuestros servicios!",
+    "Service": "Servicio",
+    "Date": "Fecha",
+    "Barber": "Barbero",
+    "GenCut": "Corte General",
+    "Congratulations": "¡Felicidades! Has acumulado suficientes cortes para obtener un corte gratis."
   }
-  
 }

@@ -24,7 +24,6 @@ export class FeedbackFormComponent {
   }
 
   async onSubmit() {
-    console.log('asdaqqq')
     const token = await this.recaptchaService.executeRecaptcha('submit');
     this.commentsForm.controls['token'].setValue(token);
     if (this.commentsForm.invalid || this.isSubmitting) {
@@ -39,7 +38,7 @@ export class FeedbackFormComponent {
       
       // Envía el comentario
       const response = await this.recaptchaService.sendFeedback(this.commentsForm.value);
-      console.log(response)
+      console.log('Argumento enviado:', this.commentsForm.value);
       if (response === 'OK') {
         this.isFeedbackSent = true; // Mostrar animación de éxito
       } else {
