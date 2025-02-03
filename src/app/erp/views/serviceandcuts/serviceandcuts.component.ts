@@ -199,11 +199,24 @@ export class ServiceandcutsComponent {
     this.calcularTotal(); // Actualizar el total cuando se cambia el precio personalizado
   }
 
+  // Método para manejar el cambio de selección de descuento
+  handleDiscountChange(element: any): void {
+    if (element.selectedDiscount && element.selectedDiscount.name === 'DESCUENTO JUEVES' && element.name === 'CORTE GENERAL') {
+      element.price = 5; // Cambia el precio del corte general a 5$ si se aplica el descuento de jueves
+      element.name = 'CORTE GENERAL 2x5$'; // Cambia el nombre del corte general
+    } else if (element.name === 'CORTE GENERAL 2x5$') {
+      element.price = 4; // Restablece el precio del corte general a 4$ si se quita el descuento
+      element.name = 'CORTE GENERAL'; // Restablece el nombre del corte general
+    }
+    this.calcularTotal();
+  }
+
   // Método para manejar el clic en cualquier campo que no sea el descuento
   resetPriceIfNotDiscount() {
     this.serviciosAgregados.forEach(servicio => {
-      if (servicio.name === 'CORTE GENERAL' && (!servicio.selectedDiscount || servicio.selectedDiscount.name !== 'DESCUENTO JUEVES')) {
+      if (servicio.name === 'CORTE GENERAL 2x5$' && (!servicio.selectedDiscount || servicio.selectedDiscount.name !== 'DESCUENTO JUEVES')) {
         servicio.price = 4; // Restablece el precio del corte general a 4$
+        servicio.name = 'CORTE GENERAL'; // Restablece el nombre del corte general
       }
     });
     this.calcularTotal();
@@ -219,9 +232,11 @@ export class ServiceandcutsComponent {
     this.aplicarDescuentos(this.serviciosAgregados, this.descuentos);
     this.serviciosAgregados.forEach(servicio => {
       if (servicio.selectedDiscount && servicio.selectedDiscount.name === 'DESCUENTO JUEVES' && servicio.name === 'CORTE GENERAL') {
-        servicio.price = 8; // Cambia el precio del corte general a 8$ si se aplica el descuento de jueves
-      } else if (servicio.name === 'CORTE GENERAL') {
+        servicio.price = 8; // Cambia el precio del corte general a 5$ si se aplica el descuento de jueves
+        servicio.name = 'CORTE GENERAL 2x5$'; // Cambia el nombre del corte general
+      } else if (servicio.name === 'CORTE GENERAL 2x5$') {
         servicio.price = 4; // Restablece el precio del corte general a 4$ si se quita el descuento
+        servicio.name = 'CORTE GENERAL'; // Restablece el nombre del corte general
       }
     });
     this.calcularTotales(this.serviciosAgregados);
@@ -257,13 +272,13 @@ export class ServiceandcutsComponent {
   }
   async savedatasales(formulario: any, servicios: any, total: any) {
     const datosFiltrados = servicios.flatMap((servicio: any) => {
-      if (servicio.name === 'CORTE GENERAL' && servicio.selectedDiscount?.name === 'DESCUENTO JUEVES') {
+      if (servicio.selectedDiscount?.name === 'DESCUENTO JUEVES') {
         return [
           {
             _id: servicio._id,
             price: 4,
             discount: "6719304a755155e34a5fbc4a",
-            discountName: servicio.selectedDiscount.name
+            discountName: "DESCUENTO JUEVES"
           },
           {
             _id: servicio._id,
@@ -277,7 +292,8 @@ export class ServiceandcutsComponent {
           _id: servicio._id,
           price: servicio.price,
           discount: servicio.selectedDiscount?._id || null,
-          discountName: servicio.selectedDiscount?.name || null
+          discountName: servicio.selectedDiscount?.name || null,
+          skipCounter: false // Agregar el testigo
         };
       }
     });
@@ -404,9 +420,17 @@ export class ServiceandcutsComponent {
     if (cliente) {
       // Limpiar los servicios agregados
       this.serviciosAgregados = [];
+      this.serviciosAgregados.forEach(servicio => {
+        if (servicio.name === 'CORTE GENERAL 2x5$') {
+          servicio.price = 4; // Restablece el precio del corte general a 4$
+          servicio.name = 'CORTE GENERAL'; // Restablece el nombre del corte general
+        }
+      });
       this.calcularTotal();
       // Aquí haces la llamada para obtener los datos adicionales de manera asíncrona
       this.salesfinddiscount(cliente._id);
+      // Volver a hacer la solicitud a los servicios disponibles
+      this.getnewdata();
     }
   }
 
