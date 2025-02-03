@@ -196,11 +196,18 @@ export class ServiceandcutsComponent {
     if (element.selectedPrice === 'custom' && element.customPrice) {
       element.price = element.customPrice; // Actualiza el precio con el valor ingresado en el input
     }
-
-    //element.price = element.customPrice;
     this.calcularTotal(); // Actualizar el total cuando se cambia el precio personalizado
   }
 
+  // Método para manejar el clic en cualquier campo que no sea el descuento
+  resetPriceIfNotDiscount() {
+    this.serviciosAgregados.forEach(servicio => {
+      if (servicio.name === 'CORTE GENERAL' && (!servicio.selectedDiscount || servicio.selectedDiscount.name !== 'DESCUENTO JUEVES')) {
+        servicio.price = 4; // Restablece el precio del corte general a 4$
+      }
+    });
+    this.calcularTotal();
+  }
 
   // Calcular el total de servicios agregados
   totales = {
@@ -209,12 +216,17 @@ export class ServiceandcutsComponent {
     total: 0
   };
   calcularTotal() {
-    this.aplicarDescuentos(this.serviciosAgregados, this.descuentos)
+    this.aplicarDescuentos(this.serviciosAgregados, this.descuentos);
+    this.serviciosAgregados.forEach(servicio => {
+      if (servicio.selectedDiscount && servicio.selectedDiscount.name === 'DESCUENTO JUEVES' && servicio.name === 'CORTE GENERAL') {
+        servicio.price = 8; // Cambia el precio del corte general a 8$ si se aplica el descuento de jueves
+      } else if (servicio.name === 'CORTE GENERAL') {
+        servicio.price = 4; // Restablece el precio del corte general a 4$ si se quita el descuento
+      }
+    });
     this.calcularTotales(this.serviciosAgregados);
-
-
-
   }
+
   // Método para eliminar un servicio de la lista
   eliminarServicio(element: any): void {
     // Lógica para eliminar el servicio de la lista
@@ -244,13 +256,32 @@ export class ServiceandcutsComponent {
     }
   }
   async savedatasales(formulario: any, servicios: any, total: any) {
-    const datosFiltrados = servicios.map((servicio: any) => {
-      return {
-        _id: servicio._id,
-        price: servicio.price,
-        discount:servicio.selectedDiscount._id
-      };
+    const datosFiltrados = servicios.flatMap((servicio: any) => {
+      if (servicio.name === 'CORTE GENERAL' && servicio.selectedDiscount?.name === 'DESCUENTO JUEVES') {
+        return [
+          {
+            _id: servicio._id,
+            price: 4,
+            discount: "6719304a755155e34a5fbc4a",
+            discountName: servicio.selectedDiscount.name
+          },
+          {
+            _id: servicio._id,
+            price: 4,
+            discount: servicio.selectedDiscount._id,
+            discountName: servicio.selectedDiscount.name
+          }
+        ];
+      } else {
+        return {
+          _id: servicio._id,
+          price: servicio.price,
+          discount: servicio.selectedDiscount?._id || null,
+          discountName: servicio.selectedDiscount?.name || null
+        };
+      }
     });
+  
     const formset = {
       cliente: formulario.clienteBuscador._id,
       barbero: formulario.barberoBuscador._id, 
@@ -371,8 +402,11 @@ export class ServiceandcutsComponent {
 
   onClienteSelected(cliente: ListClientsI) {
     if (cliente) {
+      // Limpiar los servicios agregados
+      this.serviciosAgregados = [];
+      this.calcularTotal();
       // Aquí haces la llamada para obtener los datos adicionales de manera asíncrona
-      this.salesfinddiscount(cliente._id)
+      this.salesfinddiscount(cliente._id);
     }
   }
 
@@ -447,16 +481,6 @@ if (hasFalseIsGlobal) {
 
     await this.sales.Salesprintticket(data)
   }
-
-
-
-
-
-
-
-
-
-
 
   aplicarDescuentos(
     serviciosAgregados: ListProductsSelectedI[],

@@ -194,7 +194,7 @@
                 <!-- Si tiene un único precio -->
                 <ng-container *ngIf="!element.prices || element.prices.length === 0">
                   ${{ element.price}}
-                  <button mat-icon-button color="primary" (click)="element.selectedPrice = 'custom'">
+                  <button mat-icon-button color="primary" (click)="element.selectedPrice = 'custom'" [disabled]="element.selectedDiscount?.name === 'DESCUENTO JUEVES'">
                     <mat-icon>edit</mat-icon>
                   </button>
                   <!-- Campo de precio personalizado -->
