@@ -9,7 +9,7 @@ import { ListProductsI, ListProductsSelectedI, ListDiscounts } from '../../model
 import { ListHairdresserI } from '../../models/hairdresser.interface';
 import { ListpaymentMethodsI, ListdiscountsI, ListfinancialentitysI } from '../../models/payment.interface';
 import { SalesService } from '../../service/sales/sales.service';
-import { Observable } from 'rxjs';
+import { Observable, skip } from 'rxjs';
 import { ListSalesI, GroupedSalesI } from '../../models/sales.interface';
 import { DiscountModalComponent } from '../../layout/discount-modal/discount-modal.component';
 @Component({
@@ -278,13 +278,13 @@ export class ServiceandcutsComponent {
             _id: servicio._id,
             price: 4,
             discount: "6719304a755155e34a5fbc4a",
-            discountName: "DESCUENTO JUEVES"
+            discountName: "DESCUENTO JUEVES",
           },
           {
             _id: servicio._id,
             price: 4,
             discount: servicio.selectedDiscount._id,
-            discountName: servicio.selectedDiscount.name
+            discountName: servicio.selectedDiscount.name, 
           }
         ];
       } else {
@@ -293,7 +293,7 @@ export class ServiceandcutsComponent {
           price: servicio.price,
           discount: servicio.selectedDiscount?._id || null,
           discountName: servicio.selectedDiscount?.name || null,
-          skipCounter: false // Agregar el testigo
+          skipCounter: false 
         };
       }
     });

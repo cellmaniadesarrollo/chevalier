@@ -78,6 +78,7 @@ export class TokenInterceptorService {
 
             case 500:
               this.notyf.error('Error del servidor, intenta más tarde');
+              console.error('Error del servidor:', error.response.data);
               break;
 
             default:
