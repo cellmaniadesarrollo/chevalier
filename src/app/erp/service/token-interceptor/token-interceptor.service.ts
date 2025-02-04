@@ -37,7 +37,7 @@ export class TokenInterceptorService {
           // Manejo de errores según código de estado
           switch (statusCode) {
             case 400:
-              this.notyf.error('Error en los datos enviados');
+              this.notyf.error(error.response.data.message)
               break;
 
             case 401:
