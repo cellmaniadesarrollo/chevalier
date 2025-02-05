@@ -256,7 +256,7 @@ export class ServiceandcutsComponent {
   isSubmitting = false;
   // Método para manejar el envío del formulario
   onSubmit() {
-    if (this.corteForm.valid || this.isSubmitting) {
+    if (this.corteForm.valid || this.isSubmitting ) {
       this.isSubmitting = true;
 
       // Realiza el envío del formulario
@@ -271,7 +271,7 @@ export class ServiceandcutsComponent {
     }
   }
   async savedatasales(formulario: any, servicios: any, total: any) {
-    const datosFiltrados = servicios.flatMap((servicio: any) => {
+    const datosFiltrados = await servicios.flatMap((servicio: any) => {
       if (servicio.selectedDiscount?.name === 'DESCUENTO JUEVES') {
         return [
           {
@@ -308,13 +308,15 @@ export class ServiceandcutsComponent {
       productosservcio: datosFiltrados,
       total
     }
+    if (formset.productosservcio.length > 0) {
     const data = await this.sales.Salessave(formset)
 
-    if (data._id) {
-      this.print(data)
+      if (data._id) {
+        this.print(data)
 
-      this.ngOnInit()
-      this.serviciosAgregados = []
+        this.ngOnInit()
+        this.serviciosAgregados = []
+      }
     }
   }
 
