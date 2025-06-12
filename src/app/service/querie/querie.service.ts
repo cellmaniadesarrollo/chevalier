@@ -29,23 +29,17 @@ export class QuerieService {
   }
 
   // Enviar los datos al backend usando Axios
-  async sendFeedback(data: any): Promise<any> {
-    console.log(data);
+  async sendFeedback(data: any): Promise<any> { 
     try {
       const response = await axios.post(this.url + 'consulta-cortes', {cedula:data.cedula}, {
         headers: {
           'Content-Type': 'application/json',
           'recaptcha-token': data.token // Envía el token en los headers
         }
-      });
-      console.log(response);
+      }); 
       return response.data;
-    } catch (error: any) { // Assert the type of error to any
-      if (error.response && error.response.data) {
-        return error.response.data; // Return the error message from the server
-      } else {
-        throw error;
-      }
+    } catch (error: any) { 
+        throw error; 
     }
   }
 }
