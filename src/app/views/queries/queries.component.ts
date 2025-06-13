@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuerieService } from '../../service/querie/querie.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CustomerTicket } from '../../models/consultacortes.interface';
+import { CustomerTicket, FidelityDiscount } from '../../models/consultacortes.interface';
 import axios from 'axios';
 @Component({
   selector: 'app-queries',
@@ -17,19 +17,9 @@ export class QueriesComponent {
 
   isConsultaRealizada: boolean = false;
   isConsultando: boolean = false;
-  areNames: boolean = false;
   areLastnames: boolean = false;
-  isCounter: boolean = false;
-  isService: boolean = false;
-  isBarber: boolean = false;
-  isDate: boolean = false;
-  namesHTML: string = '';
-  lastNamesHTML: string = '';
-  Counter: string = '';
-  Service: string = '';
-  Barber: string = '';
-  Date: string = '';
   sales: CustomerTicket[] = [];
+  discounts: FidelityDiscount[] = [];
   errormes: boolean = false; // Add a property to store the error message
 
   constructor(private router: Router, private quierieService: QuerieService) { }
@@ -49,8 +39,13 @@ export class QueriesComponent {
     try {
       // Envía el comentario
       const response = await this.quierieService.sendFeedback(this.consultaForm.value);
-      this.sales = response
-      this.isConsultaRealizada  = true;
+      
+      this.sales = response.data
+      this.discounts = response.discounts;
+      this.isConsultaRealizada = true;
+      setTimeout(() => {
+        this.isConsultaRealizada = false;
+      }, 5000);
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 404) {

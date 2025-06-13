@@ -24,3 +24,31 @@ export interface CustomerTicket {
   lastnames: string;
   relatedSales: RelatedSale[];
 }
+
+
+
+export interface Customer {
+  _id: string;
+  customer: string;
+  freeCuts: number;
+  names: string;
+  lastNames: string;
+}
+
+export interface ProductOrService {
+  _id: string;
+  name: string;
+  description: string;
+}
+
+export interface FidelityDiscount {
+  _id: string;
+  name: string;
+  discountType: string;
+  validFrom: string | Date;
+  validUntil: string | Date;
+  value: number;
+  customer: Customer;
+  discounttypename: string;
+  productsOrServices2: ProductOrService[];
+}
