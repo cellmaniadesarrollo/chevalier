@@ -81,3 +81,23 @@
 .sidebar.minimized + .erp-content {
   margin-left: 80px; /* Ajuste cuando la sidebar está minimizada */
 }
+
+
+ .sidebar-button {
+  text-align: left;
+  border: none;
+  background: transparent;
+  color: white;
+  &:hover {
+    background-color: #343a40;
+  }
+}
+.submenu {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease;
+}
+
+.submenu.show {
+  max-height: 500px; 
+}

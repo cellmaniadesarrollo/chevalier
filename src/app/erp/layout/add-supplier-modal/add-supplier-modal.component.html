@@ -1,0 +1,78 @@
+<h2 class="text-center mb-4">Nuevo Proveedor</h2>
+<form [formGroup]="supplierForm" (ngSubmit)="onSubmit()" class="p-4">
+  <!-- Nombre -->
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label>Nombre</mat-label>
+    <input matInput formControlName="name" placeholder="Ingrese el nombre del proveedor">
+    <mat-error *ngIf="supplierForm.get('name')?.invalid">Nombre requerido</mat-error>
+  </mat-form-field>
+
+  <!-- Identificación -->
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label>Identificación (RUC/NIT)</mat-label>
+    <input matInput formControlName="identification" placeholder="Ingrese la identificación">
+    <mat-error *ngIf="supplierForm.get('identification')?.invalid">Identificación requerida</mat-error>
+  </mat-form-field>
+
+
+
+  <!-- Dirección -->
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label>Dirección</mat-label>
+    <input matInput formControlName="address" placeholder="Ingrese la dirección">
+  </mat-form-field>
+
+  <div class="row">
+    <div class="col-md-6">
+      <!-- País -->
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>País</mat-label>
+        <mat-select formControlName="country">
+          <mat-option [value]="null">Seleccione...</mat-option>
+          <mat-option *ngFor="let c of countries" [value]="c.id">
+            {{ c.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="supplierForm.get('country')?.invalid">País requerido</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <!-- RIMPE -->
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>RIMPE</mat-label>
+        <mat-select formControlName="rimpe">
+          <mat-option [value]="null">Seleccione...</mat-option>
+          <mat-option *ngFor="let r of rimpes" [value]="r.id">
+            {{ r.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="supplierForm.get('rimpe')?.invalid">Seleccione un RIMPE</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+
+  <!-- Teléfono y Correo en la misma fila -->
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="phone" placeholder="Ingrese el teléfono">
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" placeholder="Ingrese el email">
+        <mat-error *ngIf="supplierForm.get('email')?.invalid">Correo inválido</mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+
+  <!-- Botones -->
+  <div class="mt-4 d-flex justify-content-end gap-2">
+    <button mat-raised-button color="warn" type="button" (click)="goToIngreso()">Cancelar</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="supplierForm.invalid">Guardar</button>
+  </div>
+</form>

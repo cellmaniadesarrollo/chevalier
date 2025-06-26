@@ -1,8 +1,6 @@
-<div class="sidebar d-flex flex-column"
-     [class.minimized]="sidebarService.isMinimized()" 
-     (mouseenter)="onMouseEnter()" 
-     (mouseleave)="onMouseLeave()">
- 
+<div class="sidebar d-flex flex-column" [class.minimized]="sidebarService.isMinimized()" (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()">
+
   <!-- Sección del usuario -->
   <div class="user-section d-flex align-items-center p-3 border-bottom">
     <img [src]="userImage" class="user-image me-3" alt="User">
@@ -14,17 +12,48 @@
     <i class="bi bi-grid me-3"></i>
     <span *ngIf="!sidebarService.isMinimized()">Dashboard</span>
   </button>
-    <!-- Botón de Cortes-->
-    <button routerLink="/erp/serviceandcuts" class="btn btn-dark sidebar-button d-flex align-items-center p-3 w-100">
-      <i class="bi bi-scissors me-3"></i>
-      <span *ngIf="!sidebarService.isMinimized()">Servicios y Cortes</span>
+  <!-- Botón de Cortes-->
+  <button routerLink="/erp/serviceandcuts" class="btn btn-dark sidebar-button d-flex align-items-center p-3 w-100">
+    <i class="bi bi-scissors me-3"></i>
+    <span *ngIf="!sidebarService.isMinimized()">Servicios y Cortes</span>
+  </button>
+  <button routerLink="/erp/saleslist" class="btn btn-dark sidebar-button d-flex align-items-center p-3 w-100">
+    <i class="bi bi-file-text me-3"></i>
+    <span *ngIf="!sidebarService.isMinimized()">Ventas</span>
+  </button>
+  <button *ngIf="isUserAdminOrSupervisor()" routerLink="/erp/reports"
+    class="btn btn-dark sidebar-button d-flex align-items-center p-3 w-100">
+    <i class="bi bi-clipboard-data me-3"></i>
+    <span *ngIf="!sidebarService.isMinimized()">reportes</span>
+  </button>
+
+
+  <!-- Botón Productos con colapso -->
+  <div *ngIf="isUserAdminOrSupervisor()" class="w-100">
+    <button class="btn btn-dark sidebar-button d-flex align-items-center justify-content-between p-3 w-100"
+      type="button" (click)="toggleProducts()">
+      <div class="d-flex align-items-center">
+        <i class="bi bi-box-seam me-3"></i>
+        <span *ngIf="!sidebarService.isMinimized()">Productos</span>
+      </div>
+      <i class="bi" *ngIf="!sidebarService.isMinimized()"
+        [ngClass]="{ 'bi-chevron-down': isProductsOpen, 'bi-chevron-right': !isProductsOpen }">
+      </i>
     </button>
-    <button routerLink="/erp/saleslist" class="btn btn-dark sidebar-button d-flex align-items-center p-3 w-100">
-      <i class="bi bi-file-text me-3"></i> 
-      <span *ngIf="!sidebarService.isMinimized()">Ventas</span>
-    </button>
-    <button *ngIf="isUserAdminOrSupervisor()" routerLink="/erp/reports" class="btn btn-dark sidebar-button d-flex align-items-center p-3 w-100">
-      <i class="bi bi-clipboard-data me-3"></i>
-      <span *ngIf="!sidebarService.isMinimized()">reportes</span>
-    </button>
+
+    <div class="submenu ps-4" [class.show]="isProductsOpen"
+      [style.display]="sidebarService.isMinimized() ? 'none' : 'block'">
+      <button routerLink="/erp/products-admin"
+        class="btn btn-dark sidebar-button d-flex align-items-center p-2 w-100 mt-1">
+        <i class="bi bi-list me-2"></i>
+        <span>Lista de Productos</span>
+      </button>
+      <button routerLink="/erp/products-input"
+        class="btn btn-dark sidebar-button d-flex align-items-center p-2 w-100 mt-1">
+        <i class="bi bi-plus-circle me-2"></i>
+        <span>Ingreso de Productos</span>
+      </button>
+    </div>
+  </div>
+
 </div>

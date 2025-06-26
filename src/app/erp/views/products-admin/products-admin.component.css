@@ -1,0 +1,15 @@
+.custom-header {
+  background-color: #f0f0f0; /* Cambia el color según tu diseño */
+  font-weight: bold;
+}
+  .sales-title {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    color: #34495e;
+    margin-bottom: 20px;
+  }
+  .main-margin {
+  margin: 32px 24px; /* 32px arriba/abajo, 24px derecha/izquierda */
+}
+ 

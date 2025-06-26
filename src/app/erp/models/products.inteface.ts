@@ -26,3 +26,11 @@ export interface ListDiscounts {
     discountType: string;
     productsOrServices: { _id: string; name: string }[]; 
   } 
+  export interface ListCountry {
+  id: string; 
+  name: string; 
+}
+export interface ListRimpe {
+  id: string; 
+  name: string; 
+}

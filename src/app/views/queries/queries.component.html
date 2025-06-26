@@ -33,57 +33,55 @@
     <div *ngIf="errormes " class="error-message">
       <p>{{ 'Querie.NoClient' | translate }}</p>
     </div>
-<div class="container mt-5" *ngIf="discounts && discounts.length > 0">
-  <h2 class="text-center mb-4 text-primary">Descuentos Activos</h2>
+    <div class="container mt-5" *ngIf="discounts && discounts.length > 0">
+      <h2 class="text-center mb-4 text-primary">Descuentos Activos</h2>
 
-  <div class="row">
-    <div class="col-md-6 mb-4" *ngFor="let discount of discounts">
-      <div class="card shadow-sm border-0 h-100">
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-          <h5 class="mb-0">{{ discount.customer.names }} {{ discount.customer.lastNames }}</h5>
-          <span class="badge bg-warning text-dark">
-  {{
-    discount.name.includes('FIDELITY_DISCOUNT') ? 'Descuento por fidelidad' :
-    discount.name.includes('BIRTHDAY_DISCOUNT') ? 'Descuento por cumpleaños' :
-    discount.name
-  }}
-</span>
-        </div>
+      <div class="row">
+        <div class="col-md-6 mb-4" *ngFor="let discount of discounts">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">{{ discount.customer.names }} {{ discount.customer.lastNames }}</h5>
+              <span class="badge bg-warning text-dark">
+                {{
+                discount.name.includes('FIDELITY_DISCOUNT') ? 'Descuento por fidelidad' :
+                discount.name.includes('BIRTHDAY_DISCOUNT') ? 'Descuento por cumpleaños' :
+                discount.name
+                }}
+              </span>
+            </div>
 
-        <div class="card-body">
-          <div class="alert alert-success d-flex align-items-center" role="alert">
-            <span class="me-2">🎉</span>
-            <div><strong>¡Felicidades!</strong> Tienes un descuento activo.</div>
-          </div>
+            <div class="card-body">
+              <div class="alert alert-success d-flex align-items-center" role="alert">
+                <span class="me-2">🎉</span>
+                <div><strong>¡Felicidades!</strong> Tienes un descuento activo.</div>
+              </div>
 
-          <p class="mb-2">
-            <strong>Tipo de descuento:</strong>
-            <span class="text-success">
-              {{ discount.value }}
-              {{ discount.discounttypename === 'PERCENTAGE' ? '%' : 'unidades' }}
-            </span>
-          </p>
+              <p class="mb-2">
+                <strong>Tipo de descuento:</strong>
+                <span class="text-success">
+                  {{ discount.value }}
+                  {{ discount.discounttypename === 'PERCENTAGE' ? '%' : 'unidades' }}
+                </span>
+              </p>
 
-          <p class="mb-3"><strong>Aplica para:</strong></p>
-          <ul class="list-unstyled ps-3">
-            <li *ngFor="let item of discount.productsOrServices2">
-              • <span class="fw-semibold">{{ item.name }}</span> – {{ item.description }}
-            </li>
-          </ul>
+              <p class="mb-3"><strong>Aplica para:</strong></p>
+              <ul class="list-unstyled ps-3">
+                <li *ngFor="let item of discount.productsOrServices2">
+                  • <span class="fw-semibold">{{ item.name }}</span> – {{ item.description }}
+                </li>
+              </ul>
 
-          <!-- Barra decorativa -->
-          <div class="progress mt-3" style="height: 12px;">
-            <div
-              class="progress-bar bg-success progress-bar-striped progress-bar-animated"
-              role="progressbar"
-              style="width: 100%;">
+              <!-- Barra decorativa -->
+              <div class="progress mt-3" style="height: 12px;">
+                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar"
+                  style="width: 100%;">
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
     <div class="container mt-4" *ngIf="sales && sales.length > 0">
       <h2 class="text-center mb-4">Historial de Servicios</h2>
 
@@ -100,7 +98,7 @@
 
         <div class="card-body">
           <p class="text-muted mb-3">
-            <strong>Cliente:</strong> {{ ticket.names }} {{ ticket.lastnames }} 
+            <strong>Cliente:</strong> {{ ticket.names }} {{ ticket.lastnames }}
             <strong>Servicios realizados:</strong> {{ ticket.relatedSales.length }}
           </p>
 

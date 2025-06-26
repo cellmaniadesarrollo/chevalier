@@ -32,4 +32,10 @@ export class SidebarComponent {
     isUserAdminOrSupervisor(): boolean {
       return this.authService.hasRole(['ADMIN', 'SUPERVISOR']);
     }
+ isProductsOpen = false;
+
+toggleProducts() {
+  this.isProductsOpen = !this.isProductsOpen;
+}
+
 }
