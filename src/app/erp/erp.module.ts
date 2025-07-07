@@ -34,10 +34,21 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CustomChartComponent } from './layout/custom-chart/custom-chart.component'; 
- 
+ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { DiscountModalComponent } from './layout/discount-modal/discount-modal.component';
-import { SearchAutocompleteComponent } from './layout/search-autocomplete/search-autocomplete.component';
+import { SearchAutocompleteComponent } from './layout/search-autocomplete/search-autocomplete.component'; 
+import { ProductsAdminComponent } from './views/products-admin/products-admin.component';
+import { ProductCreateModalComponent } from './layout/product-create-modal/product-create-modal.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MobileSidebarComponent } from './layout/mobile-sidebar/mobile-sidebar.component';
+import { ProductInputComponent } from './views/product-input/product-input.component';
+import { AddSupplierModalComponent } from './layout/add-supplier-modal/add-supplier-modal.component';
+import { DynamicModalInputComponent } from './containers/dynamic-modal-input/dynamic-modal-input.component';
+import { NewInputModalComponent } from './layout/new-input-modal/new-input-modal.component';
+import { RelativeDatePipe } from './pipe/relative-date/relative-date.pipe';
+
 @NgModule({
   declarations: [
     ErpComponent,
@@ -51,7 +62,8 @@ import { SearchAutocompleteComponent } from './layout/search-autocomplete/search
     CustomChartComponent,
     DashboardComponent,
     DiscountModalComponent,
-    SearchAutocompleteComponent 
+    SearchAutocompleteComponent, 
+    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent, RelativeDatePipe 
   ],
   imports: [  
 
@@ -74,10 +86,13 @@ import { SearchAutocompleteComponent } from './layout/search-autocomplete/search
     MatPaginatorModule, 
     MatCardModule,  
     MatDividerModule,  
-    NgApexchartsModule
+    NgApexchartsModule,
+    MatSlideToggleModule, 
+    MatCheckboxModule,
+    
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], 
-  providers: [ClientsService, TokenInterceptorService ],
+  providers: [ClientsService, TokenInterceptorService,],
   exports: [
     CustomChartComponent, // Exporta este componente para que pueda usarse en otros módulos
   ],

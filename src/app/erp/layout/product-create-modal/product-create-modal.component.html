@@ -1,0 +1,103 @@
+<h2 class="modal-title mb-3 titulo-centrado">Nuevo Producto</h2>
+<hr class="separador" />
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="row g-3">
+  <!-- Tipo (select) -->
+  <div class="col-md-6">
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label>Tipo</mat-label>
+      <mat-icon matPrefix>category</mat-icon>
+      <mat-select formControlName="type">
+        <mat-option *ngFor="let t of tipos" [value]="t.id ">{{ t.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Código -->
+ 
+
+  <!-- Nombre -->
+  <div class="col-md-6">
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label>Nombre del producto</mat-label>
+      <mat-icon matPrefix>inventory_2</mat-icon>
+      <input matInput formControlName="name" placeholder="Ingrese el nombre" />
+    </mat-form-field>
+  </div>
+
+  <!-- Descripción -->
+  <div class="col-md-6">
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label>Descripción</mat-label>
+      <mat-icon matPrefix>description</mat-icon>
+      <textarea matInput rows="3" formControlName="description"></textarea>
+    </mat-form-field>
+  </div>
+
+  <!-- ¿Precio Fijo? -->
+  <div class="col-md-6">
+    <mat-slide-toggle formControlName="isFixedPrice"  aria-label="¿Precio fijo?"></mat-slide-toggle>
+  
+     <label class="toggle-label ms-2">¿Precio fijo?</label>
+  </div>
+
+  <!-- Precio único -->
+  <div class="col-md-6" *ngIf="productForm.get('isFixedPrice')?.value">
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label>Precio</mat-label>
+      <mat-icon matPrefix>attach_money</mat-icon>
+      <input matInput type="number" formControlName="price" placeholder="Precio único" (focus)="selectInput($event)" />
+    </mat-form-field>
+  </div>
+
+  <!-- Precios múltiples -->
+  <div class="col-md-6" *ngIf="!productForm.get('isFixedPrice')?.value">
+    <label class="form-label">Precios Múltiples</label>
+    <div formArrayName="prices">
+      <div *ngFor="let price of prices.controls; let i = index" class="d-flex align-items-center mb-2">
+        <mat-form-field appearance="fill" class="w-100 me-2">
+          <mat-icon matPrefix>attach_money</mat-icon>
+          <input matInput type="number" [formControlName]="i" placeholder="Precio {{ i + 1 }}" (focus)="selectInput($event)" />
+        </mat-form-field>
+        <button type="button" class="btn btn-danger btn-sm" (click)="removePrice(i)">Eliminar</button>
+      </div>
+      <button type="button" class="btn btn-primary btn-sm mt-2" (click)="addPrice()">Agregar Precio</button>
+    </div>
+  </div>
+
+  <!-- Comisión -->
+  <div class="col-md-6">
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label>Comisión (%)</mat-label>
+      <mat-icon matPrefix>percent</mat-icon>
+      <input matInput type="number" formControlName="commissionRate" (focus)="selectInput($event)" />
+    </mat-form-field>
+  </div>
+
+  <!-- Stock -->
+  <div class="col-md-6" *ngIf="selectedTypeName !== 'SERVICE'">
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label>Stock</mat-label>
+      <mat-icon matPrefix>inventory</mat-icon>
+      <input matInput type="number" formControlName="stock" (focus)="selectInput($event)" />
+    </mat-form-field>
+  </div> 
+  <!-- Botones -->
+  <div class="col-12 d-flex justify-content-center gap-2 mt-3">
+    <mat-checkbox formControlName="print" class="me-3">Imprimir</mat-checkbox>
+    <button mat-raised-button color="primary"
+            type="submit"
+            [disabled]="productForm.invalid || isSaving">
+      <ng-container *ngIf="!isSaving; else loadingTpl">Guardar</ng-container>
+      <ng-template #loadingTpl>
+        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        Guardando...
+      </ng-template>
+    </button>
+    <button mat-raised-button color="warn"
+            type="button"
+            (click)="onCancel()"
+            [disabled]="isSaving">
+      Cancelar
+    </button>
+  </div>
+</form>

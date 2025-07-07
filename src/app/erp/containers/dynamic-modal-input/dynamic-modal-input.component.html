@@ -1,0 +1,21 @@
+<ng-container [ngSwitch]="modalService.currentView$ | async">
+  <!-- Vista de Ingreso -->
+  <ng-container *ngSwitchCase="'ingreso'">
+    <app-new-input-modal 
+      [initialData]="data.initialData"
+      (submit)="onSubmit($event)"
+      (cancel)="onCancel()">
+    </app-new-input-modal>
+  </ng-container>
+  
+  <!-- Vista de Proveedor -->
+  <ng-container *ngSwitchCase="'proveedor'">
+    <app-add-supplier-modal
+      [initialData]="data.initialData"
+      (submit)="onSubmit($event)"
+      (cancel)="onCancel()">
+    </app-add-supplier-modal>
+  </ng-container>
+
+  <!-- Puedes agregar más vistas según necesites -->
+</ng-container>

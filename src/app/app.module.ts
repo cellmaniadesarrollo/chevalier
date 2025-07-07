@@ -42,6 +42,8 @@ import { TeamMembersComponent } from './layout/team-members/team-members.compone
 import { LoginComponent } from './views/login/login.component';   
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { QueriesComponent } from './views/queries/queries.component';
+import { provideNativeDateAdapter } from '@angular/material/core';
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'i18n/', '.json');
 }
@@ -98,6 +100,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(), 
+    provideNativeDateAdapter() 
   ],
   bootstrap: [AppComponent]
 })

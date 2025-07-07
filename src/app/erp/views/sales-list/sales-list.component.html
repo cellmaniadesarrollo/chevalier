@@ -44,6 +44,11 @@
   <!-- Tabla de ventas -->
   <div class="table-section">
     <table mat-table [dataSource]="filteredSales" class="mat-elevation-z8 full-width-table">
+            <!-- Número de venta -->
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef> Cant. </th>
+        <td mat-cell *matCellDef="let sale"> {{ sale.quantity}} </td>
+      </ng-container>
       <!-- Número de venta -->
       <ng-container matColumnDef="saleNumber">
         <th mat-header-cell *matHeaderCellDef> #Venta </th>
@@ -59,7 +64,7 @@
       <!-- Fecha -->
       <ng-container matColumnDef="saleDate">
         <th mat-header-cell *matHeaderCellDef> Fecha </th>
-        <td mat-cell *matCellDef="let sale"> {{ sale.saleDate | date: 'yyyy-MM-dd HH:mm' : 'UTC' }} </td>
+        <td mat-cell *matCellDef="let sale"> {{ sale.saleDate | relativeDate }} </td>
       </ng-container>
     
       <!-- Barbero -->

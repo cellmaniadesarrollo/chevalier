@@ -1,10 +1,16 @@
 export interface ListProductsI {
+  quantitymax?: any;
+  batchId?: any;
+  quantity?: any;
     name?: any;
     price?: any;
     prices?: any[];
     _id?: any;
 }
 export interface ListProductsSelectedI {
+  quantitymax?: any;
+  batchId?: any;
+  quantity?: any;
     name?: any;
     price?: any;
     prices?: any[];
@@ -26,3 +32,11 @@ export interface ListDiscounts {
     discountType: string;
     productsOrServices: { _id: string; name: string }[]; 
   } 
+  export interface ListCountry {
+  id: string; 
+  name: string; 
+}
+export interface ListRimpe {
+  id: string; 
+  name: string; 
+}

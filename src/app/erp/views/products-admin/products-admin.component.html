@@ -1,0 +1,129 @@
+<div class="main-margin">
+  <div class="filter-section mb-3">
+    <h1 class="sales-title">Listado de Ventas</h1>
+    <div class="row align-items-center">
+
+      <!-- Botón de nuevo producto -->
+      <div class="col-sm-4 d-flex">
+        <button mat-raised-button color="primary" (click)="crearProducto()">
+          <mat-icon>add</mat-icon> Nuevo Producto
+        </button>
+      </div>
+
+      <!-- Input de búsqueda -->
+      <div class="col-sm-4">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Buscar producto</mat-label>
+          <input matInput (keyup.enter)="loadProductos()" placeholder="Buscar por nombre, código, etc."
+            [(ngModel)]="filters.searchQuery">
+          <button mat-icon-button matSuffix (click)="loadProductos()">
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <!-- Select de categorías -->
+      <div class="col-sm-4">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Filtrar por categoría</mat-label>
+          <mat-select [(ngModel)]="filters.category" (selectionChange)="filters.page = 1; loadProductos()">
+            <mat-option [value]="''">Todas</mat-option>
+            <mat-option *ngFor="let category of typos" [value]="category.id">
+              {{ category.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <!-- Tabla de productos -->
+  <mat-table [dataSource]="products" class="mat-elevation-z2 w-100">
+    <ng-container matColumnDef="code">
+      <mat-header-cell *matHeaderCellDef> Código </mat-header-cell>
+      <mat-cell *matCellDef="let product"> {{ product.codigo }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+      <mat-cell *matCellDef="let product"> {{ product.name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
+      <mat-cell *matCellDef="let product">
+        <span *ngIf="product.esunico">${{ product.precio }}</span>
+        <span *ngIf="!product.esunico">
+          <span *ngFor="let preci of product.precios; let last = last">
+            ${{ preci }}{{ !last ? ', ' : '' }}
+          </span>
+        </span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="tipo">
+      <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
+      <mat-cell *matCellDef="let product"> {{ product.tipo }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="comision">
+      <mat-header-cell *matHeaderCellDef> Comision </mat-header-cell>
+      <mat-cell *matCellDef="let product"> %{{ product.comision }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="stock">
+      <mat-header-cell *matHeaderCellDef> Stock </mat-header-cell>
+      <mat-cell *matCellDef="let product"> {{ product.stock }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+      <mat-cell *matCellDef="let product">
+        <button mat-icon-button color="primary">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns" class="custom-header"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+<!-- Paginación  -->
+<div class="d-flex justify-content-end align-items-center gap-3 mt-3">
+  <!-- Selector de items por página -->
+  <div class="d-flex align-items-center">
+    <mat-form-field appearance="outline">
+      <mat-label>Items por página</mat-label>
+      <mat-select [(ngModel)]="filters.itemsPerPage" (selectionChange)="filters.page = 1; loadProductos()">
+        <mat-option [value]="30">30</mat-option>
+        <mat-option [value]="50">50</mat-option>
+        <mat-option [value]="100">100</mat-option>
+        <mat-option [value]="200">200</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Mostrando X de Y -->
+  <div class="d-flex align-items-center mx-2">
+    <span>Mostrando {{ products.length }} de {{ totalItems }} items</span>
+  </div>
+
+  <!-- Paginación -->
+  <div class="d-flex align-items-center">
+    <button mat-icon-button [disabled]="filters.page === 1" (click)="cambiarPagina(filters.page - 1)">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <span class="mx-2">Página {{ filters.page }} de {{ totalPages }}</span>
+    <button mat-icon-button [disabled]="filters.page === totalPages" (click)="cambiarPagina(filters.page + 1)">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+</div>
+
+</div>

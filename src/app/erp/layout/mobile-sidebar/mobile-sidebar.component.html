@@ -1,0 +1,33 @@
+<div class="mobile-dropdown-menu" *ngIf="sidebarService.isMinimized()">
+  <button (click)="navigateTo('/erp/dashboard')">
+    <i class="bi bi-grid me-2"></i> Dashboard
+  </button>
+
+  <button (click)="navigateTo('/erp/serviceandcuts')">
+    <i class="bi bi-scissors me-2"></i> Servicios y Cortes
+  </button>
+
+  <button (click)="navigateTo('/erp/saleslist')">
+    <i class="bi bi-file-text me-2"></i> Ventas
+  </button>
+
+  <ng-container *ngIf="isUserAdminOrSupervisor()">
+    <button (click)="navigateTo('/erp/reports')">
+      <i class="bi bi-clipboard-data me-2"></i> Reportes
+    </button>
+
+    <button (click)="toggleProducts()" class="d-flex justify-content-between align-items-center">
+      <span><i class="bi bi-box-seam me-2"></i> Productos</span>
+      <i class="bi" [ngClass]="{ 'bi-chevron-down': isProductsOpen, 'bi-chevron-right': !isProductsOpen }"></i>
+    </button>
+
+    <div *ngIf="isProductsOpen" class="ps-4">
+      <button (click)="navigateTo('/erp/products-admin')">
+        <i class="bi bi-list me-2"></i> Lista de Productos
+      </button>
+      <button (click)="navigateTo('/erp/products-input')">
+        <i class="bi bi-plus-circle me-2"></i> Ingreso de Productos
+      </button>
+    </div>
+  </ng-container>
+</div>

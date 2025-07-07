@@ -1,4 +1,5 @@
 export interface ListSalesI {
+  quantity: number; 
     _id:string;
     saleNumber: number;
     client: string;

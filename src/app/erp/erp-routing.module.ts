@@ -7,7 +7,10 @@ import { ServiceandcutsComponent } from './views/serviceandcuts/serviceandcuts.c
 import { SalesListComponent } from './views/sales-list/sales-list.component';
 import { authGuardrol } from './guards/auth/auth.guard';
 import { ReportsComponent } from './views/reports/reports.component';
-const routes: Routes = [{ path: '', component: ErpComponent,
+import { ProductsAdminComponent } from './views/products-admin/products-admin.component';
+import { ProductInputComponent } from './views/product-input/product-input.component';
+const routes: Routes = [{
+  path: '', component: ErpComponent,
   canActivate: [authGuard], // Proteger todas las rutas del ERP
   children: [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Redirige a 'dashboard'
@@ -16,12 +19,24 @@ const routes: Routes = [{ path: '', component: ErpComponent,
     { path: 'saleslist', component: SalesListComponent },
     {
       path: 'reports',
-      component: ReportsComponent ,
+      component: ReportsComponent,
+      canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
+      data: { allowedRoles: ['ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos
+    },
+    {
+      path: 'products-admin',
+      component: ProductsAdminComponent,
+      canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
+      data: { allowedRoles: ['ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos
+    }, 
+    {
+      path: 'products-input',
+      component: ProductInputComponent,
       canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
       data: { allowedRoles: ['ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos
     },
   ]
- }];
+}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

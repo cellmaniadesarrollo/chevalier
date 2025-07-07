@@ -1,0 +1,36 @@
+.d-flex {
+  display: flex;
+}
+.flex-fill {
+  flex: 1 1 0;
+}
+.gap-3 {
+  gap: 1rem;
+}
+.mb-3 {
+  margin-bottom: 1rem;
+}
+.text-end {
+  text-align: end;
+} 
+
+.table td input.form-control-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+
+/* En tu archivo CSS/SCSS */
+.datepicker-cell {
+  width: auto; /* o un valor fijo como 200px */
+  padding: 0 8px; /* Ajusta el padding si es necesario */
+}
+
+.compact-datepicker {
+  width: 150px; /* Ancho específico para el datepicker */
+}
+
+/* Opcional: Ajustar el tamaño del input interno */
+.compact-datepicker .mat-input-element {
+  font-size: 14px; /* Tamaño de fuente más pequeño si es necesario */
+} 
