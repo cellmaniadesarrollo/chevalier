@@ -1,10 +1,16 @@
 export interface ListProductsI {
+  quantitymax?: any;
+  batchId?: any;
+  quantity?: any;
     name?: any;
     price?: any;
     prices?: any[];
     _id?: any;
 }
 export interface ListProductsSelectedI {
+  quantitymax?: any;
+  batchId?: any;
+  quantity?: any;
     name?: any;
     price?: any;
     prices?: any[];

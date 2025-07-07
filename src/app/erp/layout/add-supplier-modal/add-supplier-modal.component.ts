@@ -10,11 +10,11 @@ import { ListCountry, ListRimpe } from '../../models/products.inteface';
   styleUrl: './add-supplier-modal.component.css'
 })
 export class AddSupplierModalComponent {
-  constructor(private modalService: ModalService,private fb: FormBuilder,private backend:ProductsService) {}
- supplierForm!: FormGroup;
-  countries:ListCountry[] = [];  
-rimpes:ListRimpe[] = [];
- 
+  constructor(private modalService: ModalService, private fb: FormBuilder, private backend: ProductsService) { }
+  supplierForm!: FormGroup;
+  countries: ListCountry[] = [];
+  rimpes: ListRimpe[] = [];
+
   ngOnInit(): void {
     this.supplierForm = this.fb.group({
       name: ['', Validators.required],
@@ -23,36 +23,48 @@ rimpes:ListRimpe[] = [];
       address: [''],
       phone: [''],
       email: ['', Validators.email],
-      rimpe: [null, Validators.required], 
+      rimpe: [null, Validators.required],
     });
 
-    this.loadCountries();
-    this.loadRimpes();
+    this.loadInitDatas();
   }
 
- async loadCountries() {
- const data=await this.backend.suppliersnewdata()
- this.countries=data.countries
- this.rimpes=data.rimpes
- const countrySelected = this.countries.find((c: any) => c.name === 'ECUADOR');
-const rimpeSelected = this.rimpes.find((r: any) => r.name === 'NO');
+  async loadInitDatas() {
+    const data = await this.backend.suppliersnewdata()
+    this.countries = data.countries
+    this.rimpes = data.rimpes
+    const countrySelected = this.countries.find((c: any) => c.name === 'ECUADOR');
+    const rimpeSelected = this.rimpes.find((r: any) => r.name === 'NO');
 
-this.supplierForm.patchValue({
-  country: countrySelected?.id || null,
-  rimpe: rimpeSelected?.id || null,
-});
+    this.supplierForm.patchValue({
+      country: countrySelected?.id || null,
+      rimpe: rimpeSelected?.id || null,
+    });
   }
+async onBlurIdentification(): Promise<void> {
+  const control = this.supplierForm.get('identification');
+  const id = control?.value;
 
-  loadRimpes() {
-    // API call para obtener rimpes
-    // this.http.get(...).subscribe(data => this.rimpes = data);
+  if (!id || control?.invalid) return;
+
+  try {
+    const response = await this.backend.checkIdentificationExists({ id: id });
+    if (response.data.exists) {
+      control?.setErrors({ duplicate: true });
+    } else {
+      if (control?.hasError('duplicate')) {
+        control.setErrors(null);
+      }
+    }
+  } catch (error) {
+    console.error('Error al verificar identificación:', error);
+    // Podrías mostrar un snackbar o alerta si deseas
   }
-
-  onSubmit() {
-    if (this.supplierForm.valid) {
-      const supplierData = this.supplierForm.value;
-      console.log('Guardar proveedor:', supplierData);
-      // Aquí llamas al servicio para guardar
+}
+ async supplierSubmit() {
+    if (this.supplierForm.valid) { 
+      await this.backend.save(this.supplierForm.value)
+      this.modalService.changeView('ingreso');
     }
   }
   goToIngreso() {

@@ -47,6 +47,8 @@ import { ProductInputComponent } from './views/product-input/product-input.compo
 import { AddSupplierModalComponent } from './layout/add-supplier-modal/add-supplier-modal.component';
 import { DynamicModalInputComponent } from './containers/dynamic-modal-input/dynamic-modal-input.component';
 import { NewInputModalComponent } from './layout/new-input-modal/new-input-modal.component';
+import { RelativeDatePipe } from './pipe/relative-date/relative-date.pipe';
+
 @NgModule({
   declarations: [
     ErpComponent,
@@ -61,7 +63,7 @@ import { NewInputModalComponent } from './layout/new-input-modal/new-input-modal
     DashboardComponent,
     DiscountModalComponent,
     SearchAutocompleteComponent, 
-    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent 
+    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent, RelativeDatePipe 
   ],
   imports: [  
 
@@ -86,10 +88,11 @@ import { NewInputModalComponent } from './layout/new-input-modal/new-input-modal
     MatDividerModule,  
     NgApexchartsModule,
     MatSlideToggleModule, 
-    MatCheckboxModule
+    MatCheckboxModule,
+    
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], 
-  providers: [ClientsService, TokenInterceptorService ],
+  providers: [ClientsService, TokenInterceptorService,],
   exports: [
     CustomChartComponent, // Exporta este componente para que pueda usarse en otros módulos
   ],

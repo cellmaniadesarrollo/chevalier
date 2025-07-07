@@ -22,7 +22,7 @@ export class DynamicModalInputComponent {
 
   onSubmit(event: any) {
     // Lógica para manejar el submit
-    this.dialogRef.close(event);
+   // this.dialogRef.close(event);
   }
 
   onCancel() {

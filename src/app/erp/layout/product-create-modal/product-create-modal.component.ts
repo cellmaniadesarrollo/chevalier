@@ -23,8 +23,7 @@ export class ProductCreateModalComponent implements OnInit {
    
     this.getnewdata();
 
-    this.productForm = this.fb.group({
-      cod: ['', Validators.required],
+    this.productForm = this.fb.group({ 
       name: ['', Validators.required],
       isFixedPrice: [true],
       price: [0],

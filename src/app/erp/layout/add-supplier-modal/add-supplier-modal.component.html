@@ -1,5 +1,5 @@
 <h2 class="text-center mb-4">Nuevo Proveedor</h2>
-<form [formGroup]="supplierForm" (ngSubmit)="onSubmit()" class="p-4">
+<form [formGroup]="supplierForm" (ngSubmit)="supplierSubmit()" class="p-4">
   <!-- Nombre -->
   <mat-form-field appearance="fill" class="w-100">
     <mat-label>Nombre</mat-label>
@@ -8,11 +8,18 @@
   </mat-form-field>
 
   <!-- Identificación -->
-  <mat-form-field appearance="fill" class="w-100">
-    <mat-label>Identificación (RUC/NIT)</mat-label>
-    <input matInput formControlName="identification" placeholder="Ingrese la identificación">
-    <mat-error *ngIf="supplierForm.get('identification')?.invalid">Identificación requerida</mat-error>
-  </mat-form-field>
+<mat-form-field appearance="fill" class="w-100">
+  <mat-label>Identificación (RUC/NIT)</mat-label>
+  <input matInput formControlName="identification"
+         placeholder="Ingrese la identificación"
+         (blur)="onBlurIdentification()">
+  <mat-error *ngIf="supplierForm.get('identification')?.hasError('required')">
+    Identificación requerida
+  </mat-error>
+  <mat-error *ngIf="supplierForm.get('identification')?.hasError('duplicate')">
+    Esta identificación ya existe
+  </mat-error>
+</mat-form-field>
 
 
 

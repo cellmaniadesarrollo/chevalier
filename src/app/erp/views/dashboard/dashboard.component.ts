@@ -43,7 +43,7 @@ export class DashboardComponent {
       this.summarizedData = this.summarizeData(response.thisWeekpeerbarber);
       this.summarizedDatalastweek = this.summarizeData(response.lastWeekpeerbarber);
       this.summarizedDataservices =  response.thisWeekservices 
-      console.log(response.thisWeekservicespdf)
+    //  console.log(response.thisWeekservicespdf)
       this.isDataLoaded = true; // Marca los datos como cargados
     } catch (error) {
       console.error('Error al obtener datos:', error);

@@ -57,4 +57,68 @@ export class ProductsService {
       throw error;
     }
   }
+  async checkIdentificationExists(id:any): Promise<any> {
+    try { 
+      const response = await axios.post(`${this.API_URL}finddnisupplierexist`,id  );
+      return  response
+      } catch (error) {
+      console.error('Error saving client:', error);
+      throw error;
+    }
+  }
+  async save(data: any): Promise<any> {
+    try {
+      const response = await axios.post(`${this.API_URL}savesupplier`, data);
+      return response
+    } catch (error) {
+      console.error('Error saving client:', error);
+      throw error;
+    }
+  }
+      async getnewdataisert(): Promise<any> {
+    try { 
+      const response = await axios.get(`${this.API_URL}getnewdatainsert`   );
+      return  response.data
+      } catch (error) {
+      console.error('Error saving client:', error);
+      throw error;
+    }
+  }
+  async findSupplier(supplierData: any): Promise<any> {
+    try {
+      const response = await axios.post(`${this.API_URL}findsuppliers`, supplierData);
+      return response.data;
+    } catch (error) {
+      console.error('Error finding supplier:', error);
+      throw error;
+    }
+  }
+    async findProductsincome(productData: any): Promise<any> {
+    try {
+      console.log('Finding products with data:', productData);
+      const response = await axios.post(`${this.API_URL}findproductincome`,productData);
+      return response.data;
+    } catch (error) {
+      console.error('Error finding supplier:', error);
+      throw error;
+    }
+  }
+    async saveProductsIncome(data: any): Promise<any> {
+    try {
+      const response = await axios.post(`${this.API_URL}saveproductincome`, data);
+      return response
+    } catch (error) {
+      console.error('Error saving client:', error);
+      throw error;
+    }
+  }
+      async listProductsIncome(data: any): Promise<any> {
+    try {
+      const response = await axios.post(`${this.API_URL}listproductincome`, data);
+      return response.data
+    } catch (error) {
+      console.error('Error saving client:', error);
+      throw error;
+    }
+  }
 }

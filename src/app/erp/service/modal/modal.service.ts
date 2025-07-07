@@ -23,6 +23,7 @@ export class ModalService {
     
     return this.dialog.open(DynamicModalInputComponent, {
       width: '800px',
+      maxHeight: '90vh',
       data: {
         contentType: 'ingreso',
         initialData: data,

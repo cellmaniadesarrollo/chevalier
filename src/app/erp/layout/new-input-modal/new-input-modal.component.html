@@ -1,1 +1,210 @@
-<button (click)="goToProveedor()">proveedor</button>
+<div class="row mt-4 mx-3">
+  <h4 class="mb-3 text-center">Nuevo Ingreso</h4>
+
+  <form [formGroup]="voucherForm" (ngSubmit)="onSubmit()">
+    <!-- Fila 1 -->
+    <div class="row mb-2">
+      <div class="col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Número de serie</mat-label>
+          <input matInput formControlName="serialNumber" required>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Tipo de comprobante</mat-label>
+          <mat-select formControlName="voucherType" required>
+            <mat-option *ngFor="let vt of voucherTypes" [value]="vt.id">{{ vt.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Fila 2 -->
+    <div class="row mb-2">
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Proveedor</mat-label>
+          <input type="text" matInput [matAutocomplete]="productAuto" [formControl]="supplierSearch"
+            (keyup.enter)="searchSupplier()" (blur)="onBlurSupplier()">
+          <button mat-icon-button type="button" matPrefix (click)="addProveedor()" matTooltip="Nuevo proveedor">
+            <mat-icon>add</mat-icon>
+          </button>
+
+          <button mat-icon-button type="button" matSuffix (click)="searchSupplier()" matTooltip="Buscar proveedor">
+            <mat-icon>search</mat-icon>
+          </button>
+
+          <mat-autocomplete #productAuto="matAutocomplete" [displayWith]="displaySupplierFn"
+            (optionSelected)="onSupplierSelected($event.option.value)">
+            <mat-option *ngFor="let s of filteredSuppliers" [value]="s">
+              {{s.identification}} - {{ s.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Estado de pago</mat-label>
+          <mat-select formControlName="paymentStatus" required>
+            <mat-option *ngFor="let status of paymentStatuses" [value]="status.id">
+              {{ status.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Fila 3 -->
+    <div class="row mb-2">
+      <div class="col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Fecha de emisión</mat-label>
+          <input matInput [matDatepicker]="issuePicker" formControlName="issueDate" required>
+          <mat-datepicker-toggle matSuffix [for]="issuePicker"></mat-datepicker-toggle>
+          <mat-datepicker #issuePicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Fecha de recepción</mat-label>
+          <input matInput [matDatepicker]="receiptPicker" formControlName="receiptDate">
+          <mat-datepicker-toggle matSuffix [for]="receiptPicker"></mat-datepicker-toggle>
+          <mat-datepicker #receiptPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+
+    <div class="row mb-2">
+      <div class="col-md-12">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Producto</mat-label>
+          <input type="text" matInput [matAutocomplete]="auto" [formControl]="productsSearch"
+            (keyup.enter)="searchProduct()" (blur)="onBlurProduct()">
+
+          <button mat-icon-button type="button" matSuffix (mousedown)="searchProduct()" matTooltip="Buscar produto">
+            <mat-icon>search</mat-icon>
+          </button>
+
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayProductFn"
+            (optionSelected)="onProductSelected($event.option.value)">
+            <mat-option *ngFor="let s of filteredProducts" [value]="s">
+              {{ s.cod }} - {{ s.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+
+
+    <!-- TABLA CON LOS PRODUCTOS SELECCIONADOS -->
+    <div class="row mb-2">
+      <div class="col-12">
+        <div class="table-responsive">
+          <div formArrayName="details">
+            <table class="table table-bordered table-striped table-sm align-middle" *ngIf="details.length > 0">
+              <thead class="table-light">
+                <tr>
+                  <th>Producto</th>
+                  <th>Cant.</th>
+                  <th>P.V</th>
+                  <th>P.Unit.</th>
+                  <th>Imp. %</th>
+                  <th>Sub.T</th>
+                  <th>Exp.</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of details.controls; let i = index" [formGroupName]="i">
+                  <td>
+                    {{ row.get('cod')?.value }} - {{ row.get('productName')?.value }}
+                  </td>
+                  <td>
+                    <input type="number" class="form-control form-control-sm" formControlName="quantity">
+                  </td>
+                  <td>
+                    <input type="number" class="form-control form-control-sm" formControlName="pricesale">
+                  </td>
+                  <td>
+                    <input type="number" class="form-control form-control-sm" formControlName="unitPrice">
+                  </td>
+                  <td>
+                    <input type="number" class="form-control form-control-sm" formControlName="taxes">
+                  </td>
+
+                  <td>
+                    <input type="number" class="form-control form-control-sm" formControlName="subtotal" readonly>
+                  </td>
+                  <td class="datepicker-cell">
+                    <mat-form-field appearance="fill" class="compact-datepicker">
+                      <input matInput [matDatepicker]="picker" formControlName="expiryDate">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-danger" (click)="removeDetail(i)">
+                      <i class="bi bi-trash"></i> <!-- Usa Bootstrap Icons si las tienes -->
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fila 4 -->
+    <div class="row mb-2">
+      <div class="col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Subtotal</mat-label>
+          <input matInput type="number" formControlName="subtotal" min="0" required>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-3">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Costo de envío</mat-label>
+          <input matInput type="number" formControlName="shippingCost" min="0">
+        </mat-form-field>
+      </div>
+            <div class="col-md-3">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Impuesto</mat-label>
+          <input matInput type="number" formControlName="shippingCosttaxes" min="0">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Fila 5 -->
+    <div class="row mb-2">
+      <div class="col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Costos adicionales</mat-label>
+          <input matInput type="number" formControlName="additionalCosts" min="0">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Total</mat-label>
+          <input matInput type="number" formControlName="total" min="0" required>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- Botón Guardar -->
+    <div class="text-end mt-3">
+      <button mat-raised-button color="primary" type="submit" [disabled]="voucherForm.invalid">Guardar</button>
+    </div>
+  </form>
+</div>
