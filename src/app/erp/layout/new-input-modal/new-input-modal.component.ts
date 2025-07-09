@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ModalService } from '../../service/modal/modal.service';
 import { ProductsService } from '../../service/products/products.service';
@@ -48,7 +48,8 @@ export class NewInputModalComponent {
       shippingCosttaxes: [0, [Validators.min(0)]],
       additionalCosts: [0, [Validators.min(0)]],
       total: [0, [Validators.required, Validators.min(0)]],
-      details: this.fb.array([])
+      details: this.fb.array([]),
+      printOption: [true], // <-- Agrega este campo
     });
     this.getdata()
     this.searchSupplier()
@@ -114,7 +115,15 @@ export class NewInputModalComponent {
     if (this.voucherForm.valid) {
       console.log('Datos enviados:', this.voucherForm.value);
       const data=await this.backend.saveProductsIncome(this.voucherForm.value)
-      console.log(data)
+const printPromises = data.printData.map((obj: any) => {
+  return this.backend.printTicketChevalier(obj); // debe devolver una Promesa
+});
+
+Promise.all(printPromises).then(() => {
+this.onCancel()
+});
+      
+       
       // Aquí puedes llamar a tu servicio para guardar el voucher
     }
   }
@@ -178,7 +187,7 @@ export class NewInputModalComponent {
       productId: [product.id],
       productName: [product.name], // solo para mostrar
       cod: [product.cod],
-      pricesale: [product.cod],
+      pricesale: [0],
       quantity: [1, [Validators.required, Validators.min(1)]],
       unitPrice: [product.price || 0, [Validators.required, Validators.min(0)]],
       taxes: [0, [Validators.min(0)]],
@@ -223,5 +232,15 @@ export class NewInputModalComponent {
 
     const total = subtotal + shippingTotal + additional;
     this.voucherForm.get('total')?.setValue(Number(total.toFixed(2)));
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscapePressed(event: KeyboardEvent) {
+    event.preventDefault();
+    this.onCancel();
+  }
+
+  onCancel() {
+    this.cancel.emit();
   }
 }

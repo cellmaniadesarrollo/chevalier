@@ -48,6 +48,7 @@ import { AddSupplierModalComponent } from './layout/add-supplier-modal/add-suppl
 import { DynamicModalInputComponent } from './containers/dynamic-modal-input/dynamic-modal-input.component';
 import { NewInputModalComponent } from './layout/new-input-modal/new-input-modal.component';
 import { RelativeDatePipe } from './pipe/relative-date/relative-date.pipe';
+import { EtiquetasCantidadDialogComponent } from './layout/etiquetas-cantidad-dialog/etiquetas-cantidad-dialog.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,7 @@ import { RelativeDatePipe } from './pipe/relative-date/relative-date.pipe';
     DashboardComponent,
     DiscountModalComponent,
     SearchAutocompleteComponent, 
-    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent, RelativeDatePipe 
+    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent, RelativeDatePipe, EtiquetasCantidadDialogComponent 
   ],
   imports: [  
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { DynamicModalInputComponent } from '../../containers/dynamic-modal-input/dynamic-modal-input.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
+import { EtiquetasCantidadDialogComponent } from '../../layout/etiquetas-cantidad-dialog/etiquetas-cantidad-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class ModalService {
     return this.dialog.open(DynamicModalInputComponent, {
       width: '800px',
       maxHeight: '90vh',
+      disableClose: true,
       data: {
         contentType: 'ingreso',
         initialData: data,
@@ -45,4 +47,12 @@ export class ModalService {
       }
     });
   }
+openCantidadDialog(initialValue: number = 1): Promise<number | undefined> {
+  const dialogRef = this.dialog.open(EtiquetasCantidadDialogComponent, {
+    width: '300px',
+    data: { initialValue }
+  });
+
+  return dialogRef.afterClosed().toPromise();
+}
 }
