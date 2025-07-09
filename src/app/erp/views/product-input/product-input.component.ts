@@ -34,7 +34,8 @@ export class ProductInputComponent {
     'impuesto',
     'totalLinea',
     'fechaVencimiento',
-    'lote'
+    'lote',
+    'imprimir' // <-- Nueva columna
   ];// Actualiza según tus columnas
   typos: any[] = []; // Se llena desde el backend con las categorías
 
@@ -48,7 +49,7 @@ export class ProductInputComponent {
     const data = await this.backend.listProductsIncome(this.filters)
     this.productos = data.data
     this.totalItems = data.metadata[0].total; 
-    console.log(data)
+    
   }
 
   onPageChange(event: PageEvent) {
@@ -68,7 +69,18 @@ export class ProductInputComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('Ingreso guardado:', result);
+        this.loadProductos()
       }
     });
   }
+async printTicket(data: any ) {
+      const item = await this.backend.getImtemPrintTicket([{ _id:data  }]);
+    console.log(item);
+  const cantidad = await this.modalService.openCantidadDialog(item[0].cant); // ← valor editable inicial
+
+  if (cantidad) {
+    item[0].cant = cantidad; 
+    this.backend.printTicketChevalier(item[0]) 
+  }
+}
 }

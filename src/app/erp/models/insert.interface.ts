@@ -10,6 +10,7 @@ export interface ListPayStatusI {
 
 export interface VoucherDetail {
   id: string;
+  productId: string;
   comprobanteNumero: string;
   fechaEmision: string | Date;
   fechaRecepcion: string | Date;

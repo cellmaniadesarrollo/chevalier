@@ -202,9 +202,17 @@
         </mat-form-field>
       </div>
     </div>
-    <!-- Botón Guardar -->
-    <div class="text-end mt-3">
-      <button mat-raised-button color="primary" type="submit" [disabled]="voucherForm.invalid">Guardar</button>
+    <!-- Checkbox de Imprimir y Botones Cancelar/Guardar -->
+    <div class="row mb-2 align-items-center">
+      <div class="col-md-6 d-flex justify-content-end align-items-center">
+        <mat-checkbox formControlName="printOption">
+          <span class="label-oscuro">Imprimir</span>
+        </mat-checkbox>
+      </div>
+      <div class="col-md-6 text-end">
+        <button mat-stroked-button color="warn" type="button" (click)="onCancel()" class="me-2">Cancelar</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="voucherForm.invalid">Guardar</button>
+      </div>
     </div>
   </form>
 </div>
