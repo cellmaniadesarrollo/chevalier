@@ -12,4 +12,11 @@
   .main-margin {
   margin: 32px 24px; /* 32px arriba/abajo, 24px derecha/izquierda */
 }
- 
+.mat-row:hover {
+  background-color: #e3eafc;
+  cursor: pointer;
+}
+.mat-row.clicked {
+  background-color: #b3d1ff !important;
+  transition: background-color 0.3s;
+}

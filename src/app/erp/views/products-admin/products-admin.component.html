@@ -82,17 +82,21 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
       <mat-cell *matCellDef="let product">
-        <button mat-icon-button color="primary">
+        <button mat-icon-button color="primary" (click)="$event.stopPropagation()">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn">
+        <button mat-icon-button color="warn" (click)="$event.stopPropagation()">
           <mat-icon>delete</mat-icon>
         </button>
       </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns" class="custom-header"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns;"
+      (click)="OpcionesModal(row._id)"
+      class="mat-row"
+    ></mat-row>
   </mat-table>
 <!-- Paginación  -->
 <div class="d-flex justify-content-end align-items-center gap-3 mt-3">

@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductCreateModalComponent } from '../../layout/product-create-modal/product-create-modal.component';
 import { ProductsService } from '../../service/products/products.service';
+import { ModalService } from '../../service/modal/modal.service';
 
 interface Producto {
   codigo: string;
@@ -21,7 +22,7 @@ interface typoProducto{
   styleUrl: './products-admin.component.css'
 })
 export class ProductsAdminComponent {
-  constructor(private dialog: MatDialog, private productService: ProductsService) { 
+  constructor(private dialog: MatDialog, private productService: ProductsService,private modal:ModalService) { 
   }
   filters = {
     searchQuery: '',       // Para el buscador (input text)
@@ -72,5 +73,13 @@ this.totalPages = Math.ceil(data.items.metadata[0].total / this.filters.itemsPer
       }
     });
 
+  }
+
+    OpcionesModal(data: any) {
+    const datos = {
+      id: data, 
+    };
+
+    this.modal.abrirModalConDatos(datos);
   }
 }

@@ -9,6 +9,7 @@ import { authGuardrol } from './guards/auth/auth.guard';
 import { ReportsComponent } from './views/reports/reports.component';
 import { ProductsAdminComponent } from './views/products-admin/products-admin.component';
 import { ProductInputComponent } from './views/product-input/product-input.component';
+import { AssignmentListComponent } from './views/assignment-list/assignment-list.component';
 const routes: Routes = [{
   path: '', component: ErpComponent,
   canActivate: [authGuard], // Proteger todas las rutas del ERP
@@ -33,7 +34,13 @@ const routes: Routes = [{
       path: 'products-input',
       component: ProductInputComponent,
       canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
-      data: { allowedRoles: ['ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos
+      data: { allowedRoles: ['ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos assignment-list
+    },
+        {
+      path: 'assignment-list',
+      component: AssignmentListComponent,
+      canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
+      data: { allowedRoles: ['ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos assignment-list
     },
   ]
 }];

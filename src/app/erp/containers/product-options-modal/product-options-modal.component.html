@@ -1,0 +1,22 @@
+ 
+<mat-dialog-content>
+  <mat-tab-group [(selectedIndex)]="selectedTabIndex">
+    <mat-tab label="Asignaciones">
+      <ng-container *ngIf="selectedTabIndex === 0">
+       <app-barber-supplies-tracker *ngIf="iddata" [datoRecibido]="iddata" (cerrarModal)="closeDialog($event)"></app-barber-supplies-tracker>
+      </ng-container>
+    </mat-tab>
+    <mat-tab label="Tab 2">
+      <ng-container *ngIf="selectedTabIndex === 1">
+        2
+      </ng-container>
+    </mat-tab>
+    <mat-tab label="Tab 3">
+      <ng-container *ngIf="selectedTabIndex === 2">
+         3
+      </ng-container>
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>
+
+ 

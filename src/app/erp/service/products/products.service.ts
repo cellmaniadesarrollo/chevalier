@@ -120,10 +120,37 @@ export class ProductsService {
       console.error('Error saving client:', error);
       throw error;
     }
-  } 
-    async getImtemPrintTicket(data: any): Promise<any> {
+  }
+  async getImtemPrintTicket(data: any): Promise<any> {
     try {
       const response = await axios.post(`${this.API_URL}getitempintticket`, data);
+      return response.data
+    } catch (error) {
+      console.error('Error saving client:', error);
+      throw error;
+    }
+  }
+  async findBanchesProduct(data: any): Promise<any> {
+    try {
+      const response = await axios.post(`${this.API_URL}findproductbanches`, data);
+      return response.data
+    } catch (error) {
+      console.error('Error saving client:', error);
+      throw error;
+    }
+  }
+  async saveBarberSuppliesTracker(data: any): Promise<any> {
+    try {
+      const response = await axios.post(`${this.API_URL}savebarbersuppliestracker`, data);
+      return response.data
+    } catch (error) {
+      console.error('Error saving client:', error);
+      throw error;
+    }
+  }
+    async listBarberSuppliesTracker(data: any): Promise<any> {
+    try {
+      const response = await axios.post(`${this.API_URL}listbarbersuppliestracker`, data);
       return response.data
     } catch (error) {
       console.error('Error saving client:', error);

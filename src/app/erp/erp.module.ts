@@ -49,7 +49,12 @@ import { DynamicModalInputComponent } from './containers/dynamic-modal-input/dyn
 import { NewInputModalComponent } from './layout/new-input-modal/new-input-modal.component';
 import { RelativeDatePipe } from './pipe/relative-date/relative-date.pipe';
 import { EtiquetasCantidadDialogComponent } from './layout/etiquetas-cantidad-dialog/etiquetas-cantidad-dialog.component';
-
+import { ProductOptionsModalComponent } from './containers/product-options-modal/product-options-modal.component';
+ 
+import { MatTabsModule } from '@angular/material/tabs';
+import { BarberSuppliesTrackerComponent } from './layout/barber-supplies-tracker/barber-supplies-tracker.component'; 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AssignmentListComponent } from './views/assignment-list/assignment-list.component';
 @NgModule({
   declarations: [
     ErpComponent,
@@ -64,7 +69,7 @@ import { EtiquetasCantidadDialogComponent } from './layout/etiquetas-cantidad-di
     DashboardComponent,
     DiscountModalComponent,
     SearchAutocompleteComponent, 
-    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent, RelativeDatePipe, EtiquetasCantidadDialogComponent 
+    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent, RelativeDatePipe, EtiquetasCantidadDialogComponent, ProductOptionsModalComponent, BarberSuppliesTrackerComponent, AssignmentListComponent 
   ],
   imports: [  
 
@@ -90,6 +95,8 @@ import { EtiquetasCantidadDialogComponent } from './layout/etiquetas-cantidad-di
     NgApexchartsModule,
     MatSlideToggleModule, 
     MatCheckboxModule,
+     MatTabsModule,
+     MatProgressSpinnerModule 
     
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], 
