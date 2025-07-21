@@ -1,0 +1,74 @@
+<div class="container mt-4">
+  <form [formGroup]="assignmentForm" (ngSubmit)="onSubmit()">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Lote de producto</mat-label>
+          <mat-select formControlName="batchId" required>
+            <mat-option *ngFor="let batch of productBatches" [value]="batch._id">
+              {{ batch.code }} - {{ batch.quantity }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="assignmentForm.get('batchId')?.hasError('required')">
+            Seleccione un lote.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Barbero</mat-label>
+          <mat-select formControlName="barberId" required>
+            <mat-option *ngFor="let barber of barbers" [value]="barber._id">
+              {{ barber.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="assignmentForm.get('barberId')?.hasError('required')">
+            Seleccione un barbero.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Cantidad</mat-label>
+          <input matInput type="number" formControlName="quantity" min="1" [attr.max]="getMaxQuantity()" required>
+          <mat-error *ngIf="assignmentForm.get('quantity')?.hasError('required')">
+            La cantidad es requerida.
+          </mat-error>
+          <mat-error *ngIf="assignmentForm.get('quantity')?.hasError('min')">
+            Debe ser al menos 1.
+          </mat-error>
+          <mat-hint *ngIf="assignmentForm.get('batchId')?.value">
+            Máximo: {{ getMaxQuantity() }}
+          </mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Comentario (opcional)</mat-label>
+          <textarea matInput formControlName="comment" maxlength="200" rows="3"></textarea>
+          <mat-hint align="end">{{ assignmentForm.get('comment')?.value?.length || 0 }}/200</mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col text-end">
+        <button mat-raised-button color="primary" type="submit" [disabled]="assignmentForm.invalid || isLoading">
+          <ng-container *ngIf="!isLoading; else loading">
+            Asignar producto
+          </ng-container>
+          <ng-template #loading>
+            <mat-progress-spinner mode="indeterminate" diameter="20" strokeWidth="3" color="accent"
+              class="spinner-button">
+            </mat-progress-spinner>
+          </ng-template>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -3,6 +3,7 @@ import { DynamicModalInputComponent } from '../../containers/dynamic-modal-input
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
 import { EtiquetasCantidadDialogComponent } from '../../layout/etiquetas-cantidad-dialog/etiquetas-cantidad-dialog.component';
+import { ProductOptionsModalComponent } from '../../containers/product-options-modal/product-options-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -55,4 +56,10 @@ openCantidadDialog(initialValue: number = 1): Promise<number | undefined> {
 
   return dialogRef.afterClosed().toPromise();
 }
+ abrirModalConDatos(data: any) {
+    this.dialog.open(ProductOptionsModalComponent, {
+      width: '700px',
+      data: data
+    });
+  }
 }

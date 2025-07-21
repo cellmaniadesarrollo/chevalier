@@ -1,0 +1,95 @@
+<div class="container mt-4">
+  <!-- Título centrado -->
+  <div class="row justify-content-center mb-3">
+    <div class="col-auto">
+      <h2 class="text-center">Asignaciones de Productos</h2>
+    </div>
+  </div>
+
+  <!-- Buscador y filtro de barbero -->
+  <div class="row justify-content-center mb-4">
+    <!-- Buscador -->
+    <div class="col-sm-4">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Buscar producto</mat-label>
+        <input matInput (keyup.enter)="loadAsignaciones()" placeholder="Buscar por nombre, código, etc."
+          [(ngModel)]="filters.searchQuery">
+        <button mat-icon-button matSuffix (click)="loadAsignaciones()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+    <!-- Select de barbero -->
+    <div class="col-sm-3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Barbero</mat-label>
+        <mat-select [(ngModel)]="filters.filter" (selectionChange)="loadAsignaciones()">
+          <mat-option [value]="''">Todos</mat-option>
+          <mat-option *ngFor="let b of barbero" [value]="b._id">{{ b.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+<!-- Tabla estilizada -->
+<div class="table-responsive">
+  <table mat-table [dataSource]="asignaciones" class="mat-elevation-z8 styled-table" matSort>
+
+    <!-- Producto -->
+    <ng-container matColumnDef="producto">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Producto</th>
+      <td mat-cell *matCellDef="let row">{{ row.productName }}</td>
+    </ng-container>
+
+    <!-- Lote -->
+    <ng-container matColumnDef="lote">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Lote</th>
+      <td mat-cell *matCellDef="let row">{{ row.lotNumber }}</td>
+    </ng-container>
+
+    <!-- Cantidad -->
+    <ng-container matColumnDef="cantidad">
+      <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+      <td mat-cell *matCellDef="let row">{{ row.quantity }}</td>
+    </ng-container>
+
+    <!-- Fecha -->
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+      <td mat-cell *matCellDef="let row">{{ row.assignmentDate | relativeDate}}</td>
+    </ng-container>
+
+    <!-- Entregado por -->
+    <ng-container matColumnDef="entregadoPor">
+      <th mat-header-cell *matHeaderCellDef>Entregado por</th>
+      <td mat-cell *matCellDef="let row">{{ row.assignerFullName }}</td>
+    </ng-container>
+
+    <!-- Destinatario -->
+    <ng-container matColumnDef="destinatario">
+      <th mat-header-cell *matHeaderCellDef>Destinatario</th>
+      <td mat-cell *matCellDef="let row">{{ row.recipientFullName }}</td>
+    </ng-container>
+        <!-- Observaciones -->
+    <ng-container matColumnDef="observaciones">
+      <th mat-header-cell *matHeaderCellDef>Observaciones</th>
+      <td mat-cell *matCellDef="let row">{{ row.observations }}</td>
+    </ng-container>
+
+    <!-- Filas -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+  <!-- Paginación -->
+  <mat-paginator
+    [length]="totalAsignaciones"
+    [pageSize]="filters.pageSize"
+    [pageIndex]="filters.page - 1"
+    [pageSizeOptions]="[30, 50, 100]"
+    (page)="onPageChange($event)">
+  </mat-paginator>
+</div>
