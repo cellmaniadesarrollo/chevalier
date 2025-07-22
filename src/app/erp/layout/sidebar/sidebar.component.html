@@ -29,7 +29,7 @@
 
 
   <!-- Botón Productos con colapso -->
-  <div *ngIf="isUserAdminOrSupervisor()" class="w-100">
+  <div class="w-100">
     <button class="btn btn-dark sidebar-button d-flex align-items-center justify-content-between p-3 w-100"
       type="button" (click)="toggleProducts()">
       <div class="d-flex align-items-center">
@@ -48,7 +48,7 @@
         <i class="bi bi-list me-2"></i>
         <span>Lista de Productos</span>
       </button>
-      <button routerLink="/erp/products-input"
+      <button *ngIf="isUserAdminOrSupervisor()"  routerLink="/erp/products-input"
         class="btn btn-dark sidebar-button d-flex align-items-center p-2 w-100 mt-1">
         <i class="bi bi-plus-circle me-2"></i>
         <span>Ingreso de Productos</span>

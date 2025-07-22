@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductsService } from '../../service/products/products.service';
 export interface Barber {
@@ -8,7 +8,7 @@ export interface Barber {
 export interface ProductBatch {
   _id: string;
   quantity: string;
-  code: number; 
+  code: number;
 }
 @Component({
   selector: 'app-barber-supplies-tracker',
@@ -17,20 +17,20 @@ export interface ProductBatch {
 })
 
 export class BarberSuppliesTrackerComponent {
-@Input() datoRecibido: any;
+  @Input() datoRecibido: any;
   @Output() cerrarModal = new EventEmitter<any>();
 
   cerrar() {
     this.cerrarModal.emit('cerrado desde tracker');
   }
   assignmentForm!: FormGroup;
-  productBatches:ProductBatch [] = []; // cargar desde servicio
-  barbers:Barber[] = []; // cargar desde servicio
+  productBatches: ProductBatch[] = []; // cargar desde servicio
+  barbers: Barber[] = []; // cargar desde servicio
 
-  constructor(private fb: FormBuilder,private backendservice:ProductsService) {}
+  constructor(private fb: FormBuilder, private backendservice: ProductsService) { }
 
   ngOnInit(): void {
-    console.log(this.datoRecibido,'componete')
+    console.log(this.datoRecibido, 'componete')
     this.assignmentForm = this.fb.group({
       batchId: [null, Validators.required],
       barberId: [null, Validators.required],
@@ -55,12 +55,12 @@ export class BarberSuppliesTrackerComponent {
       }
       this.assignmentForm.get('quantity')?.updateValueAndValidity();
     });
-}
-async getdata(){
-const data = await this.backendservice.findBanchesProduct(this.datoRecibido);
-this.productBatches = data.batches;
-this.barbers = data.hairdresser; 
-}
+  }
+  async getdata() {
+    const data = await this.backendservice.findBanchesProduct(this.datoRecibido);
+    this.productBatches = data.batches;
+    this.barbers = data.hairdresser;
+  }
   loadBatches() {
     // Lógica para obtener lotes desde el backend
   }
@@ -70,14 +70,14 @@ this.barbers = data.hairdresser;
     const batch = this.productBatches.find(b => b._id === batchId);
     return batch ? Number(batch.quantity) : 1;
   }
-isLoading = false;
- async onSubmit() {
-    if (this.assignmentForm.valid) { 
+  isLoading = false;
+  async onSubmit() {
+    if (this.assignmentForm.valid) {
       this.isLoading = true;
-        setTimeout(() => {
-    this.isLoading = false;
-  }, 3000);
-     await this.backendservice.saveBarberSuppliesTracker(this.assignmentForm.value)
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 3000);
+      await this.backendservice.saveBarberSuppliesTracker(this.assignmentForm.value)
       this.cerrar()
     }
   }

@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ProductCreateModalComponent } from '../../layout/product-create-modal/product-create-modal.component';
 import { ProductsService } from '../../service/products/products.service';
 import { ModalService } from '../../service/modal/modal.service';
+import { AuthService } from '../../../service/auth/auth.service';
 
 interface Producto {
   codigo: string;
@@ -22,7 +23,7 @@ interface typoProducto{
   styleUrl: './products-admin.component.css'
 })
 export class ProductsAdminComponent {
-  constructor(private dialog: MatDialog, private productService: ProductsService,private modal:ModalService) { 
+  constructor(private dialog: MatDialog, private productService: ProductsService,private modal:ModalService,public authService: AuthService) { 
   }
   filters = {
     searchQuery: '',       // Para el buscador (input text)
@@ -82,4 +83,8 @@ this.totalPages = Math.ceil(data.items.metadata[0].total / this.filters.itemsPer
 
     this.modal.abrirModalConDatos(datos);
   }
+
+      isUserAdminOrSupervisor(): boolean {
+      return this.authService.hasRole(['ADMIN', 'SUPERVISOR']);
+    }
 }
