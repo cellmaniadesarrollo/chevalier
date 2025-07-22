@@ -11,7 +11,7 @@ export class SidebarComponent {
   userName = JSON.parse(localStorage.getItem('user') || '{}').username || 'Usuario';
   userImage = 'img/userdefault.png';
 
-  constructor(public sidebarService: SidebarService,public authService: AuthService) {}
+  constructor(public sidebarService: SidebarService, public authService: AuthService) { }
 
   // Maximiza temporalmente al pasar el mouse
   onMouseEnter() {
@@ -28,14 +28,14 @@ export class SidebarComponent {
       this.isHovered = false;
     }
   }
-    // Puedes crear un método que verifique los roles si lo necesitas para reutilización
-    isUserAdminOrSupervisor(): boolean {
-      return this.authService.hasRole(['ADMIN', 'SUPERVISOR']);
-    }
- isProductsOpen = false;
+  // Puedes crear un método que verifique los roles si lo necesitas para reutilización
+  isUserAdminOrSupervisor(): boolean {
+    return this.authService.hasRole(['ADMIN', 'SUPERVISOR']);
+  }
+  isProductsOpen = false;
 
-toggleProducts() {
-  this.isProductsOpen = !this.isProductsOpen;
-}
+  toggleProducts() {
+    this.isProductsOpen = !this.isProductsOpen;
+  }
 
 }

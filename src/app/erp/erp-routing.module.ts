@@ -28,19 +28,19 @@ const routes: Routes = [{
       path: 'products-admin',
       component: ProductsAdminComponent,
       canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
-      data: { allowedRoles: ['ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos
+      data: { allowedRoles: ['ADMIN','CASHIER', 'SUPERVISOR'] }  // Especifica los roles permitidos
     }, 
     {
       path: 'products-input',
       component: ProductInputComponent,
       canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
-      data: { allowedRoles: ['ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos assignment-list
+      data: { allowedRoles: [ 'ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos assignment-list
     },
         {
       path: 'assignment-list',
       component: AssignmentListComponent,
       canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
-      data: { allowedRoles: ['ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos assignment-list
+      data: { allowedRoles: ['CASHIER', 'ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos assignment-list
     },
   ]
 }];

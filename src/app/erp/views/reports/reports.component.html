@@ -153,15 +153,12 @@
             [ngStyle]="isLastRow(row) ? {'background-color': '#bdc3c7', 'color': '#2c3e50', 'font-weight': 'bold'} : {}">
         </tr>
       </table>
-      
-    
- 
     </mat-card>
     <!-- Botones de Exportación -->
     <div class="text-center mt-4">
-      <button mat-raised-button color="accent" (click)="openDialogpdf()">Exportar a PDF</button>
-      <button mat-raised-button color="accent">Exportar a Excel</button>
-      <button mat-raised-button color="accent">Imprimir</button>
+      <button mat-raised-button color="accent" (click)="openDialogpdf('SERVICE')">Informe de Servicios</button>
+      <button mat-raised-button color="accent" (click)="openDialogpdf('PRODUCT')">Informe de Productos</button>
+      <button mat-raised-button color="accent"(click)="openDialogpdf('BEBIDA')">Informe de Bebidas</button>
     </div>
   </div>
 </div>

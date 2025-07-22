@@ -138,18 +138,21 @@ export class ReportsComponent {
     } 
   }
 
-  openDialogpdf(): void {
+  openDialogpdf(tipoinnforme:any): void {
     let consulta=this.consultaFiltros() as any
+    consulta.tipoinnforme=tipoinnforme
      consulta.nombrebarbero = this.barberos.find((barbero: ListHairdresserI) => barbero._id === this.filtros.barbero)?.name?? 'TODOS';
     const dialogRef = this.dialog.open(PdfReportComponent, {
       width: '600px',
       height: '200px',
       disableClose: false,
       data: consulta
-    });
-
- 
+    }); 
   }
+
+
+
+  
   consultaFiltros(){
     let datafecha = null;
 

@@ -5,7 +5,7 @@
 
       <!-- Botón de nuevo producto -->
       <div class="col-sm-4 d-flex">
-        <button mat-raised-button color="primary" (click)="crearProducto()">
+        <button *ngIf="isUserAdminOrSupervisor()"  mat-raised-button color="primary" (click)="crearProducto()">
           <mat-icon>add</mat-icon> Nuevo Producto
         </button>
       </div>
