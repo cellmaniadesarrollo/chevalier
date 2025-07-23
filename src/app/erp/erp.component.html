@@ -1,7 +1,13 @@
 <app-topbar></app-topbar>
-<app-sidebar *ngIf="!isMobile"></app-sidebar>
-<app-mobile-sidebar *ngIf="isMobile"></app-mobile-sidebar>
 
-<div class="erp-content" [ngClass]="{'full-width': !isMobile && sidebarService.isMinimized(), 'reduced-width': !isMobile && !sidebarService.isMinimized()}">
-  <router-outlet></router-outlet>
+<div class="layout-container">
+  <app-sidebar *ngIf="!isMobile"></app-sidebar>
+  <app-mobile-sidebar *ngIf="isMobile"></app-mobile-sidebar>
+
+  <div class="erp-content" [ngClass]="{
+      'full-width': !isMobile && sidebarService.isMinimized(),
+      'reduced-width': !isMobile && !sidebarService.isMinimized()
+    }">
+    <router-outlet></router-outlet>
+  </div>
 </div>
