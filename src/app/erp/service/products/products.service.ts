@@ -157,6 +157,15 @@ export class ProductsService {
       throw error;
     }
   }
+      async listExpiredProducts( ): Promise<any> {
+    try {
+      const response = await axios.get(`${this.API_URL}expidedproducts` );
+      return response.data
+    } catch (error) {
+      console.error('Error saving client:', error);
+      throw error;
+    }
+  }
   printTicketChevalier(params: Record<string, string | number | boolean>): void {
     // Verificar si hay parámetros
     if (!params || Object.keys(params).length === 0) {

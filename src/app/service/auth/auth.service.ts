@@ -7,16 +7,16 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private userRoles: string[] = []; // Guardamos los roles del usuario logueado
-  private API_URL = environment.apiUrl+'/api/'; // URL del backend
+  private API_URL = environment.apiUrl + '/api/'; // URL del backend
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   // Método de login
-  async login(data:any) { 
+  async login(data: any) {
     try {
-      
-      const response = await axios.post(`${this.API_URL}login`,data);
- 
+
+      const response = await axios.post(`${this.API_URL}login`, data);
+
       const { accessToken, user } = response.data;
 
       // Guardar el token en el localStorage o sessionStorage
@@ -52,8 +52,8 @@ export class AuthService {
   }
 
 
-   // Establecer roles desde los datos del usuario
-   setRoles(roles: string[]) {
+  // Establecer roles desde los datos del usuario
+  setRoles(roles: string[]) {
     this.userRoles = roles;
   }
 
@@ -68,15 +68,15 @@ export class AuthService {
     return this.userRoles;
   }
 
-// Método para verificar si el usuario tiene uno de los roles permitidos
-hasRole(allowedRoles: string[]): boolean {
-  const user = this.getCurrentUser(); // Obtener el usuario actual desde el almacenamiento
-  if (!user || !user.roles) {
-    return false; // Si no hay usuario o no tiene roles, no tiene acceso
+  // Método para verificar si el usuario tiene uno de los roles permitidos
+  hasRole(allowedRoles: string[]): boolean {
+    const user = this.getCurrentUser(); // Obtener el usuario actual desde el almacenamiento
+    if (!user || !user.roles) {
+      return false; // Si no hay usuario o no tiene roles, no tiene acceso
+    }
+    // Comprobar si alguno de los roles del usuario coincide con los roles permitidos
+    return user.roles.some((role: string) => allowedRoles.includes(role));
   }
-  // Comprobar si alguno de los roles del usuario coincide con los roles permitidos
-  return user.roles.some((role: string) => allowedRoles.includes(role));
-}
   // Obtener el usuario actual (desde localStorage o sessionStorage)
   getCurrentUser() {
     return JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');

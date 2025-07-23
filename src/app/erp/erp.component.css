@@ -1,13 +1,74 @@
+/* ==== TOPBAR ==== */
+app-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 1000;
+  background-color: #fff; /* o el color que uses */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ==== LAYOUT ==== */
+.layout-container {
+  display: flex;
+  padding-top: 60px; /* Altura de la topbar */
+}
+
+/* ==== SIDEBAR GENERAL ==== */
+ 
+app-mobile-sidebar {
+  padding-top: 60px; /* Para evitar solapamiento con topbar */
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  position: relative;
+  z-index: 900; /* Debajo de la topbar */
+}
+
+/* ==== CONTENIDO PRINCIPAL ==== */
 .erp-content {
-    transition: margin-left 0.3s ease; /* Animación suave cuando cambie el margen */
-  }
-  
+  flex-grow: 1;
+  transition: margin-left 0.3s ease;
+  padding-top: 0; /* Ya está aplicado por .layout-container */
+}
+
+/* Sidebar minimizada */
+.erp-content.full-width {
+  margin-left: 80px;
+}
+
+/* Sidebar expandida */
+.erp-content.reduced-width {
+  margin-left: 250px;
+}
+
+/* ==== MEDIA QUERIES ==== */
+
+/* Escritorio */
+@media (min-width: 768px) {
   .erp-content.full-width {
-    margin-left: 80px; /* Margen cuando la sidebar está minimizada */
+    margin-left: 80px;
   }
-  
+
   .erp-content.reduced-width {
-    margin-left: 250px; /* Margen cuando la sidebar está maximizada */
+    margin-left: 250px;
   }
- 
- 
+}
+
+/* Móviles: sin margen lateral */
+@media (max-width: 767.98px) {
+  .erp-content {
+    margin-left: 0 !important;
+  }
+
+  app-sidebar,
+  app-mobile-sidebar {
+    padding-top: 60px;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+  }
+}

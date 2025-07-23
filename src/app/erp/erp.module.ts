@@ -54,7 +54,11 @@ import { ProductOptionsModalComponent } from './containers/product-options-modal
 import { MatTabsModule } from '@angular/material/tabs';
 import { BarberSuppliesTrackerComponent } from './layout/barber-supplies-tracker/barber-supplies-tracker.component'; 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AssignmentListComponent } from './views/assignment-list/assignment-list.component';
+import { AssignmentListComponent } from './views/assignment-list/assignment-list.component'; 
+
+import { MatMenuModule } from '@angular/material/menu'; 
+import { MatBadgeModule } from '@angular/material/badge'; 
+
 @NgModule({
   declarations: [
     ErpComponent,
@@ -96,7 +100,10 @@ import { AssignmentListComponent } from './views/assignment-list/assignment-list
     MatSlideToggleModule, 
     MatCheckboxModule,
      MatTabsModule,
-     MatProgressSpinnerModule 
+     MatProgressSpinnerModule, 
+
+         MatMenuModule, 
+    MatBadgeModule, 
     
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], 
