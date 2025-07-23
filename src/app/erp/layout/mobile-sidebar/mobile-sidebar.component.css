@@ -3,7 +3,8 @@
   background-color: #333;
   color: #d4af37;
   padding: 1rem 0;
-  position: absolute;
+  position: fixed; 
+ 
   top: 56px; /* Altura de la topbar */
   left: 0;
   z-index: 1050;

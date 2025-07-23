@@ -18,13 +18,7 @@ app-topbar {
 
 /* ==== SIDEBAR GENERAL ==== */
  
-app-mobile-sidebar {
-  padding-top: 60px; /* Para evitar solapamiento con topbar */
-  height: calc(100vh - 60px);
-  overflow-y: auto;
-  position: relative;
-  z-index: 900; /* Debajo de la topbar */
-}
+ 
 
 /* ==== CONTENIDO PRINCIPAL ==== */
 .erp-content {
@@ -44,31 +38,4 @@ app-mobile-sidebar {
 }
 
 /* ==== MEDIA QUERIES ==== */
-
-/* Escritorio */
-@media (min-width: 768px) {
-  .erp-content.full-width {
-    margin-left: 80px;
-  }
-
-  .erp-content.reduced-width {
-    margin-left: 250px;
-  }
-}
-
-/* Móviles: sin margen lateral */
-@media (max-width: 767.98px) {
-  .erp-content {
-    margin-left: 0 !important;
-  }
-
-  app-sidebar,
-  app-mobile-sidebar {
-    padding-top: 60px;
-    position: fixed;
-    top: 60px;
-    left: 0;
-    width: 100%;
-    z-index: 999;
-  }
-}
+ 
