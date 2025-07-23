@@ -11,7 +11,7 @@
     <i class="bi bi-file-text me-2"></i> Ventas
   </button>
 
-  <ng-container *ngIf="isUserAdminOrSupervisor()">
+  <ng-container >
     <button (click)="navigateTo('/erp/reports')">
       <i class="bi bi-clipboard-data me-2"></i> Reportes
     </button>
@@ -25,8 +25,11 @@
       <button (click)="navigateTo('/erp/products-admin')">
         <i class="bi bi-list me-2"></i> Lista de Productos
       </button>
-      <button (click)="navigateTo('/erp/products-input')">
+      <button *ngIf="isUserAdminOrSupervisor()" (click)="navigateTo('/erp/products-input')">
         <i class="bi bi-plus-circle me-2"></i> Ingreso de Productos
+      </button>
+       <button (click)="navigateTo('/erp/assignment-list')">
+        <i class="bi bi-plus-circle me-2"></i> Asignaciones
       </button>
     </div>
   </ng-container>
