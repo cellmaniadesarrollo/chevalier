@@ -183,14 +183,15 @@ this.onCancel()
   }
 
   createDetail(product: any): FormGroup {
+    console.log(product)
     const group = this.fb.group({
       productId: [product.id],
       productName: [product.name], // solo para mostrar
       cod: [product.cod],
-      pricesale: [0],
+      pricesale: [product.price||0],
       quantity: [1, [Validators.required, Validators.min(1)]],
-      unitPrice: [product.price || 0, [Validators.required, Validators.min(0)]],
-      taxes: [0, [Validators.min(0)]],
+      unitPrice: [product.unitPrice || 0, [Validators.required, Validators.min(0)]],
+      taxes: [product.taxes, [Validators.min(0)]],
       subtotal: [0, [Validators.required, Validators.min(0)]], 
       expiryDate: ['']
     });

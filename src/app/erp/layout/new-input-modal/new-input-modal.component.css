@@ -23,7 +23,7 @@
 /* En tu archivo CSS/SCSS */
 .datepicker-cell {
   width: auto; /* o un valor fijo como 200px */
-  padding: 0 8px; /* Ajusta el padding si es necesario */
+  padding: 0 0px; /* Ajusta el padding si es necesario */
 }
 
 .compact-datepicker {
