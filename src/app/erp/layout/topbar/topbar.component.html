@@ -8,37 +8,33 @@
       <i class="bi bi-list" (click)="toggleSidebar()"></i>
     </div>
 
-    <!-- 🔔 Notificaciones (lo movemos aquí para alinearlo a la derecha del icono) -->
+    <!-- 🔔 Notificaciones -->
     <div class="notifications dropdown" [class.show]="showDropdown" (click)="toggleDropdown($event)">
       <button class="btn btn-link position-relative p-0" id="notificationsDropdown" style="width: 40px; height: 40px;">
         <i class="bi bi-bell-fill text-warning fs-4"></i>
         <span *ngIf="totalAlerts > 0"
-              class="position-absolute bg-danger text-white d-flex align-items-center justify-content-center rounded-circle"
-              style="width: 18px; height: 18px; font-size: 0.65rem; right: 0; bottom: 0; transform: translate(50%, 50%);">
+          class="position-absolute bg-danger text-white d-flex align-items-center justify-content-center rounded-circle"
+          style="width: 18px; height: 18px; font-size: 0.65rem; right: 0; bottom: 0; transform: translate(50%, 50%);">
           {{ totalAlerts }}
         </span>
       </button>
 
-      <ul class="dropdown-menu notifications-menu mt-2"
-          [class.show]="showDropdown" aria-labelledby="notificationsDropdown">
-        <ng-container *ngIf="expiredProducts.length || nearExpiredProducts.length; else noAlerts">
-          <li *ngFor="let item of expiredProducts">
-            <div class="dropdown-item text-danger small">
+      <ul class="dropdown-menu notifications-menu mt-2" [class.show]="showDropdown"
+        aria-labelledby="notificationsDropdown">
+        <ng-container *ngIf="notifications.length; else noAlerts">
+          <li *ngFor="let item of notifications">
+            <div class="dropdown-item small" [ngClass]="{
+                   'text-danger': item.status === 'expired',
+                   'text-warning': item.status === 'near'
+                 }">
               <strong>{{ item.name }}</strong><br>
               Cantidad: {{ item.quantity }}<br>
               Lote: {{ item.batch }}<br>
-              Vencido: {{ item.expirationDate | date: 'shortDate' }}
-            </div>
-          </li>
-          <li *ngFor="let item of nearExpiredProducts">
-            <div class="dropdown-item text-warning small">
-              <strong>{{ item.name }}</strong><br>
-              Cantidad: {{ item.quantity }}<br>
-              Lote: {{ item.batch }}<br>
-              Expira: {{ item.expirationDate | date: 'shortDate' }}
+              {{ item.status === 'expired' ? 'Vencido' : 'Expira' }}: {{ item.expirationDate | date: 'shortDate' }}
             </div>
           </li>
         </ng-container>
+
         <ng-template #noAlerts>
           <li>
             <div class="dropdown-item text-muted small">No hay alertas</div>
@@ -48,7 +44,7 @@
     </div>
   </div>
 
-  <!-- Botón logout a la derecha -->
+  <!-- Botón logout -->
   <div class="topbar-right d-flex align-items-center">
     <div class="logout me-3">
       <button class="btn btn-outline-warning" (click)="logout()">Cerrar Sesión</button>
