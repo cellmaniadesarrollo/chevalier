@@ -9,60 +9,53 @@ import { ProductsService } from '../../service/products/products.service';
   styleUrl: './topbar.component.css'
 })
 export class TopbarComponent {
-  constructor(private sidebarService: SidebarService, private authservi: AuthService, private productservice: ProductsService) { }
-  user: any;
-  logout() {
-    // Borrar la sesión
-    this.authservi.logout()
-    // Redireccionar al login
-
-  }
-
-  toggleSidebar() {
-    this.sidebarService.toggleMinimized();  // Llamar al servicio para minimizar/maximizar la sidebar
-  }
+ user: any;
   notifications: any[] = [];
+  showDropdown = false;
+
+  constructor(
+    private sidebarService: SidebarService,
+    private authService: AuthService,
+    private productService: ProductsService
+  ) {}
 
   ngOnInit(): void {
-    // Intentar obtener el usuario de localStorage o sessionStorage
+    // Obtener usuario desde localStorage o sessionStorage
     const userData = localStorage.getItem('user') || sessionStorage.getItem('user');
-
     if (userData) {
       this.user = JSON.parse(userData);
     }
-    console.log(this.user)
-    if (this.user.username !== 'byronp') {
-      this.getdata()     
- 
+
+    if (this.user?.username !== 'byronp') {
+      this.loadNotifications();
     }
   }
 
-
-  async getdata() {
-    this.notifications = await this.productservice.listExpiredProducts() 
-  }
-  get expiredProducts() {
-    const now = new Date();
-    return this.notifications.filter(item => new Date(item.expirationDate) < now);
+  logout(): void {
+    this.authService.logout();
   }
 
-  get nearExpiredProducts() {
-    const now = new Date();
-    const inSevenDays = new Date();
-    inSevenDays.setDate(now.getDate() + 7);
+  toggleSidebar(): void {
+    this.sidebarService.toggleMinimized();
+  }
 
-    return this.notifications.filter(item => {
+  async loadNotifications(): Promise<void> {
+    const data = await this.productService.listExpiredProducts();
+
+    const now = new Date();
+
+    this.notifications = data.map((item: any) => {
       const expDate = new Date(item.expirationDate);
-      return expDate >= now && expDate <= inSevenDays;
+      return {
+        ...item,
+        status: expDate < now ? 'expired' : 'near' // expired=rojo, near=amarillo
+      };
     });
   }
 
   get totalAlerts(): number {
-    return this.expiredProducts.length + this.nearExpiredProducts.length;
+    return this.notifications.length;
   }
-
-
-  showDropdown = false;
 
   toggleDropdown(event: Event): void {
     event.stopPropagation();
@@ -70,7 +63,7 @@ export class TopbarComponent {
   }
 
   @HostListener('document:click', ['$event'])
-  closeDropdown(event: Event) {
+  closeDropdown(): void {
     this.showDropdown = false;
   }
 }
