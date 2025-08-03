@@ -16,7 +16,7 @@ export class TokenInterceptorService {
         if (token) {
           config.headers.set('Authorization', `Bearer ${token}`);
         }
-        config.timeout = 5000; // Añadir tiempo de espera de 5 segundos
+        config.timeout = 25000; // Añadir tiempo de espera de 5 segundos
         return config;
       },
       (error: any) => Promise.reject(error)
