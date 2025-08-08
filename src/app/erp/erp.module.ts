@@ -57,7 +57,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AssignmentListComponent } from './views/assignment-list/assignment-list.component'; 
 
 import { MatMenuModule } from '@angular/material/menu'; 
-import { MatBadgeModule } from '@angular/material/badge'; 
+import { MatBadgeModule } from '@angular/material/badge';
+import { ClientsListComponent } from './views/clients-list/clients-list.component'; 
 
 @NgModule({
   declarations: [
@@ -73,7 +74,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     DashboardComponent,
     DiscountModalComponent,
     SearchAutocompleteComponent, 
-    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent, RelativeDatePipe, EtiquetasCantidadDialogComponent, ProductOptionsModalComponent, BarberSuppliesTrackerComponent, AssignmentListComponent 
+    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent, RelativeDatePipe, EtiquetasCantidadDialogComponent, ProductOptionsModalComponent, BarberSuppliesTrackerComponent, AssignmentListComponent, ClientsListComponent 
   ],
   imports: [  
 
