@@ -30,4 +30,17 @@ export class ClientsService {
       throw error;
     }
   }
+    async getClients(page: number, limit: number, search: string) {
+    try {
+      const response = await axios.post(`${this.API_URL}listclients`, {
+        page,
+        limit,
+        search
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error al obtener clientes:', error);
+      throw error;
+    }
+  }
 }
