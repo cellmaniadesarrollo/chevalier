@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
 import { EtiquetasCantidadDialogComponent } from '../../layout/etiquetas-cantidad-dialog/etiquetas-cantidad-dialog.component';
 import { ProductOptionsModalComponent } from '../../containers/product-options-modal/product-options-modal.component';
+import { EditClientComponent } from '../../layout/edit-client/edit-client.component';
 
 @Injectable({
   providedIn: 'root'
@@ -62,4 +63,14 @@ openCantidadDialog(initialValue: number = 1): Promise<number | undefined> {
       data: data
     });
   }
+
+   abrirModalEditarCliente(data: any) { 
+  const dialogRef = this.dialog.open(EditClientComponent, {
+    width: '700px',
+    height: '450px',
+    data: data
+  });
+
+  return dialogRef; 
+}
 }

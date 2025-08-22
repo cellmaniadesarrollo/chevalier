@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ClientsService } from '../../service/clients/clients.service';
+import { ModalService } from '../../service/modal/modal.service';
 @Component({
   selector: 'app-clients-list',
   templateUrl: './clients-list.component.html',
@@ -14,7 +15,7 @@ displayedColumns: string[] = ['name', 'cedula', 'phone','dateOfBirth'];
   pageSize: number = 30;
   currentPage: number = 1;
 
-  constructor(private clientService: ClientsService) {}
+  constructor(private clientService: ClientsService,private modalservice:ModalService) {}
 
   ngOnInit(): void {
     this.loadClients();
@@ -43,4 +44,12 @@ displayedColumns: string[] = ['name', 'cedula', 'phone','dateOfBirth'];
     this.currentPage = event.pageIndex + 1;
     this.loadClients();
   }
+
+abrirModalEditarCliente(data: any) {
+  this.modalservice.abrirModalEditarCliente(data).afterClosed().subscribe((result) => {
+    if (result === 'updated') {   // 🔹 Recibir señal desde modal
+      this.loadClients();         // 👉 Recarga clientes
+    }
+  });
+}
 }
