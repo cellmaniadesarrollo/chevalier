@@ -58,7 +58,8 @@ import { AssignmentListComponent } from './views/assignment-list/assignment-list
 
 import { MatMenuModule } from '@angular/material/menu'; 
 import { MatBadgeModule } from '@angular/material/badge';
-import { ClientsListComponent } from './views/clients-list/clients-list.component'; 
+import { ClientsListComponent } from './views/clients-list/clients-list.component';
+import { EditClientComponent } from './layout/edit-client/edit-client.component'; 
 
 @NgModule({
   declarations: [
@@ -74,7 +75,7 @@ import { ClientsListComponent } from './views/clients-list/clients-list.componen
     DashboardComponent,
     DiscountModalComponent,
     SearchAutocompleteComponent, 
-    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent, RelativeDatePipe, EtiquetasCantidadDialogComponent, ProductOptionsModalComponent, BarberSuppliesTrackerComponent, AssignmentListComponent, ClientsListComponent 
+    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent, RelativeDatePipe, EtiquetasCantidadDialogComponent, ProductOptionsModalComponent, BarberSuppliesTrackerComponent, AssignmentListComponent, ClientsListComponent, EditClientComponent 
   ],
   imports: [  
 

@@ -7,11 +7,11 @@ environment
   providedIn: 'root'
 })
 export class ClientsService {
-  private API_URL = environment.apiUrl+'/api/'; // URL del backend
+  private API_URL = environment.apiUrl + '/api/'; // URL del backend
   constructor(private tokenInterceptor: TokenInterceptorService) { }
 
-   // Método para enviar los datos del cliente al backend
-   async saveClient(clientData: any): Promise<any> {
+  // Método para enviar los datos del cliente al backend
+  async saveClient(clientData: any): Promise<any> {
     try {
       const response = await axios.post(`${this.API_URL}saveclients`, clientData);
       return response.data;
@@ -20,8 +20,8 @@ export class ClientsService {
       throw error;
     }
   }
-   // Método para enviar los datos del cliente al backend
-   async findClient(clientData: any): Promise<any> {
+  // Método para enviar los datos del cliente al backend
+  async findClient(clientData: any): Promise<any> {
     try {
       const response = await axios.post(`${this.API_URL}findclients`, clientData);
       return response.data;
@@ -30,13 +30,31 @@ export class ClientsService {
       throw error;
     }
   }
-    async getClients(page: number, limit: number, search: string) {
+  async getClients(page: number, limit: number, search: string) {
     try {
       const response = await axios.post(`${this.API_URL}listclients`, {
         page,
         limit,
         search
       });
+      return response.data;
+    } catch (error) {
+      console.error('Error al obtener clientes:', error);
+      throw error;
+    }
+  }
+  async findOneClient(data: any) {
+    try {
+      const response = await axios.post(`${this.API_URL}findoneclient`, data);
+      return response.data;
+    } catch (error) {
+      console.error('Error al obtener clientes:', error);
+      throw error;
+    }
+  }
+   async editOneClient(data: any) {
+    try {
+      const response = await axios.post(`${this.API_URL}editoneclient`, data);
       return response.data;
     } catch (error) {
       console.error('Error al obtener clientes:', error);

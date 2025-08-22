@@ -55,3 +55,10 @@ mat-paginator {
   display: flex;
   justify-content: flex-end;
 }
+.clickable-cell {
+  cursor: pointer;
+}
+
+.clickable-cell:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
