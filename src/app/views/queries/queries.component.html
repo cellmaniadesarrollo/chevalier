@@ -106,6 +106,7 @@
             <table class="table table-striped table-hover">
               <thead class="table-dark">
                 <tr>
+                  <th>Servicio</th>
                   <th>Fecha de Venta</th>
                   <th>Barbero</th>
                   <th>Cajero</th>
@@ -113,6 +114,7 @@
               </thead>
               <tbody>
                 <tr *ngFor="let sale of ticket.relatedSales">
+                  <td>{{ sale.productDetails.name }}</td>
                   <td>{{ sale.saleDate | date:'dd/MM/yyyy HH:mm' }}</td>
                   <td>{{ sale.barberName }}</td>
                   <td>{{ sale.cashierName }}</td>
