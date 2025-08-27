@@ -127,12 +127,14 @@ export class SalesService {
 
   async Salesprintticket(data: any): Promise<any> {
     const requests = [
+      
       axios.post('https://192.168.31.240:3051/printticktets', data)
+      //axios.post('https://localhost:3051/printticktets', data)
         .then(response => ({ status: 'fulfilled', data: response.data }))
         .catch(error => ({ status: 'rejected', reason: error })), 
-      axios.post('https://192.168.0.100:3051/printticktets', data)
-        .then(response => ({ status: 'fulfilled', data: response.data }))
-        .catch(error => ({ status: 'rejected', reason: error }))
+      // axios.post('https://192.168.0.100:3051/printticktets', data)
+      //   .then(response => ({ status: 'fulfilled', data: response.data }))
+      //   .catch(error => ({ status: 'rejected', reason: error }))
     ];
   
     try {
