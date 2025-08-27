@@ -11,6 +11,7 @@ export interface RelatedSale {
   } | SaleItem[];
   saleDate: string | Date;
   barberName: string;
+  productDetails:{name:string}
   cashierName: string;
 }
 
