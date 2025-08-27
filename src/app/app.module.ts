@@ -43,6 +43,7 @@ import { LoginComponent } from './views/login/login.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { QueriesComponent } from './views/queries/queries.component';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { RelativeDatePipe } from './pipe/relative-date/relative-date.pipe';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'i18n/', '.json');
@@ -74,9 +75,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     SocialMediaLinksComponent,
     TeamMembersComponent,
     LoginComponent,
-    QueriesComponent
+    QueriesComponent,RelativeDatePipe
   ],
   imports: [
+     
     BrowserModule,
     AppRoutingModule,
     MatToolbarModule,

@@ -115,8 +115,8 @@
               <tbody>
                 <tr *ngFor="let sale of ticket.relatedSales">
                   <td>{{ sale.productDetails.name }}</td>
-                  <td>{{ sale.saleDate | date:'dd/MM/yyyy HH:mm' }}</td>
-                  <td>{{ sale.barberName }}</td>
+                  <td>{{ sale.saleDate | relativeDate }}</td>
+                  <td>{{ sale.barberName  }}</td>
                   <td>{{ sale.cashierName }}</td>
                 </tr>
               </tbody>

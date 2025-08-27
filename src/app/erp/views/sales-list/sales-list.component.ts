@@ -62,6 +62,7 @@ export class SalesListComponent implements OnInit {
   async printTicket(sale: any) {
     try {
       const datas = await this.salesservice.Salesgetdataprintticket({ id: sale })
+      console.log(datas)
       await this.salesservice.Salesprintticket(datas)
     } catch (error) {
       console.log(error)
