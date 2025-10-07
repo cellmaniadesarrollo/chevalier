@@ -28,6 +28,7 @@ export interface GroupedSalesI {
     firstname: string; // Nombre del cajero
     lastname: string; // Apellido del cajero
   };
+  
   productsOrServices: {
     item: string; // ID del producto o servicio
     price: number; // Precio del producto o servicio
@@ -35,14 +36,21 @@ export interface GroupedSalesI {
     discountDetails: {
       value: number; // Valor del descuento
       type: 'PERCENTAGE' | 'FIXED'; // Tipo de descuento (porcentaje o fijo)
+                  collaborators_discount: any;
+            main_discount:  any;
     };
+     collaborators?: ColaboradorI[];
   }[];
   saleDate: string; // Fecha de la venta
   paymentMethod: {
     name: string; // Método de pago (e.g., 'EFECTIVO')
   };
 }
-  
+  export interface ColaboradorI {
+  barbero?: any;
+  valor?: number;
+   firstname?: any;  lastname?: any;   value?: any;
+}
 export interface ListBarberI {
     id: string;
     name: string;
