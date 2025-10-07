@@ -131,7 +131,8 @@ export class ServiceandcutsComponent {
   }
 
   async getnewdata() {
-    const data = await this.sales.getNewSalesData() 
+    const data = await this.sales.getNewSalesData()
+console.log(data)
     this.facturaInfo.cobrador = data.user
     this.facturaInfo.fecha = data.date
     this.barberos = data.hairdresser
@@ -144,7 +145,7 @@ export class ServiceandcutsComponent {
 
     });
     this.sales1 = data.products;
-    
+
     this.groupedSales = data.products;
   }
 
@@ -173,16 +174,28 @@ export class ServiceandcutsComponent {
 
   // Método para agregar servicio
   agregarServicio(serv: any) {
-    const servicio = this.corteForm.get('servicioBuscador')?.value as ListProductsI;
+    const servicio = { ...(this.corteForm.get('servicioBuscador')?.value as any) };
+    console.log('ser', servicio)
     servicio.quantity = 1;
-    if (servicio && !this.serviciosAgregados.includes(servicio)) {
 
-      this.serviciosAgregados = [...this.serviciosAgregados, servicio];  // Clona la lista para actualizar la referencia
-     console.log(this.serviciosAgregados)
+    // Inicializa colaboradores
+    if (servicio.collaborators && servicio.collaborators > 0) {
+      servicio.colaboradoresSeleccionados = Array(servicio.collaborators).fill(null).map(() => ({
+        barbero: null,
+        valor: null
+      }));
+    } else {
+      servicio.colaboradoresSeleccionados = [];
+    }
+
+    // Evitar duplicados
+    const existe = this.serviciosAgregados.some(s => s._id === servicio._id);
+    if (!existe) {
+      this.serviciosAgregados = [...this.serviciosAgregados, servicio];
+
       this.calcularTotal();
     }
   }
-
   // Método para manejar el cambio de selección de precio en el select
   handlePriceChange(element: any): void {
     if (element.selectedPrice !== 'custom') {
@@ -300,7 +313,9 @@ export class ServiceandcutsComponent {
           price: servicio.price,
           discount: servicio.selectedDiscount?._id || null,
           discountName: servicio.selectedDiscount?.name || null,
-          skipCounter: false
+          skipCounter: false,
+          colaboradoresSeleccionados: servicio.colaboradoresSeleccionados || null,
+          collaborators: servicio.collaborators || null
         };
       }
     });
@@ -384,7 +399,14 @@ export class ServiceandcutsComponent {
 
     return `${barbero.name.trim()} `
   }
+  displayAyudante(barbero: ListHairdresserI): string {
 
+    if (!barbero) {
+      return '';
+    }
+
+    return `${barbero.name.trim()} `
+  }
   displayServicio(servicio: any): string {
     if (!servicio) {
       return '';
@@ -445,7 +467,7 @@ export class ServiceandcutsComponent {
 
   async salesfinddiscount(data: any) {
 
-    const datas: ListDiscounts[] = await this.sales.getSalesDiscount({ find: data }); 
+    const datas: ListDiscounts[] = await this.sales.getSalesDiscount({ find: data });
     const hasFalseIsGlobal = datas.some(discount => discount.isGlobal === false);
 
     if (hasFalseIsGlobal) {
@@ -521,16 +543,19 @@ export class ServiceandcutsComponent {
     if (serviciosAgregados.length === 0 || descuentos.length === 0) {
       console.warn("No hay servicios agregados o descuentos disponibles para procesar.");
       return;
-    }
-
+    } 
     serviciosAgregados.forEach(servicio => {
       // Guardar el descuento seleccionado actual
       const previousSelectedDiscount = servicio.selectedDiscount ?
-        { _id: servicio.selectedDiscount._id, discountType: servicio.selectedDiscount.discountType, value: servicio.selectedDiscount.value }
+      
+        {
+          _id: servicio.selectedDiscount._id, discountType: servicio.selectedDiscount.discountType, value: servicio.selectedDiscount.value,
+          main_discount: servicio.selectedDiscount.main_discount, collaborators_discount: servicio.selectedDiscount.collaborators_discount
+        }
         : undefined;
       // Inicializar o reconstruir la propiedad discount
       servicio.discount = [];
-
+ 
       descuentos.forEach(descuento => {
         if (descuento.productsOrServices.length === 0) {
           // Si no hay productos específicos, aplicar el descuento a todos
@@ -538,7 +563,9 @@ export class ServiceandcutsComponent {
             _id: descuento._id,
             discountType: descuento.discountType,
             value: descuento.value,
-            name: descuento.name
+            name: descuento.name,
+            main_discount: descuento.main_discount,
+            collaborators_discount: descuento.collaborators_discount
           });
         } else {
           // Comparar los IDs y aplicar el descuento si coincide
@@ -551,7 +578,9 @@ export class ServiceandcutsComponent {
               _id: descuento._id,
               discountType: descuento.discountType,
               value: descuento.value,
-              name: descuento.name
+              name: descuento.name,
+            main_discount: descuento.main_discount,
+            collaborators_discount: descuento.collaborators_discount
             });
           }
         }
@@ -577,29 +606,63 @@ export class ServiceandcutsComponent {
     });
   }
 
-  calcularTotales(servicios: any[]) { 
+  calcularTotales(servicios: any[]) {
     let subtotal = 0;
     let totalDescuento = 0;
 
     servicios.forEach(servicio => {
-      const precio = servicio.price || 0;
-      const descuento = servicio.selectedDiscount?.value || 0;
-      const tipoDescuento = servicio.selectedDiscount?.discountType;
+      const precioPrincipal = Number(servicio.price) || 0;
+      const cantidad = Number(servicio.quantity) || 1;
+      const colaboradores = servicio.colaboradoresSeleccionados || [];
+      const descuentoSel = servicio.selectedDiscount;
 
+      let subtotalServicio = 0;
       let descuentoAplicado = 0;
 
-      // Verificar el tipo de descuento
-      if (tipoDescuento === 'PERCENTAGE') {
-        descuentoAplicado = (descuento / 100) * precio; // Descuento en porcentaje
-      } else if (tipoDescuento === 'FIXED') {
-        descuentoAplicado = descuento; // Descuento fijo
+      // --- Subtotal principal ---
+      const subtotalMain = precioPrincipal * cantidad;
+      subtotalServicio += subtotalMain;
+
+      // --- Subtotal colaboradores ---
+      const subtotalColaboradores = colaboradores.reduce((acc: number, col: any) => {
+        return acc + (Number(col.valor) || 0);
+      }, 0);
+      subtotalServicio += subtotalColaboradores;
+
+      // --- Calcular descuento ---
+      if (descuentoSel && descuentoSel.value) {
+        const valorDescuento = Number(descuentoSel.value);
+        const tipoDescuento = descuentoSel.discountType;
+        const aplicaMain = descuentoSel.main_discount;
+        const aplicaColaboradores = descuentoSel.collaborators_discount;
+
+        // Descuento al main
+        if (aplicaMain) {
+          const base = subtotalMain;
+          if (tipoDescuento === 'PERCENTAGE') {
+            descuentoAplicado += (valorDescuento / 100) * base;
+          } else if (tipoDescuento === 'FIXED') {
+            descuentoAplicado += valorDescuento;
+          }
+        }
+        console.log(subtotalColaboradores, aplicaColaboradores)
+        // Descuento a colaboradores
+        if (aplicaColaboradores && subtotalColaboradores > 0) {
+          const base = subtotalColaboradores;
+          if (tipoDescuento === 'PERCENTAGE') {
+            descuentoAplicado += (valorDescuento / 100) * base;
+          } else if (tipoDescuento === 'FIXED') {
+            // Si es FIXED, lo aplicamos proporcionalmente entre colaboradores
+            descuentoAplicado += valorDescuento;
+          }
+        }
       }
 
-     subtotal += (servicio.price || 0) * (servicio.quantity || 1);
+      subtotal += subtotalServicio;
       totalDescuento += descuentoAplicado;
     });
 
-    // Actualizar los totales calculados
+    // --- Totales finales ---
     this.totales = {
       subtotal,
       totalDescuento,
@@ -607,36 +670,57 @@ export class ServiceandcutsComponent {
     };
   }
 
-  getSubtotal(productsOrServices: any[]): number {
-    return productsOrServices.reduce((acc, product) => acc + (product.price*product.quantity), 0);
-  }
+getSubtotal(productsOrServices: any[]): number {
+  return productsOrServices.reduce((acc, p) => {
+    const base = (p.price || 0) * (p.quantity || 1);
+    const collaboratorsTotal = (p.collaborators || []).reduce(
+      (sum: number, c: any) => sum + (c.value || 0),
+      0
+    );
+    return acc + base + collaboratorsTotal;
+  }, 0);
+}
 
-  getTotalDiscounts(productsOrServices: any[]): number {
-    return productsOrServices.reduce((acc, product) => {
-       
-      const discount = product.discountDetails.value || 0;
+getTotalDiscounts(productsOrServices: any[]): number {
+  return this.getSubtotal(productsOrServices) - this.getTotalWithDiscounts(productsOrServices);
+}
+getTotalWithDiscounts(productsOrServices: any[]): number {
+  return productsOrServices.reduce((acc, product) => {
+    const discount = product.discountDetails?.value || 0;
+    const discountType = product.discountDetails?.type || 'NONE';
+    const mainDiscount = product.discountDetails?.main_discount ?? true;
+    const collaboratorsDiscount = product.discountDetails?.collaborators_discount ?? true;
 
-      if (product.discountDetails.type === 'PERCENTAGE') {
-        return acc + ((product.price*product.quantity)* discount) / 100;
-      } else if (product.discountDetails.type === 'FIXED') {
-        return acc + discount;
+    let total = 0;
+
+    // --- Precio principal ---
+    let mainPrice = product.price * (product.quantity || 1);
+    if (mainDiscount) {
+      if (discountType === 'PERCENTAGE') {
+        mainPrice -= (mainPrice * discount) / 100;
+      } else if (discountType === 'FIXED') {
+        mainPrice -= discount;
       }
+    }
 
-      return acc; // Si no tiene descuento
-    }, 0);
-  }
-  getTotalWithDiscounts(productsOrServices: any[]): number {
-    return productsOrServices.reduce((acc, product) => {
-      const discount = product.discountDetails.value || 0;
-      let discountedPrice = product.price*product.quantity;
+    total += Math.max(mainPrice, 0);
 
-      if (product.discountDetails.type === 'PERCENTAGE') {
-        discountedPrice -= (product.price * discount) / 100;
-      } else if (product.discountDetails.type === 'FIXED') {
-        discountedPrice -= discount;
-      }
+    // --- Colaboradores ---
+    if (Array.isArray(product.collaborators) && product.collaborators.length > 0) {
+      product.collaborators.forEach((col: any) => {
+        let colPrice = col.value || 0;
+        if (collaboratorsDiscount) {
+          if (discountType === 'PERCENTAGE') {
+            colPrice -= (colPrice * discount) / 100;
+          } else if (discountType === 'FIXED') {
+            colPrice -= discount;
+          }
+        }
+        total += Math.max(colPrice, 0);
+      });
+    }
 
-      return acc + Math.max(discountedPrice, 0); // Evitar precios negativos
-    }, 0);
-  }
+    return acc + total;
+  }, 0);
+}
 }

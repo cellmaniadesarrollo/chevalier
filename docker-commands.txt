@@ -25,7 +25,7 @@ Si la rama ya existe localmente:
 bash
 git checkout feature/publicacionesFB
 🔷 Detener contenedores y eliminar redes/volúmenes temporales  
-🟢 docker compose -f docker-compose.dev.yml down
+🟢 docker compose -f docker-compose.dev.yml down -v
 
 
 
