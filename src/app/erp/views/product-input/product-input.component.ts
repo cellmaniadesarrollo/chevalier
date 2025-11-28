@@ -83,5 +83,12 @@ export class ProductInputComponent {
       this.backend.printTicketChevalier(item[0])
     }
   }
+  abrirModalImpresionDocumentoIngreso(id:any,numero:any) {
+ 
 
+    const dialogRef = this.modalService.openIngresoPrintDocumentModal(id,numero) 
+      dialogRef.afterClosed().subscribe(result => {
+    console.log('Modal cerrado, resultado:', result);
+  });
+  }
 }

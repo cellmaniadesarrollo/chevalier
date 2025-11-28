@@ -1,0 +1,85 @@
+<div class="client-list-container">
+  <!-- Título -->
+  <h1 class="client-title">Listado de Descuentos</h1>
+  <!-- Botón Crear Descuento -->
+  <div class="create-button-container">
+    <button mat-raised-button color="primary" (click)="abrirModalCrearDescuento()">
+      Crear Descuento
+    </button>
+  </div>
+
+  <!-- Filtro centrado -->
+  <div class="filter-section">
+    <div class="row justify-content-center">
+      <div class="col-sm-6">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Buscar Descuento</mat-label>
+          <input matInput (keyup.enter)="applyFilters()" placeholder="Buscar por nombre, cédula o teléfono"
+            [(ngModel)]="searchTerm" />
+          <button mat-icon-button matSuffix (click)="applyFilters()">
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <!-- Tabla -->
+  <div class="table-section">
+    <table mat-table [dataSource]="filteredDiscounts" class="mat-elevation-z8 full-width-table">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Nombre</th>
+        <td mat-cell *matCellDef="let client" (dblclick)="abrirModalEditarDescuento(client._id)" class="clickable-cell">
+          {{ client.name}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+        <td mat-cell *matCellDef="let client" (dblclick)="abrirModalEditarDescuento(client._id)" class="clickable-cell">
+          {{ client.description }}
+        </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef> Valor </th>
+        <td mat-cell *matCellDef="let client" (dblclick)="abrirModalEditarDescuento(client._id)" class="clickable-cell">
+          {{ client.discounttype === 'PERCENTAGE' ? client.value + '%' : '$' + client.value }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="from">
+        <th mat-header-cell *matHeaderCellDef>Desde
+        </th>
+        <td mat-cell *matCellDef="let client" (dblclick)="abrirModalEditarDescuento(client._id)" class="clickable-cell">
+          {{ toDatetimeLocal(client.from )}} 
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="util">
+        <th mat-header-cell *matHeaderCellDef>Hasta
+        </th>
+        <td mat-cell *matCellDef="let client" (dblclick)="abrirModalEditarDescuento(client._id)" class="clickable-cell">
+          {{ toDatetimeLocal(client.until) }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="global">
+        <th mat-header-cell *matHeaderCellDef> Global </th>
+        <td mat-cell *matCellDef="let client" (dblclick)="abrirModalEditarDescuento(client._id)" class="clickable-cell">
+          {{ client.global ? 'Global' : 'No global' }}
+        </td>
+      </ng-container>
+      <!-- Header y Filas -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+
+
+  <!-- Paginación -->
+  <mat-paginator [length]="totalClients" [pageSize]="pageSize" [pageIndex]="currentPage - 1"
+    [pageSizeOptions]="[30, 50, 100]" (page)="onPageChange($event)">
+  </mat-paginator>
+</div>

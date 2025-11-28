@@ -30,7 +30,11 @@
     <i class="bi bi-clipboard-data me-3"></i>
     <span *ngIf="!sidebarService.isMinimized()">reportes</span>
   </button>
-
+  <button *ngIf="isUserAdminOrSupervisor()" routerLink="/erp/discounts"
+    class="btn btn-dark sidebar-button d-flex align-items-center p-3 w-100">
+    <i class="bi bi-cash-stack me-3"></i>
+    <span *ngIf="!sidebarService.isMinimized()">Descuentos</span>
+  </button>
 
   <!-- Botón Productos con colapso -->
   <div class="w-100">

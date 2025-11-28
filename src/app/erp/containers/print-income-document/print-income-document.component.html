@@ -1,0 +1,21 @@
+<div class="container py-4">
+
+  <div class="text-center">
+    <h2 class="modal-title mb-3">Imprimir Documento</h2>
+
+    <p class="modal-text mb-4">
+      ¿Deseas imprimir el <strong>Documento N° {{ data.numero }}</strong>?
+    </p>
+
+    <div class="d-flex justify-content-center gap-2">
+      <button mat-raised-button color="primary" (click)="printDocument()">
+        🖨️ Imprimir Documento N° {{ data.numero }}
+      </button>
+
+      <button mat-raised-button color="warn" (click)="closeModal()">
+        ❌ Cancelar
+      </button>
+    </div>
+  </div>
+
+</div>

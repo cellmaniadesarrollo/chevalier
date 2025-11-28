@@ -112,6 +112,15 @@ export class ProductsService {
       throw error;
     }
   }
+    async PrintDocumentIncome(data: any): Promise<any> {
+    try {
+      const response = await axios.post(`${this.API_URL}printdocumentincome`, {data});
+      return response.data
+    } catch (error) {
+      console.error('Error saving client:', error);
+      throw error;
+    }
+  }
   async listProductsIncome(data: any): Promise<any> {
     try {
       const response = await axios.post(`${this.API_URL}listproductincome`, data);
