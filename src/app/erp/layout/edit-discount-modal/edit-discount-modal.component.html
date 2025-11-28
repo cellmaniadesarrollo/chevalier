@@ -1,0 +1,217 @@
+<h2 class="titulo-modal">
+    {{ isEdit ? 'Editar Descuento' : 'Nuevo Descuento' }}
+</h2>
+<form [formGroup]="discountForm" class="container">
+
+    <div class="row">
+
+        <!-- TÍTULO DEL DESCUENTO -->
+        <div class="col-md-6 mb-3">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Nombre del Descuento</mat-label>
+                <input matInput formControlName="tituloDescuento" placeholder="Ingrese el nombre del descuento">
+                <mat-error *ngIf="discountForm.get('tituloDescuento')?.invalid">
+                    Este campo es obligatorio
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <!-- OBSERVACIONES -->
+        <div class="col-md-6 mb-3">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Descripcion</mat-label>
+                <textarea matInput placeholder="Añadir Descripcion" formControlName="observaciones"></textarea>
+            </mat-form-field>
+        </div>
+
+        <!-- TIPO DE DESCUENTO - SELECT -->
+        <div class="col-md-6 mb-3">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Tipo de Descuento</mat-label>
+                <mat-select formControlName="tipoDescuento">
+                    <mat-option *ngFor="let tipo of tiposDescuento" [value]="tipo.id">
+                        {{ traducirTipo(tipo.name) }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <!-- VALOR DEL DESCUENTO -->
+        <div class="col-md-6 mb-3">
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Valor del Descuento</mat-label>
+                <input matInput type="number" formControlName="valorDescuento" placeholder="Ej: 10">
+            </mat-form-field>
+        </div>
+
+        <!-- FECHA INICIO -->
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Fecha y Hora de Inicio</label>
+            <input type="datetime-local" class="form-control" formControlName="fechaInicio">
+        </div>
+
+        <!-- FECHA FIN -->
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Fecha y Hora de Fin</label>
+            <input type="datetime-local" class="form-control" formControlName="fechaFin">
+        </div>
+
+        <!-- CHECKBOXES -->
+        <div class="col-md-12 mb-3">
+            <mat-checkbox formControlName="descuentoGlobal">Descuento global</mat-checkbox>
+        </div>
+
+        <div class="col-md-4">
+            <mat-checkbox formControlName="aplicaPrincipal">Aplicar a principal</mat-checkbox>
+        </div>
+
+        <div class="col-md-4">
+            <mat-checkbox formControlName="aplicaColaboradores">Aplicar a colaboradores</mat-checkbox>
+        </div>
+
+        <div class="col-md-4">
+            <mat-checkbox formControlName="aplicaComision">Aplicar en comisión</mat-checkbox>
+        </div>
+        <!-- 🔹 SECCIÓN DE PRODUCTOS -->
+        <!-- 🔹 BUSCADOR DE PRODUCTOS/SERVICIOS -->
+        <div class="col-sm-12 mt-4">
+            <div class="row">
+                <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>Buscar Producto o Servicio</mat-label>
+                    <input type="text" matInput placeholder="Buscar por nombre, código, etc."
+                        formControlName="productoBuscador" [matAutocomplete]="autoProducto"
+                        (keyup.enter)="searchproducts()" />
+
+                    <!-- Botón lupa -->
+                    <button mat-icon-button matSuffix (click)="searchproducts()" aria-label="Buscar producto">
+                        <mat-icon>search</mat-icon>
+                    </button>
+
+                    <!-- AUTOCOMPLETE -->
+                    <mat-autocomplete #autoProducto="matAutocomplete" [displayWith]="displayProducto"
+                        (optionSelected)="agregarProducto($event.option.value)">
+                        <mat-option *ngFor="let p of productos" [value]="p">
+                            {{ p.name }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- 🔹 TABLA DE PRODUCTOS AGREGADOS -->
+        <div class="col-sm-12">
+            <div class="tabla-scroll mt-3">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let p of productosAgregados; let i = index">
+                            <td>{{ p.name }}</td>
+                            <td>
+                                <button mat-icon-button color="warn" (click)="removeProducto(i)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- BÚSQUEDA Y AGREGAR CLIENTES -->
+        <div class="col-md-12 mt-4" *ngIf="!discountForm.get('descuentoGlobal')?.value">
+
+            <div class="d-flex align-items-center mb-2">
+                <button type="button" mat-raised-button color="primary" (click)="openDialog()">
+                    <i class="fas fa-plus"></i> Añadir Cliente
+                </button>
+            </div>
+
+            <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Buscar Cliente</mat-label>
+                <input type="text" matInput placeholder="Buscar Cliente" formControlName="clienteBuscador"
+                    [matAutocomplete]="autoCliente" (keyup.enter)="searchclients()">
+
+                <button mat-icon-button matSuffix (click)="searchclients()">
+                    <mat-icon>search</mat-icon>
+                </button>
+
+                <mat-autocomplete #autoCliente="matAutocomplete" [displayWith]="displayCliente"
+                    (optionSelected)="onClienteSelected($event.option.value)">
+                    <mat-option *ngFor="let cli of clientes" [value]="cli">
+                        {{ cli.dni }} - {{ cli.names }} {{ cli.lastNames }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <!-- FILTRO DE CLIENTES -->
+            <div class="col-md-6 mb-3">
+                <input type="text" class="form-control" placeholder="Filtrar por DNI o nombre..."
+                    [(ngModel)]="filtroClientes" [ngModelOptions]="{standalone: true}">
+            </div>
+            <!-- TABLA DE CLIENTES AÑADIDOS -->
+            <div class="tabla-scroll">
+                <table class="table table-bordered table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th>DNI</th>
+                            <th>Nombres</th>
+                            <th>Cortes Gratis</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let c of clientesFiltrados(); let i = index">
+                            <td>{{ c.dni }}</td>
+                            <td>{{ c.names }} {{ c.lastNames }}</td>
+                            <td>
+                                <input type="number" class="form-control" [(ngModel)]="c.freeCuts"
+                                    [ngModelOptions]="{standalone: true}" min="0" />
+                            </td>
+                            <td>
+                                <button mat-icon-button color="warn" (click)="removeCliente(i)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-md-12 mt-4">
+        <mat-checkbox formControlName="diasEspecificos">
+            Aplicar en días específicos
+        </mat-checkbox>
+    </div>
+    <div class="col-md-12 mt-3" *ngIf="discountForm.get('diasEspecificos')?.value">
+
+        <label class="fw-bold mb-2">Selecciona los días</label>
+
+        <div class="row">
+            <div class="col-md-3" *ngFor="let dia of diasSemana; let i = index">
+                <mat-checkbox [formControl]="diasFormArray.controls[i]">
+                    {{ dia }}
+                </mat-checkbox>
+            </div>
+        </div>
+
+    </div>
+    <div class="mt-4 text-end">
+        <button mat-raised-button color="primary" (click)="guardarDescuento()">
+            {{ isEdit ? 'Actualizar Descuento' : 'Guardar Descuento' }}
+        </button>
+
+        <button mat-raised-button color="warn" class="ms-2" (click)="cancelar()">
+            Cancelar
+        </button>
+    </div>
+
+</form>

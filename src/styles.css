@@ -60,3 +60,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   line-height: 1.5; /* Ajusta el interlineado si deseas más control sobre el alto */
 }
  
+
+/* styles.scss (global) */
+.mat-mdc-checkbox label,
+.mat-mdc-checkbox .mdc-form-field__label,
+.mat-mdc-checkbox .mat-checkbox-label {
+  color: #111 !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+}
+
+/* cambiar el fondo cuando está checked */
+.mat-mdc-checkbox.mat-mdc-checked .mdc-checkbox__background {
+  background-color: #1976d2 !important;
+  border-color: #1976d2 !important;
+}

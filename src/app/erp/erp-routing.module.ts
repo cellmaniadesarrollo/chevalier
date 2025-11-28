@@ -11,6 +11,7 @@ import { ProductsAdminComponent } from './views/products-admin/products-admin.co
 import { ProductInputComponent } from './views/product-input/product-input.component';
 import { AssignmentListComponent } from './views/assignment-list/assignment-list.component';
 import { ClientsListComponent } from './views/clients-list/clients-list.component';
+import { DicountsListComponent } from './views/dicounts-list/dicounts-list.component';
 const routes: Routes = [{
   path: '', component: ErpComponent,
   canActivate: [authGuard], // Proteger todas las rutas del ERP
@@ -22,6 +23,12 @@ const routes: Routes = [{
     {
       path: 'reports',
       component: ReportsComponent,
+      canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
+      data: { allowedRoles: ['ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos
+    },
+        {
+      path: 'discounts',
+      component: DicountsListComponent,
       canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
       data: { allowedRoles: ['ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos
     },

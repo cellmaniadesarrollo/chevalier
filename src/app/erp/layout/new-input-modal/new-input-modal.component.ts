@@ -158,7 +158,11 @@ this.onCancel()
   onProductSelected(product: any) {
     this.details.push(this.createDetail(product));
     this.productsSearch.setValue('');
+
+  
+this.recalculateTotals();
     if (this.table) this.table.renderRows();
+     
   }
 
   removeDetail(index: number) {
@@ -182,32 +186,44 @@ this.onCancel()
     return this.voucherForm.get('details') as FormArray;
   }
 
-  createDetail(product: any): FormGroup {
-    console.log(product)
-    const group = this.fb.group({
-      productId: [product.id],
-      productName: [product.name], // solo para mostrar
-      cod: [product.cod],
-      pricesale: [product.price||0],
-      quantity: [1, [Validators.required, Validators.min(1)]],
-      unitPrice: [product.unitPrice || 0, [Validators.required, Validators.min(0)]],
-      taxes: [product.taxes, [Validators.min(0)]],
-      subtotal: [0, [Validators.required, Validators.min(0)]], 
-      expiryDate: ['']
-    });
-    // Suscribirse a cambios y actualizar el subtotal automáticamente
-    group.valueChanges.subscribe(values => {
-      const quantity = Number(values.quantity) || 0;
-      const price = Number(values.unitPrice) || 0;
-      const tax = Number(values.taxes) || 0;
+createDetail(product: any): FormGroup {
+  const group = this.fb.group({
+    productId: [product.id],
+    productName: [product.name],
+    cod: [product.cod],
+    pricesale: [product.price || 0],
+    quantity: [1, [Validators.required, Validators.min(1)]],
+    unitPrice: [product.unitPrice || 0, [Validators.required, Validators.min(0)]],
+    taxes: [product.taxes, [Validators.min(0)]],
+    subtotal: [0, [Validators.required, Validators.min(0)]],
+    expiryDate: [''],
+    commission: [product.comision, [Validators.required, Validators.min(0)]],
+  });
 
-      const subtotal = quantity * price * (1 + tax / 100);
-      group.get('subtotal')?.setValue(Number(subtotal.toFixed(2)), { emitEvent: false });
-      this.recalculateTotals();
-    });
+  // Suscribirse a cambios
+  group.valueChanges.subscribe(values => {
+    const quantity = Number(values.quantity) || 0;
+    const price = Number(values.unitPrice) || 0;
+    const tax = Number(values.taxes) || 0;
 
-    return group;
-  }
+    const subtotal = quantity * price * (1 + tax / 100);
+    group.get('subtotal')?.setValue(Number(subtotal.toFixed(2)), { emitEvent: false });
+    this.recalculateTotals();
+  });
+
+// 🔥 CALCULAR UNA VEZ AL CREARLO
+const quantity = group.get('quantity')?.value || 0;
+const price = group.get('unitPrice')?.value || 0;
+const tax = group.get('taxes')?.value || 0;
+
+const subtotal = quantity * price * (1 + tax / 100);
+group.get('subtotal')?.setValue(Number(subtotal.toFixed(2)), { emitEvent: false });
+
+// 🔥 actualizar totales del voucher
+this.recalculateTotals();
+
+  return group;
+}
   displayProductFn(product: any): string {
     return product && product.name ? `${product.cod} - ${product.name}` : '';
   }
@@ -235,11 +251,12 @@ this.onCancel()
     this.voucherForm.get('total')?.setValue(Number(total.toFixed(2)));
   }
 
-  @HostListener('document:keydown.escape', ['$event'])
-  onEscapePressed(event: KeyboardEvent) {
-    event.preventDefault();
-    this.onCancel();
-  }
+@HostListener('document:keydown.escape', ['$event'])
+onEscapePressed(event: Event) {
+  const keyboardEvent = event as KeyboardEvent;
+  keyboardEvent.preventDefault();
+  this.onCancel();
+}
 
   onCancel() {
     this.cancel.emit();

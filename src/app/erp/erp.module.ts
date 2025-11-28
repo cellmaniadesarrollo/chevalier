@@ -59,7 +59,10 @@ import { AssignmentListComponent } from './views/assignment-list/assignment-list
 import { MatMenuModule } from '@angular/material/menu'; 
 import { MatBadgeModule } from '@angular/material/badge';
 import { ClientsListComponent } from './views/clients-list/clients-list.component';
-import { EditClientComponent } from './layout/edit-client/edit-client.component'; 
+import { EditClientComponent } from './layout/edit-client/edit-client.component';
+import { PrintIncomeDocumentComponent } from './containers/print-income-document/print-income-document.component';
+import { DicountsListComponent } from './views/dicounts-list/dicounts-list.component';
+import { EditDiscountModalComponent } from './layout/edit-discount-modal/edit-discount-modal.component'; 
 
 @NgModule({
   declarations: [
@@ -75,7 +78,7 @@ import { EditClientComponent } from './layout/edit-client/edit-client.component'
     DashboardComponent,
     DiscountModalComponent,
     SearchAutocompleteComponent, 
-    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent, RelativeDatePipe, EtiquetasCantidadDialogComponent, ProductOptionsModalComponent, BarberSuppliesTrackerComponent, AssignmentListComponent, ClientsListComponent, EditClientComponent 
+    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent, RelativeDatePipe, EtiquetasCantidadDialogComponent, ProductOptionsModalComponent, BarberSuppliesTrackerComponent, AssignmentListComponent, ClientsListComponent, EditClientComponent, PrintIncomeDocumentComponent, DicountsListComponent, EditDiscountModalComponent 
   ],
   imports: [  
 

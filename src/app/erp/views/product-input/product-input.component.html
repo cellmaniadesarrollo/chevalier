@@ -44,7 +44,11 @@
 
     <ng-container matColumnDef="comprobanteNumero">
       <th mat-header-cell *matHeaderCellDef>Comprobante</th>
-      <td mat-cell *matCellDef="let element">{{ element.comprobanteNumero }}</td>
+      <td mat-cell *matCellDef="let element" 
+    (click)="abrirModalImpresionDocumentoIngreso(element.id,element.comprobanteNumero )" 
+    class="clickable-cell">
+  {{ element.comprobanteNumero }}
+</td>
     </ng-container>
 
     <ng-container matColumnDef="fechaEmision">

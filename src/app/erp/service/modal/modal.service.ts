@@ -5,15 +5,17 @@ import { BehaviorSubject } from 'rxjs';
 import { EtiquetasCantidadDialogComponent } from '../../layout/etiquetas-cantidad-dialog/etiquetas-cantidad-dialog.component';
 import { ProductOptionsModalComponent } from '../../containers/product-options-modal/product-options-modal.component';
 import { EditClientComponent } from '../../layout/edit-client/edit-client.component';
+import { PrintIncomeDocumentComponent } from '../../containers/print-income-document/print-income-document.component';
+import { EditDiscountModalComponent } from '../../layout/edit-discount-modal/edit-discount-modal.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
-   private currentView = new BehaviorSubject<string>('default');
+  private currentView = new BehaviorSubject<string>('default');
   currentView$ = this.currentView.asObservable();
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
   // Cambiar la vista actual del modal
   changeView(viewName: string) {
@@ -23,9 +25,10 @@ export class ModalService {
   openIngresoModal(data?: any) {
     // Resetear a la vista por defecto al abrir
     this.currentView.next('ingreso');
-    
+
     return this.dialog.open(DynamicModalInputComponent, {
-      width: '800px',
+      width: '1000px',
+
       maxHeight: '90vh',
       disableClose: true,
       data: {
@@ -39,7 +42,7 @@ export class ModalService {
   openProveedorModal(data?: any) {
     // Resetear a la vista por defecto al abrir
     this.currentView.next('proveedor');
-    
+
     return this.dialog.open(DynamicModalInputComponent, {
       width: '800px',
       data: {
@@ -49,28 +52,51 @@ export class ModalService {
       }
     });
   }
-openCantidadDialog(initialValue: number = 1): Promise<number | undefined> {
-  const dialogRef = this.dialog.open(EtiquetasCantidadDialogComponent, {
-    width: '300px',
-    data: { initialValue }
-  });
+  openCantidadDialog(initialValue: number = 1): Promise<number | undefined> {
+    const dialogRef = this.dialog.open(EtiquetasCantidadDialogComponent, {
+      width: '300px',
+      data: { initialValue }
+    });
 
-  return dialogRef.afterClosed().toPromise();
-}
- abrirModalConDatos(data: any) {
+    return dialogRef.afterClosed().toPromise();
+  }
+  abrirModalConDatos(data: any) {
     this.dialog.open(ProductOptionsModalComponent, {
       width: '700px',
       data: data
     });
   }
 
-   abrirModalEditarCliente(data: any) { 
-  const dialogRef = this.dialog.open(EditClientComponent, {
-    width: '700px',
-    height: '450px',
-    data: data
-  });
+  abrirModalEditarCliente(data: any) {
+    const dialogRef = this.dialog.open(EditClientComponent, {
+      width: '700px',
+      height: '450px',
+      data: data
+    });
 
-  return dialogRef; 
-}
+    return dialogRef;
+  }
+  abrirModalEditardescuento(data: any = null) {
+    const dialogRef = this.dialog.open(EditDiscountModalComponent, {
+      width: '800px',
+      height: '650px',
+       disableClose: true,
+      data: data
+    });
+
+    return dialogRef;
+  }
+  openIngresoPrintDocumentModal(id?: any, numero?: any) {
+    // Resetear a la vista por defecto al abrir
+    this.currentView.next('ingreso');
+
+    return this.dialog.open(PrintIncomeDocumentComponent, {
+      width: 'auto',
+      height: '200px',
+      maxHeight: '90vh',
+      disableClose: true,
+      data: { id, numero },
+
+    });
+  }
 }

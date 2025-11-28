@@ -13,7 +13,21 @@
 .text-end {
   text-align: end;
 } 
-
+table.table {
+  font-size: 10px; /* Ajusta a tu gusto */
+}
+td input[formControlName="quantity"] {
+  width: 45px;
+}
+td input[formControlName="pricesale"] {
+  width: 50px;
+}
+td input[formControlName="taxes"] {
+  width: 45px;
+}
+.table input.form-control-sm {
+  font-size: 10px !important;
+}
 .table td input.form-control-sm {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
