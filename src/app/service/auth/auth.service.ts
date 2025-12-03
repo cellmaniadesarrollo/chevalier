@@ -81,4 +81,30 @@ export class AuthService {
   getCurrentUser() {
     return JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
   }
+
+
+
+
+// Método para enviar los datos del cliente al backend
+  async saveClient(clientData: any): Promise<any> {
+    try {
+      const response = await axios.post(`${this.API_URL}saveclientspublic`, clientData);
+      return response.data;
+    } catch (error) {
+      console.error('Error saving client:', error);
+      throw error;
+    }
+  }
+  // Método para enviar los datos del cliente al backend
+  async findClient(clientData: any): Promise<any> {
+    try {
+      const response = await axios.post(`${this.API_URL}findclientspublic`, clientData);
+      return response.data;
+    } catch (error) {
+      console.error('Error saving client:', error);
+      throw error;
+    }
+  }
+ 
+
 }

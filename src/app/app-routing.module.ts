@@ -14,6 +14,7 @@ import { SocialMediaLinksComponent } from './views/social-media-links/social-med
 import { LoginComponent } from './views/login/login.component';
 import { QueriesComponent } from './views/queries/queries.component';
 import { authGuard } from './guards/auth.guard';
+import { RegiterClientComponent } from './views/regiter-client/regiter-client.component';
 const routes: Routes = [
   
   {path:'',component:WelcomeComponent },
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path:'terms',component:TermsComponent  },
   {path:'linkssocial',component:SocialMediaLinksComponent  },
   {path:'login',component:LoginComponent },
+  {path:'register-client',component:RegiterClientComponent },
    // Lazy load para el módulo ERP
    {
     path: 'erp',
