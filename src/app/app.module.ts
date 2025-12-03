@@ -44,7 +44,12 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { QueriesComponent } from './views/queries/queries.component';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { RelativeDatePipe } from './pipe/relative-date/relative-date.pipe';
+import { RegiterClientComponent } from './views/regiter-client/regiter-client.component';
 
+ 
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'i18n/', '.json');
 }
@@ -75,7 +80,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     SocialMediaLinksComponent,
     TeamMembersComponent,
     LoginComponent,
-    QueriesComponent,RelativeDatePipe
+    QueriesComponent,RelativeDatePipe, RegiterClientComponent,
+    
   ],
   imports: [
      
@@ -98,6 +104,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }), 
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [
     provideClientHydration(),
