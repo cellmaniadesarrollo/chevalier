@@ -25,23 +25,23 @@ export class QueriesComponent {
 
   constructor(private router: Router, private route: ActivatedRoute, private quierieService: QuerieService) { }
   ngOnInit(): void {
-    this.route.paramMap.subscribe(async params => {
+    this.route.paramMap.subscribe(params => {
       const value = params.get('value');
 
       if (value) {
-        this.isAutoQuery = true;      // 👈 viene por query
-        this.isConsultando = true;    // 👈 muestra spinner
+        this.isAutoQuery = true;
+        this.isConsultando = true;
 
         const decoded = this.decodeValue(value);
+        this.consultaForm.patchValue({ cedula: decoded });
 
-        this.consultaForm.patchValue({
-          cedula: decoded
+        // 👇 fuerza render del spinner
+        setTimeout(async () => {
+          await this.onConsultar();
+
+          this.isConsultando = false;
+          this.isAutoQuery = false;
         });
-
-        await this.onConsultar();
-
-        this.isConsultando = false;   // 👈 oculta spinner
-        this.isAutoQuery = false;     // 👈 vuelve al modo normal
       }
     });
   }
@@ -49,42 +49,39 @@ export class QueriesComponent {
     return this.router.url === '/queries';
   }
 
-async onConsultar() {
-  if (this.consultaForm.invalid) {
-    return;
-  }
+  async onConsultar() { 
 
-  // 👇 SOLO bloquear doble click en modo manual
-  if (!this.isAutoQuery && this.isConsultando) {
-    return;
-  }
+    // 👇 SOLO bloquear doble click en modo manual
+    if (!this.isAutoQuery && this.isConsultando) {
+      return;
+    }
 
-  if (!this.isAutoQuery) {
-    this.isConsultando = true;
-  }
-
-  try {
-    const token = await this.quierieService.executeRecaptcha('submit');
-    this.consultaForm.controls['token'].setValue(token);
-
-    const response = await this.quierieService.sendFeedback(this.consultaForm.value);
-
-    this.sales = response.data;
-    this.discounts = response.discounts;
-
-    this.isConsultaRealizada = true;
-    setTimeout(() => {
-      this.isConsultaRealizada = false;
-    }, 5000);
-
-  } catch (error) {
-    this.errormes = true;
-  } finally {
     if (!this.isAutoQuery) {
-      this.isConsultando = false;
+      this.isConsultando = true;
+    }
+
+    try {
+      const token = await this.quierieService.executeRecaptcha('submit');
+      this.consultaForm.controls['token'].setValue(token);
+
+      const response = await this.quierieService.sendFeedback(this.consultaForm.value);
+
+      this.sales = response.data;
+      this.discounts = response.discounts;
+
+      this.isConsultaRealizada = true;
+      setTimeout(() => {
+        this.isConsultaRealizada = false;
+      }, 5000);
+
+    } catch (error) {
+      this.errormes = true;
+    } finally {
+      if (!this.isAutoQuery) {
+        this.isConsultando = false;
+      }
     }
   }
-}
 
 
   decodeValue(encoded: string): string {
