@@ -8,9 +8,9 @@ import { Component, ViewEncapsulation } from '@angular/core';
 export class TeamMembersComponent {
   teamMembers = [
     {
-      name: 'Ana González',
+      name: 'Rogrelys Luzardo',
       specialty: 'Experta en tratamientos capilares',
-      bio: 'Ana es conocida por su habilidad en tratamientos capilares y cuidado del cabello.',
+      bio: 'Rogrelys es conocida por su habilidad en tratamientos capilares y cuidado del cabello.',
       photo: 'img/team/1.jpg'
     },
     {
