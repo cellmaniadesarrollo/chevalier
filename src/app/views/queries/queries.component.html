@@ -10,13 +10,15 @@
           <p>{{ 'Querie.Detail' | translate }}</p>
         </div>
       </div>
-      <!-- Spinner solo cuando viene por query -->
+
+    <div *ngIf="!isConsultaRealizada " class="custom-consulta-form">
+            <!-- Spinner solo cuando viene por query -->
       <div *ngIf="isAutoQuery && isConsultando" class="text-center my-5">
         <div class="spinner-border text-primary" role="status"></div>
         <p class="mt-3 fw-semibold">Consultando información...</p>
       </div>
       <!-- Mostrar el formulario si la consulta no ha sido realizada -->
-      <form *ngIf="!isConsultaRealizada && !isAutoQuery" [formGroup]="consultaForm" class="custom-consulta-form">
+      <form *ngIf="!isConsultaRealizada && !isAutoQuery" [formGroup]="consultaForm" >
         <label for="cedula" class="custom-consulta-form-label">
           {{ 'Querie.Label' | translate }}
         </label>
@@ -28,6 +30,8 @@
           {{ isConsultando ? ('Querie.Button2' | translate) : ('Querie.Button' | translate) }}
         </button>
       </form>
+    </div>
+
       <!-- Mostrar el mensaje de éxito si la consulta fue realizada -->
       <div *ngIf="isConsultaRealizada" class="success-message">
         <div class="success-icon">✔️</div>
