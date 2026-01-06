@@ -4,6 +4,7 @@ import { QuerieService } from '../../service/querie/querie.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomerTicket, FidelityDiscount } from '../../models/consultacortes.interface';
 import axios from 'axios';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-queries',
   templateUrl: './queries.component.html',
@@ -22,8 +23,22 @@ export class QueriesComponent {
   discounts: FidelityDiscount[] = [];
   errormes: boolean = false; // Add a property to store the error message
 
-  constructor(private router: Router, private quierieService: QuerieService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private quierieService: QuerieService) { }
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(async params => {
+      const value = params.get('value');
 
+      if (value) {
+        const decoded = this.decodeValue(value);
+
+        this.consultaForm.patchValue({
+          cedula: decoded
+        });
+
+        await this.onConsultar();
+      }
+    });
+  }
   isConsultaPage(): boolean {
     return this.router.url === '/queries';
   }
@@ -39,7 +54,7 @@ export class QueriesComponent {
     try {
       // Envía el comentario
       const response = await this.quierieService.sendFeedback(this.consultaForm.value);
-      
+
       this.sales = response.data
       this.discounts = response.discounts;
       this.isConsultaRealizada = true;
@@ -60,5 +75,13 @@ export class QueriesComponent {
     } finally {
       this.isConsultando = false;
     }
+  }
+
+  decodeValue(encoded: string): string {
+    const base64 = encoded
+      .replace(/-/g, '+')
+      .replace(/_/g, '/');
+
+    return atob(base64);
   }
 }
