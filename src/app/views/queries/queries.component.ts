@@ -24,21 +24,25 @@ export class QueriesComponent {
   errormes: boolean = false; // Add a property to store the error message
 
   constructor(private router: Router, private route: ActivatedRoute, private quierieService: QuerieService) { }
-  ngOnInit(): void {
-    this.route.paramMap.subscribe(async params => {
-      const value = params.get('value');
+ngOnInit(): void {
+  this.route.paramMap.subscribe(async params => {
+    const value = params.get('value');
 
-      if (value) {
-        const decoded = this.decodeValue(value);
+    if (value) {
+      const decoded = this.decodeValue(value);
 
-        this.consultaForm.patchValue({
-          cedula: decoded
-        });
+      this.consultaForm.patchValue({
+        cedula: decoded
+      });
 
-        await this.onConsultar();
-      }
-    });
-  }
+      // 🔥 ACTIVA LOADING ANTES
+      this.isConsultando = true;
+
+      // Ejecuta consulta automática
+      await this.onConsultar();
+    }
+  });
+}
   isConsultaPage(): boolean {
     return this.router.url === '/queries';
   }
