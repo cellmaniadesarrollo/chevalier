@@ -27,6 +27,7 @@ const routes: Routes = [
   {path:'data-deletion',component:DataDeletionComponent },
   {path:'comments',component:FeedbackFormComponent  },
   {path:'queries',component:QueriesComponent  },
+  { path: 'queries/q/:value', component: QueriesComponent },
   {path:'terms',component:TermsComponent  },
   {path:'linkssocial',component:SocialMediaLinksComponent  },
   {path:'login',component:LoginComponent },
