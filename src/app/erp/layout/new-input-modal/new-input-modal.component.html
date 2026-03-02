@@ -1,7 +1,7 @@
 <div class="row mt-4 mx-3">
   <h4 class="mb-3 text-center">Nuevo Ingreso</h4>
 
-  <form [formGroup]="voucherForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="voucherForm"   >
     <!-- Fila 1 -->
     <div class="row mb-2">
       <div class="col-md-6">
@@ -214,7 +214,7 @@
       </div>
       <div class="col-md-6 text-end">
         <button mat-stroked-button color="warn" type="button" (click)="onCancel()" class="me-2">Cancelar</button>
-        <button mat-raised-button color="primary" type="submit" [disabled]="voucherForm.invalid">Guardar</button>
+        <button mat-raised-button color="primary" type="button" (click)="onSubmit()" [disabled]="voucherForm.invalid">Guardar</button>
       </div>
     </div>
   </form>

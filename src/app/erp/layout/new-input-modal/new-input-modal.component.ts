@@ -97,7 +97,7 @@ export class NewInputModalComponent {
     this.voucherForm.get('additionalCosts')?.valueChanges.subscribe(() => {
       this.recalculateTotals();
     });
-        this.voucherForm.get('shippingCosttaxes')?.valueChanges.subscribe(() => {
+    this.voucherForm.get('shippingCosttaxes')?.valueChanges.subscribe(() => {
       this.recalculateTotals();
     });
   }
@@ -111,19 +111,19 @@ export class NewInputModalComponent {
   }
 
 
- async onSubmit() {
+  async onSubmit() {
     if (this.voucherForm.valid) {
       console.log('Datos enviados:', this.voucherForm.value);
-      const data=await this.backend.saveProductsIncome(this.voucherForm.value)
-const printPromises = data.printData.map((obj: any) => {
-  return this.backend.printTicketChevalier(obj); // debe devolver una Promesa
-});
+      const data = await this.backend.saveProductsIncome(this.voucherForm.value)
+      const printPromises = data.printData.map((obj: any) => {
+        return this.backend.printTicketChevalier(obj); // debe devolver una Promesa
+      });
 
-Promise.all(printPromises).then(() => {
-this.onCancel()
-});
-      
-       
+      Promise.all(printPromises).then(() => {
+        this.onCancel()
+      });
+
+
       // Aquí puedes llamar a tu servicio para guardar el voucher
     }
   }
@@ -150,7 +150,7 @@ this.onCancel()
   }
   //  productos
   async searchProduct() {
-    console.log('Buscando producto con:', this.productsSearch.value); 
+    console.log('Buscando producto con:', this.productsSearch.value);
     const data = await this.backend.findProductsincome({ find: this.productsSearch.value });
     this.products = data || [];
     this.filteredProducts = this.products; // Inicializar
@@ -159,10 +159,10 @@ this.onCancel()
     this.details.push(this.createDetail(product));
     this.productsSearch.setValue('');
 
-  
-this.recalculateTotals();
+
+    this.recalculateTotals();
     if (this.table) this.table.renderRows();
-     
+
   }
 
   removeDetail(index: number) {
@@ -186,44 +186,44 @@ this.recalculateTotals();
     return this.voucherForm.get('details') as FormArray;
   }
 
-createDetail(product: any): FormGroup {
-  const group = this.fb.group({
-    productId: [product.id],
-    productName: [product.name],
-    cod: [product.cod],
-    pricesale: [product.price || 0],
-    quantity: [1, [Validators.required, Validators.min(1)]],
-    unitPrice: [product.unitPrice || 0, [Validators.required, Validators.min(0)]],
-    taxes: [product.taxes, [Validators.min(0)]],
-    subtotal: [0, [Validators.required, Validators.min(0)]],
-    expiryDate: [''],
-    commission: [product.comision, [Validators.required, Validators.min(0)]],
-  });
+  createDetail(product: any): FormGroup {
+    const group = this.fb.group({
+      productId: [product.id],
+      productName: [product.name],
+      cod: [product.cod],
+      pricesale: [product.price || 0],
+      quantity: [1, [Validators.required, Validators.min(1)]],
+      unitPrice: [product.unitPrice || 0, [Validators.required, Validators.min(0)]],
+      taxes: [product.taxes, [Validators.min(0)]],
+      subtotal: [0, [Validators.required, Validators.min(0)]],
+      expiryDate: [''],
+      commission: [product.comision, [Validators.required, Validators.min(0)]],
+    });
 
-  // Suscribirse a cambios
-  group.valueChanges.subscribe(values => {
-    const quantity = Number(values.quantity) || 0;
-    const price = Number(values.unitPrice) || 0;
-    const tax = Number(values.taxes) || 0;
+    // Suscribirse a cambios
+    group.valueChanges.subscribe(values => {
+      const quantity = Number(values.quantity) || 0;
+      const price = Number(values.unitPrice) || 0;
+      const tax = Number(values.taxes) || 0;
+
+      const subtotal = quantity * price * (1 + tax / 100);
+      group.get('subtotal')?.setValue(Number(subtotal.toFixed(2)), { emitEvent: false });
+      this.recalculateTotals();
+    });
+
+    // 🔥 CALCULAR UNA VEZ AL CREARLO
+    const quantity = group.get('quantity')?.value || 0;
+    const price = group.get('unitPrice')?.value || 0;
+    const tax = group.get('taxes')?.value || 0;
 
     const subtotal = quantity * price * (1 + tax / 100);
     group.get('subtotal')?.setValue(Number(subtotal.toFixed(2)), { emitEvent: false });
+
+    // 🔥 actualizar totales del voucher
     this.recalculateTotals();
-  });
 
-// 🔥 CALCULAR UNA VEZ AL CREARLO
-const quantity = group.get('quantity')?.value || 0;
-const price = group.get('unitPrice')?.value || 0;
-const tax = group.get('taxes')?.value || 0;
-
-const subtotal = quantity * price * (1 + tax / 100);
-group.get('subtotal')?.setValue(Number(subtotal.toFixed(2)), { emitEvent: false });
-
-// 🔥 actualizar totales del voucher
-this.recalculateTotals();
-
-  return group;
-}
+    return group;
+  }
   displayProductFn(product: any): string {
     return product && product.name ? `${product.cod} - ${product.name}` : '';
   }
@@ -241,22 +241,22 @@ this.recalculateTotals();
 
     this.voucherForm.get('subtotal')?.setValue(Number(subtotal.toFixed(2)));
 
-  const shippingCost = Number(this.voucherForm.get('shippingCost')?.value) || 0;
-  const shippingTaxPercent = Number(this.voucherForm.get('shippingCosttaxes')?.value) || 0;
-  const additional = Number(this.voucherForm.get('additionalCosts')?.value) || 0;
+    const shippingCost = Number(this.voucherForm.get('shippingCost')?.value) || 0;
+    const shippingTaxPercent = Number(this.voucherForm.get('shippingCosttaxes')?.value) || 0;
+    const additional = Number(this.voucherForm.get('additionalCosts')?.value) || 0;
 
-  const shippingTotal = shippingCost + (shippingCost * (shippingTaxPercent / 100));
+    const shippingTotal = shippingCost + (shippingCost * (shippingTaxPercent / 100));
 
     const total = subtotal + shippingTotal + additional;
     this.voucherForm.get('total')?.setValue(Number(total.toFixed(2)));
   }
 
-@HostListener('document:keydown.escape', ['$event'])
-onEscapePressed(event: Event) {
-  const keyboardEvent = event as KeyboardEvent;
-  keyboardEvent.preventDefault();
-  this.onCancel();
-}
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscapePressed(event: Event) {
+    const keyboardEvent = event as KeyboardEvent;
+    keyboardEvent.preventDefault();
+    this.onCancel();
+  }
 
   onCancel() {
     this.cancel.emit();
