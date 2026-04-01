@@ -7,7 +7,7 @@ import { TopbarComponent } from './layout/topbar/topbar.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { ServiceandcutsComponent } from './views/serviceandcuts/serviceandcuts.component';
 
-import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,7 +18,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatOptionModule } from '@angular/material/core';
 import { AddclientComponent } from './layout/addclient/addclient.component';
-import { MatDialogModule } from '@angular/material/dialog'; 
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
@@ -26,19 +26,19 @@ import { ClientsService } from './service/clients/clients.service';
 import { TokenInterceptorService } from './service/token-interceptor/token-interceptor.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SalesListComponent } from './views/sales-list/sales-list.component';
-import { ReportsComponent } from './views/reports/reports.component'; 
+import { ReportsComponent } from './views/reports/reports.component';
 import { MatCardModule } from '@angular/material/card';
-import { PdfReportComponent } from './layout/pdf-report/pdf-report.component';  
+import { PdfReportComponent } from './layout/pdf-report/pdf-report.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 
 import { MatDividerModule } from '@angular/material/divider';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CustomChartComponent } from './layout/custom-chart/custom-chart.component'; 
- import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { CustomChartComponent } from './layout/custom-chart/custom-chart.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { DiscountModalComponent } from './layout/discount-modal/discount-modal.component';
-import { SearchAutocompleteComponent } from './layout/search-autocomplete/search-autocomplete.component'; 
+import { SearchAutocompleteComponent } from './layout/search-autocomplete/search-autocomplete.component';
 import { ProductsAdminComponent } from './views/products-admin/products-admin.component';
 import { ProductCreateModalComponent } from './layout/product-create-modal/product-create-modal.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -50,19 +50,20 @@ import { NewInputModalComponent } from './layout/new-input-modal/new-input-modal
 import { RelativeDatePipe } from './pipe/relative-date/relative-date.pipe';
 import { EtiquetasCantidadDialogComponent } from './layout/etiquetas-cantidad-dialog/etiquetas-cantidad-dialog.component';
 import { ProductOptionsModalComponent } from './containers/product-options-modal/product-options-modal.component';
- 
-import { MatTabsModule } from '@angular/material/tabs';
-import { BarberSuppliesTrackerComponent } from './layout/barber-supplies-tracker/barber-supplies-tracker.component'; 
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AssignmentListComponent } from './views/assignment-list/assignment-list.component'; 
 
-import { MatMenuModule } from '@angular/material/menu'; 
+import { MatTabsModule } from '@angular/material/tabs';
+import { BarberSuppliesTrackerComponent } from './layout/barber-supplies-tracker/barber-supplies-tracker.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AssignmentListComponent } from './views/assignment-list/assignment-list.component';
+
+import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { ClientsListComponent } from './views/clients-list/clients-list.component';
 import { EditClientComponent } from './layout/edit-client/edit-client.component';
 import { PrintIncomeDocumentComponent } from './containers/print-income-document/print-income-document.component';
 import { DicountsListComponent } from './views/dicounts-list/dicounts-list.component';
-import { EditDiscountModalComponent } from './layout/edit-discount-modal/edit-discount-modal.component'; 
+import { EditDiscountModalComponent } from './layout/edit-discount-modal/edit-discount-modal.component';
+import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -77,15 +78,15 @@ import { EditDiscountModalComponent } from './layout/edit-discount-modal/edit-di
     CustomChartComponent,
     DashboardComponent,
     DiscountModalComponent,
-    SearchAutocompleteComponent, 
-    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent, RelativeDatePipe, EtiquetasCantidadDialogComponent, ProductOptionsModalComponent, BarberSuppliesTrackerComponent, AssignmentListComponent, ClientsListComponent, EditClientComponent, PrintIncomeDocumentComponent, DicountsListComponent, EditDiscountModalComponent 
+    SearchAutocompleteComponent,
+    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent, RelativeDatePipe, EtiquetasCantidadDialogComponent, ProductOptionsModalComponent, BarberSuppliesTrackerComponent, AssignmentListComponent, ClientsListComponent, EditClientComponent, PrintIncomeDocumentComponent, DicountsListComponent, EditDiscountModalComponent
   ],
-  imports: [  
+  imports: [
 
     CommonModule,
     ErpRoutingModule,
     FormsModule,
-    ReactiveFormsModule ,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
@@ -93,26 +94,27 @@ import { EditDiscountModalComponent } from './layout/edit-discount-modal/edit-di
     MatTableModule,
     MatIconModule,
     MatOptionModule,
-    MatDialogModule ,
+    MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatSnackBarModule, 
-    MatPaginatorModule, 
-    MatCardModule,  
-    MatDividerModule,  
+    MatSnackBarModule,
+    MatPaginatorModule,
+    MatCardModule,
+    MatDividerModule,
     NgApexchartsModule,
-    MatSlideToggleModule, 
+    MatSlideToggleModule,
     MatCheckboxModule,
-     MatTabsModule,
-     MatProgressSpinnerModule, 
+    MatTabsModule,
+    MatProgressSpinnerModule,
 
-         MatMenuModule, 
-    MatBadgeModule, 
-    
+    MatMenuModule,
+    MatBadgeModule,
+    BaseChartDirective
+
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA], 
-  providers: [ClientsService, TokenInterceptorService,],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [ClientsService, TokenInterceptorService, provideCharts(withDefaultRegisterables())],
   exports: [
     CustomChartComponent, // Exporta este componente para que pueda usarse en otros módulos
   ],
