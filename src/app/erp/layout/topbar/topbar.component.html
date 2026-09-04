@@ -1,4 +1,6 @@
 <div class="topbar d-flex justify-content-between align-items-center px-3">
+
+  <!-- LADO IZQUIERDO -->
   <div class="branding d-flex align-items-center">
     <img src="img/cara blanco.png" class="logo me-3" alt="Logo" />
     <span class="chevalier me-3">CHEVALIER</span>
@@ -9,7 +11,7 @@
     </div>
 
     <!-- 🔔 Notificaciones -->
-    <div class="notifications dropdown" [class.show]="showDropdown" (click)="toggleDropdown($event)">
+    <div class="notifications dropdown me-3" [class.show]="showDropdown" (click)="toggleDropdown($event)">
       <button class="btn btn-link position-relative p-0" id="notificationsDropdown" style="width: 40px; height: 40px;">
         <i class="bi bi-bell-fill text-warning fs-4"></i>
         <span *ngIf="totalAlerts > 0"
@@ -42,12 +44,38 @@
         </ng-template>
       </ul>
     </div>
+
+    <!-- 🔹 CAJA: oculta por completo para barbero puro -->
+    <div class="cash-session d-flex align-items-center" *ngIf="cashSessionStatus && !isOnlyHairdresser()">
+      <span *ngIf="cashSessionStatus.hasActiveSession" class="cash-badge cash-badge-open me-2">
+        <i class="bi bi-cash-coin me-1"></i>
+        Caja abierta — ${{ cashSessionStatus.currentExpectedCash | number:'1.2-2' }}
+      </span>
+      <button *ngIf="cashSessionStatus.hasActiveSession" class="btn btn-outline-danger btn-sm me-2"
+        (click)="openCloseCashModal()">
+        Cerrar caja
+      </button>
+      <button *ngIf="cashSessionStatus.hasActiveSession" class="btn btn-outline-primary btn-sm me-2"
+        (click)="openCashMovementModal()">
+        <i class="bi bi-arrow-left-right me-1"></i> Movimiento de caja
+      </button>
+      <button *ngIf="needsToOpenCash" class="btn btn-outline-warning btn-sm" (click)="openCashModal()">
+        <i class="bi bi-cash-coin me-1"></i> Abrir caja
+      </button>
+
+      <button *ngIf="needsToClosePendingSession" class="btn btn-danger btn-sm cash-pending-btn"
+        (click)="openCashModal()">
+        <i class="bi bi-exclamation-triangle-fill me-1"></i> Sesión pendiente
+      </button>
+    </div>
+
   </div>
 
-  <!-- Botón logout -->
+  <!-- LADO DERECHO -->
   <div class="topbar-right d-flex align-items-center">
-    <div class="logout me-3">
+    <div class="logout">
       <button class="btn btn-outline-warning" (click)="logout()">Cerrar Sesión</button>
     </div>
   </div>
+
 </div>

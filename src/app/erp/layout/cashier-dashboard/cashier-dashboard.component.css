@@ -1,0 +1,236 @@
+/* Utilidad de fuente extra pequeña */
+.x-small {
+  font-size: 10px;
+}
+
+/* ══════════════════ KPI CARDS ══════════════════ */
+.kpi-card {
+  border: none !important;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 3px;
+  background: #1f77b4;
+}
+.kpi-card h4 {
+  font-size: 1.15rem;
+}
+
+/* ══════════════════ BARBERO CARD ══════════════════ */
+.barber-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.barber-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fafbfc;
+  cursor: pointer;
+  gap: 8px;
+}
+.barber-header:hover {
+  background: #f1f3f5;
+}
+
+.barber-name {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  font-size: 13px;
+}
+.barber-name i {
+  font-size: 16px;
+  color: #adb5bd;
+}
+.cut-count {
+  font-size: 10px;
+  font-weight: 500;
+  color: #6b7280;
+  background: #e9ecef;
+  padding: 1px 6px;
+  border-radius: 12px;
+}
+
+.barber-compact-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+}
+.total-net {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* ══════════════════ CORTES ══════════════════ */
+.barber-cuts {
+  background: #fff;
+  border-top: 1px solid #f1f3f5;
+}
+
+.cut-row {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.1s ease;
+}
+.cut-row:hover {
+  background: #fcfcfd;
+}
+.cut-row:last-child {
+  border-bottom: none;
+}
+
+.cut-number {
+  font-size: 10px;
+  font-weight: 700;
+  color: #9ca3af;
+}
+.cut-client {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #111827;
+  max-width: 110px;
+}
+.cut-time {
+  font-size: 10px;
+  color: #adb5bd;
+}
+.cut-service {
+  font-size: 10.5px;
+}
+.cut-price {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111827;
+}
+.cut-price-gross {
+  font-size: 11px;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+/* Descuento compacto */
+.discount-tag {
+  font-size: 10px;
+  color: #92400e;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+/* Footer y Etiquetas */
+.payment-method {
+  font-size: 9.5px;
+  font-weight: 500;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 1px 6px;
+  border-radius: 10px;
+}
+.cut-net {
+  font-size: 11px;
+  font-weight: 600;
+  color: #059669;
+}
+
+/* Colaboradores */
+.cut-collaborators {
+  display: flex;
+  align-items: center;
+}
+.collab-label {
+  font-size: 9.5px;
+  color: #9ca3af;
+}
+.collab-item {
+  font-size: 9.5px;
+  background: #e0e7ff;
+  color: #3730a3;
+  padding: 0px 6px;
+  border-radius: 10px;
+}
+
+/* ══════════════════ DESCUENTOS DEL DÍA ══════════════════ */
+.discounts-card .card-body {
+  background: linear-gradient(180deg, #fffbeb 0%, #ffffff 40px);
+}
+
+.discount-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f3f4f6;
+}
+.discount-row:last-child {
+  border-bottom: none;
+}
+.discount-row-meta {
+  font-size: 10px;
+  color: #9ca3af;
+  display: block;
+}
+.discount-row-amount .amount-value {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #dc2626;
+}
+.discount-row-amount .net-value {
+  display: block;
+  font-size: 9.5px;
+  color: #9ca3af;
+}
+
+/* ══════════════════ MOVIMIENTOS RESUMEN ══════════════════ */
+.movements-summary {
+  display: flex;
+  gap: 6px;
+}
+.mov-sum-item {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 10.5px;
+}
+.mov-sum-item.income        { background: #dcfce7; color: #166534; }
+.mov-sum-item.expense       { background: #fee2e2; color: #991b1b; }
+.mov-sum-item.net.positive  { background: #dbeafe; color: #1e40af; }
+.mov-sum-item.net.negative  { background: #fef3c7; color: #92400e; }
+.mov-sum-item strong { font-size: 11.5px; }
+
+/* ══════════════════ LISTAS COMPARTIDAS ══════════════════ */
+.report-list {
+  max-height: 220px;
+  overflow-y: auto;
+}
+.report-list::-webkit-scrollbar { width: 4px; }
+.report-list::-webkit-scrollbar-thumb {
+  background: #e0e0e0;
+  border-radius: 6px;
+}
+
+.report-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+.report-row:last-child { border-bottom: none; }
+.report-row.clickable { cursor: pointer; border-radius: 4px; }
+.report-row.clickable:hover { background: #f8f9fa; }

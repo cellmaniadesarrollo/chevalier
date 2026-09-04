@@ -1,0 +1,111 @@
+<h2 mat-dialog-title>Comisiones de {{ user.username }}</h2>
+
+<mat-dialog-content class="commissions-modal">
+
+  <div class="error-banner" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Formulario para agregar -->
+  <div class="add-commission-form">
+    <mat-form-field appearance="outline" class="flex-2">
+      <mat-label>Servicio</mat-label>
+      <mat-select [(ngModel)]="newCommission.service" (selectionChange)="onServiceChange()">
+        <mat-option *ngFor="let service of services" [value]="service._id">
+          {{ service.name }} <span *ngIf="service.type">({{ service.type.name }})</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="flex-1" *ngIf="selectedNewService && !selectedNewService.isFixedPrice">
+      <mat-label>Valor específico</mat-label>
+      <mat-select [(ngModel)]="newCommission.servicePrice">
+        <mat-option [value]="null">Todos los valores</mat-option>
+        <mat-option *ngFor="let price of selectedNewService.prices" [value]="price">
+          {{ price | currency }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="flex-1">
+      <mat-label>% comisión</mat-label>
+      <input matInput type="number" min="0" max="100" [(ngModel)]="newCommission.rate">
+    </mat-form-field>
+
+    <button mat-mini-fab color="primary" (click)="addCommission()" [disabled]="isSaving"
+            matTooltip="Agregar comisión">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <div class="section-divider">Comisiones asignadas</div>
+
+  <div class="loading-row" *ngIf="isLoading">
+    <mat-spinner diameter="28"></mat-spinner>
+  </div>
+
+  <table class="commissions-table" *ngIf="!isLoading">
+    <thead>
+      <tr>
+        <th>Servicio</th>
+        <th>Valor específico</th>
+        <th>% comisión</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let commission of commissions">
+        <td>{{ commission.service?.name }}</td>
+
+        <ng-container *ngIf="editingId === commission._id; else viewMode">
+          <td>
+            <mat-form-field appearance="outline" class="inline-field" *ngIf="commission.service && !commission.service.isFixedPrice">
+              <mat-select [(ngModel)]="editValues.servicePrice">
+                <mat-option [value]="null">Todos los valores</mat-option>
+                <mat-option *ngFor="let price of commission.service.prices" [value]="price">
+                  {{ price | currency }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <span *ngIf="commission.service?.isFixedPrice">-</span>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" class="inline-field">
+              <input matInput type="number" min="0" max="100" [(ngModel)]="editValues.rate">
+            </mat-form-field>
+          </td>
+          <td class="actions-cell">
+            <button mat-icon-button color="primary" (click)="saveEdit(commission)" matTooltip="Guardar">
+              <mat-icon>check</mat-icon>
+            </button>
+            <button mat-icon-button (click)="cancelEdit()" matTooltip="Cancelar">
+              <mat-icon>close</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <ng-template #viewMode>
+          <td>{{ commission.servicePrice !== null ? (commission.servicePrice | currency) : 'Todos' }}</td>
+          <td>{{ commission.rate }}%</td>
+          <td class="actions-cell">
+            <button mat-icon-button (click)="startEdit(commission)" matTooltip="Editar">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="removeCommission(commission)" matTooltip="Eliminar">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-template>
+      </tr>
+
+      <tr *ngIf="commissions.length === 0">
+        <td colspan="4" class="no-results">Este usuario no tiene comisiones configuradas.</td>
+      </tr>
+    </tbody>
+  </table>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Cerrar</button>
+</mat-dialog-actions>

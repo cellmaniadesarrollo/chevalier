@@ -1,0 +1,219 @@
+<div *ngIf="isDataLoaded" class="container-fluid px-3 py-2">
+
+  <!-- ══ KPI CAJA (Más compacto) ══ -->
+  <div class="row g-2 mb-2">
+    <div class="col-6 col-md-3">
+      <div class="card kpi-card border-0 shadow-sm h-100">
+        <div class="card-body p-2 d-flex flex-column justify-content-center">
+          <span class="text-muted small">
+            <i class="bi bi-cash me-1"></i>Efectivo del día
+          </span>
+          <h4 class="fw-bold mb-0 mt-1">${{ cashSummary.totalCash | number:'1.2-2' }}</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+      <div class="card kpi-card border-0 shadow-sm h-100">
+        <div class="card-body p-2 d-flex flex-column justify-content-center">
+          <span class="text-muted small">
+            <i class="bi bi-phone me-1"></i>Transferencias
+          </span>
+          <h4 class="fw-bold mb-0 mt-1">${{ cashSummary.totalTransfer | number:'1.2-2' }}</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+      <div class="card kpi-card border-0 shadow-sm h-100">
+        <div class="card-body p-2 d-flex flex-column justify-content-center">
+          <span class="text-muted small">
+            <i class="bi bi-arrow-up-circle me-1"></i>Ingresos
+          </span>
+          <div class="d-flex align-items-baseline gap-2 mt-1">
+            <h4 class="fw-bold mb-0 text-success">+${{ totalIncome | number:'1.2-2' }}</h4>
+            <span class="text-muted x-small">Egr: -${{ totalExpense | number:'1.2-2' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 col-md-3">
+      <div class="card kpi-card border-0 shadow-sm h-100">
+        <div class="card-body p-2 d-flex flex-column justify-content-center">
+          <span class="text-muted small">
+            <i class="bi bi-calculator me-1"></i>Total ventas
+          </span>
+          <div class="d-flex align-items-baseline gap-2 mt-1">
+            <h4 class="fw-bold mb-0">${{ cashSummary.grandTotal | number:'1.2-2' }}</h4>
+            <span class="text-muted x-small">({{ barbers.length }} barb.)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECCIÓN PRINCIPAL ══ -->
+  <div class="row g-2">
+
+    <!-- Barberos -->
+    <div class="col-12 col-xl-7">
+      <div class="card shadow-sm h-100">
+        <div class="card-body p-2">
+          <p class="text-muted small mb-2 fw-semibold">
+            <i class="bi bi-scissors me-1"></i>Producción por barbero
+          </p>
+
+          <div *ngIf="barbers.length; else noCuts">
+            <div class="barber-card" *ngFor="let b of barbers">
+
+              <!-- Header y Resumen compacto en 1 sola fila -->
+              <div class="barber-header p-2" (click)="toggleBarber(b.barberId)">
+                <div class="barber-name">
+                  <i class="bi bi-person-circle me-1"></i>
+                  <span class="fw-semibold me-2">{{ b.barberName }}</span>
+                  <span class="cut-count">{{ b.cuts.length }} c.</span>
+                </div>
+
+                <div class="barber-compact-summary">
+                  <span class="text-muted">Bruto: ${{ b.totalGross | number:'1.2-2' }}</span>
+                  <span class="text-danger" *ngIf="b.totalDiscount > 0">Desc: -${{ b.totalDiscount | number:'1.2-2' }}</span>
+                  <span class="total-net">${{ b.totalNet | number:'1.2-2' }}</span>
+                  <i class="bi ms-1" [ngClass]="isExpanded(b.barberId) ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+                </div>
+              </div>
+
+              <!-- Detalle cortes (expandible) -->
+              <div class="barber-cuts" *ngIf="isExpanded(b.barberId)">
+                <div class="cut-row px-2 py-1" *ngFor="let c of b.cuts">
+
+                  <!-- Fila principal del corte en una línea -->
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                      <span class="cut-number">#{{ c.saleNumber }}</span>
+                      <span class="cut-client text-truncate">{{ c.client }}</span>
+                      <span class="cut-time">{{ c.saleDate | date:'HH:mm':'UTC' }}</span>
+                      <span class="payment-method">
+                        <i class="bi me-1" [ngClass]="getPaymentIcon(c.paymentMethod)"></i>{{ c.paymentMethod }}
+                      </span>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2">
+                      <span class="cut-service text-muted">{{ c.service }}</span>
+                      <span [ngClass]="c.discountAmount > 0 ? 'cut-price-gross' : 'cut-price'">
+                        ${{ c.grossPrice | number:'1.2-2' }}
+                      </span>
+                      <span class="cut-net" *ngIf="c.discountAmount > 0">Neto ${{ c.netPrice | number:'1.2-2' }}</span>
+                    </div>
+                  </div>
+
+                  <!-- Descuento e info complementaria Inline -->
+                  <div class="d-flex align-items-center justify-content-between gap-2 mt-1" *ngIf="c.discountAmount > 0 || (c.collaborators?.length ?? 0) > 0">
+                    <div class="discount-tag" *ngIf="c.discountAmount > 0">
+                      <i class="bi bi-tag me-1"></i>
+                      {{ c.discountInfo?.name }} ({{ c.discountInfo?.type === 'PERCENTAGE' ? c.discountInfo?.value + '%' : '$' + c.discountInfo?.value }})
+                      <strong class="text-danger ms-1">-${{ c.discountAmount | number:'1.2-2' }}</strong>
+                    </div>
+
+                    <div class="cut-collaborators ms-auto" *ngIf="(c.collaborators?.length ?? 0) > 0">
+                      <span class="collab-label me-1">Colab:</span>
+                      <span class="collab-item" *ngFor="let col of c.collaborators">
+                        {{ col.name }} (${{ col.value | number:'1.2-2' }})
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <ng-template #noCuts>
+            <span class="text-muted small">Sin ventas registradas hoy.</span>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <!-- Descuentos del día + Movimientos de caja -->
+    <div class="col-12 col-xl-5 d-flex flex-column gap-2">
+
+      <!-- Descuentos del día -->
+      <div class="card shadow-sm discounts-card" *ngIf="discountsApplied.length">
+        <div class="card-body p-2">
+          <p class="text-muted small mb-1 fw-semibold">
+            <i class="bi bi-tag-fill me-1"></i>Descuentos aplicados
+            <span class="badge bg-secondary ms-1">{{ discountsApplied.length }}</span>
+          </p>
+
+          <div class="report-list">
+            <div class="discount-row py-1" *ngFor="let d of discountsApplied">
+              <div class="discount-row-main text-truncate">
+                <span class="fw-semibold">#{{ d.saleNumber }} {{ d.service }}</span>
+<span class="discount-row-meta">
+  {{ d.barberName }} · {{ d.client || 'Sin cliente' }} · {{ d.saleDate | date:'HH:mm':'UTC' }}
+</span>
+              </div>
+              <div class="discount-row-amount ms-2 text-end">
+                <span class="amount-value">-${{ d.discountAmount | number:'1.2-2' }}</span>
+                <span class="net-value">Neto ${{ d.netPrice | number:'1.2-2' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Movimientos de caja -->
+      <div class="card shadow-sm flex-grow-1">
+        <div class="card-body p-2">
+          <p class="text-muted small mb-2 fw-semibold">
+            <i class="bi bi-receipt me-1"></i>Movimientos de caja — hoy
+          </p>
+
+          <!-- Resumen compacto -->
+          <div class="movements-summary mb-2">
+            <div class="mov-sum-item income">
+              <span>Ingresos</span>
+              <strong>+${{ totalIncome | number:'1.2-2' }}</strong>
+            </div>
+            <div class="mov-sum-item expense">
+              <span>Egresos</span>
+              <strong>-${{ totalExpense | number:'1.2-2' }}</strong>
+            </div>
+            <div class="mov-sum-item net" [ngClass]="netMovements >= 0 ? 'positive' : 'negative'">
+              <span>Neto</span>
+              <strong>{{ netMovements >= 0 ? '+' : '' }}${{ netMovements | number:'1.2-2' }}</strong>
+            </div>
+          </div>
+
+          <div class="report-list" *ngIf="movements.length; else noMovements">
+            <div class="report-row clickable py-1" *ngFor="let m of movements" (click)="viewMovementDetail(m._id)">
+              <div class="report-main text-truncate">
+                <span class="fw-semibold text-truncate">{{ m.description }}</span>
+<small class="text-muted d-block x-small">
+  {{ m.createdAt | date:'HH:mm':'UTC' }} · {{ m.createdBy?.username || '—' }}
+</small>
+              </div>
+              <span [ngClass]="m.type === 'income' ? 'text-success fw-bold' : 'text-danger fw-bold'" class="ms-2">
+                {{ m.type === 'income' ? '+' : '-' }}${{ m.amount | number:'1.2-2' }}
+              </span>
+            </div>
+          </div>
+
+          <ng-template #noMovements>
+            <span class="text-muted small">Sin movimientos hoy.</span>
+          </ng-template>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Cargando -->
+<div *ngIf="!isDataLoaded" class="d-flex justify-content-center align-items-center p-5">
+  <div class="spinner-border text-secondary" role="status"></div>
+</div>

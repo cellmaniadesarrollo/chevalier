@@ -1,0 +1,155 @@
+/* ══════════════════ GENERAL Y UTILIDADES ══════════════════ */
+.x-small {
+  font-size: 10px;
+}
+
+.date-input {
+  width: 130px !important;
+  font-size: 12px;
+  height: 28px;
+  padding: 2px 6px;
+}
+
+.filter-card {
+  border-radius: 8px;
+  background-color: #fcfcfd;
+}
+
+/* ══════════════════ KPI CARDS ══════════════════ */
+.kpi-card {
+  border: none !important;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; 
+  left: 0; 
+  bottom: 0;
+  width: 3px;
+  background: #1f77b4;
+}
+
+.kpi-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+}
+
+.kpi-card h4 {
+  font-size: 1.15rem;
+  color: #111827;
+}
+
+/* ══════════════════ LISTA DE CORTES ══════════════════ */
+.cuts-list {
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+.cuts-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.cuts-list::-webkit-scrollbar-thumb {
+  background: #e0e0e0;
+  border-radius: 6px;
+}
+
+.cut-row {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.1s ease;
+  border-radius: 4px;
+}
+
+.cut-row:hover {
+  background: #f8f9fa;
+}
+
+.cut-row:last-child {
+  border-bottom: none;
+}
+
+/* Detalles del corte */
+.cut-number {
+  font-size: 10px;
+  font-weight: 700;
+  color: #9ca3af;
+  font-variant-numeric: tabular-nums;
+}
+
+.cut-client {
+  font-size: 12px;
+  font-weight: 600;
+  color: #111827;
+  max-width: 140px;
+}
+
+.cut-time {
+  font-size: 10px;
+  color: #9ca3af !important;
+}
+
+.cut-service {
+  font-size: 11px;
+  max-width: 120px;
+}
+
+.cut-price {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.cut-price-gross {
+  font-size: 11px;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.cut-net {
+  font-size: 11px;
+  font-weight: 600;
+  color: #059669;
+}
+
+/* Métodos de Pago y Descuentos */
+.payment-method {
+  font-size: 9.5px;
+  font-weight: 500;
+  color: #4b5563;
+  background: #f3f4f6;
+  padding: 1px 6px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.discount-tag {
+  font-size: 10px;
+  color: #92400e;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 4px;
+  padding: 1px 6px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ══════════════════ RESPONSIVE ══════════════════ */
+@media (max-width: 576px) {
+  .cut-client {
+    max-width: 90px;
+  }
+  
+  .cut-service {
+    display: none; /* Se oculta el tipo de servicio en pantallas muy pequeñas para ahorrar ancho */
+  }
+
+  .date-input {
+    width: 110px !important;
+  }
+}

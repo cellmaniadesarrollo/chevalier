@@ -1,0 +1,62 @@
+<h2 mat-dialog-title>Abrir caja</h2>
+
+<mat-dialog-content>
+
+  <!-- Caso: hay una sesión pendiente de cierre -->
+  <div *ngIf="data.needsToClosePending" class="pending-alert">
+    <span class="pending-icon">⚠</span>
+    <div>
+      Hay una sesión de caja pendiente de cierre del día anterior.
+      <p class="pending-detail" *ngIf="data.pendingSession">
+        Abierta con ${{ data.pendingSession.declaredOpeningAmount | number:'1.2-2' }}.
+        Debe cerrarla antes de abrir una nueva.
+      </p>
+    </div>
+  </div>
+
+  <!-- Caso normal: apertura de caja -->
+  <ng-container *ngIf="!data.needsToClosePending">
+
+    <div *ngIf="previewLoading" class="preview-loading">
+      Cargando información de apertura...
+    </div>
+
+    <div *ngIf="!previewLoading && preview" class="preview-box">
+      <div>Fondo dejado el día anterior: ${{ preview.previousDayLeftover | number:'1.2-2' }}</div>
+      <div>Ventas huérfanas pendientes: ${{ preview.orphanSalesTotal | number:'1.2-2' }}</div>
+      <hr />
+      <div class="preview-total">
+        Total esperado: <strong>${{ preview.expectedOpeningAmount | number:'1.2-2' }}</strong>
+      </div>
+    </div>
+
+    <div class="expected-amount-box" *ngIf="!previewLoading && preview">
+      Debería estar abriendo con:
+      <strong>${{ preview.expectedOpeningAmount | number:'1.2-2' }}</strong>
+    </div>
+
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Monto con el que abre caja</mat-label>
+      <input matInput type="number" [(ngModel)]="declaredOpeningAmount"
+        (focus)="selectAll($event)" />
+    </mat-form-field>
+
+    <p *ngIf="errorMessage" class="error-text">{{ errorMessage }}</p>
+
+  </ng-container>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()" [disabled]="loading">Cancelar</button>
+
+  <button *ngIf="data.needsToClosePending" mat-raised-button color="warn"
+    (click)="openCloseModal()">
+    Cerrar caja pendiente
+  </button>
+
+  <button *ngIf="!data.needsToClosePending" mat-raised-button color="primary"
+    [disabled]="loading" (click)="confirmOpen()">
+    Confirmar apertura
+  </button>
+</mat-dialog-actions>

@@ -13,6 +13,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 0 20px;
 }
+
 .branding {
   display: flex;
   align-items: center;
@@ -25,16 +26,16 @@
     font-size: 1.5rem;
     font-weight: bold;
   }
+
+  .toggle-sidebar-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
 }
 
 .topbar-right {
   display: flex;
   align-items: center;
-
-  .notifications {
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
 
   .btn-outline-warning {
     color: #d4af37;
@@ -46,13 +47,18 @@
       color: #2e2e2e;
     }
   }
+}
 
-  .toggle-sidebar-icon {
-    font-size: 1.5rem;
-    cursor: pointer;
+/* Notificaciones */
+.notifications {
+  font-size: 1.5rem;
+  cursor: pointer;
+
+  .btn-link {
+    position: relative;
   }
 }
- 
+
 .notifications-menu {
   min-width: 300px;
   background-color: #fff;
@@ -75,14 +81,38 @@
   }
 }
 
-.notifications .btn-link {
-  position: relative;
-}
-
 .text-danger {
   color: #dc3545;
 }
 
 .text-warning {
   color: #ffc107;
+}
+
+/* Estado de Caja */
+.cash-session {
+  .cash-badge {
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .cash-badge-open {
+    background-color: rgba(212, 175, 55, 0.15);
+    color: #d4af37;
+    border: 1px solid #d4af37;
+  }
+
+  .cash-pending-btn {
+    animation: pulse-alert 1.5s infinite;
+  }
+}
+
+@keyframes pulse-alert {
+  0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.5); }
+  70% { box-shadow: 0 0 0 8px rgba(220, 53, 69, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
 }

@@ -1,0 +1,351 @@
+<!-- Cargar vistas según rol -->
+<ng-container *ngIf="isAdminOrSupervisor(); else userView">
+ 
+
+  <!-- O si este mismo HTML corresponde a las tarjetas y gráficos de Admin cuando la data carga: -->
+  <div *ngIf="isDataLoaded" class="container-fluid px-3 py-2">
+    
+    <!-- Tarjetas KPI -->
+    <div class="row g-2 mb-3">
+      
+      <!-- Total semana actual -->
+      <div class="col-6 col-md-3">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body p-3">
+            <p class="text-muted small mb-1">
+              <i class="bi bi-calendar-week me-1"></i>Ventas esta semana
+            </p>
+            <h3 class="fw-bold mb-0">${{ totalThisWeek }}</h3>
+            <span class="badge mt-1"
+              [ngClass]="weekChangePercent >= 0 ? 'bg-success' : 'bg-danger'">
+              <i class="bi" [ngClass]="weekChangePercent >= 0 ? 'bi-arrow-up' : 'bi-arrow-down'"></i>
+              {{ weekChangePercent | number:'1.0-0' }}% vs mismos días
+            </span>
+            <br>
+            <small class="text-muted">
+              Sem. anterior mismo período: ${{ totalLastWeekEquivalent }}
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Total semana anterior -->
+      <div class="col-6 col-md-3">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body p-3">
+            <p class="text-muted small mb-1">
+              <i class="bi bi-calendar-minus me-1"></i>Ventas semana anterior
+            </p>
+            <h3 class="fw-bold mb-0">${{ totalLastWeek }}</h3>
+            <small class="text-muted">Semana completa</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Promedio diario -->
+      <div class="col-6 col-md-3">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body p-3">
+            <p class="text-muted small mb-1">
+              <i class="bi bi-bar-chart-line me-1"></i>Promedio por día activo
+            </p>
+            <h3 class="fw-bold mb-0">${{ avgDailyThisWeek }}</h3>
+            <small class="text-muted">Anterior: ${{ avgDailyLastWeek }} · {{ activeDaysThisWeek }} días activos</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top barbero -->
+      <div class="col-6 col-md-3">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body p-3">
+            <p class="text-muted small mb-1">
+              <i class="bi bi-trophy me-1"></i>Top barbero esta semana
+            </p>
+            <h5 class="fw-bold mb-0 text-truncate">{{ topBarberThisWeek }}</h5>
+            <small class="text-muted">Servicio líder: {{ topServiceThisWeek }}</small>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Reportes de caja -->
+    <div class="row g-2 mt-2">
+
+<!-- Últimas sesiones de caja -->
+<!-- Últimas sesiones de caja -->
+<div class="col-12 col-xl-6">
+  <div class="card shadow-sm h-100">
+    <div class="card-body p-3">
+      <p class="text-muted small mb-2">
+        <i class="bi bi-cash-coin me-1"></i>Últimas sesiones de caja
+      </p>
+
+      <div class="report-list" *ngIf="recentSessions.length; else noSessions">
+        <div class="session-card" *ngFor="let s of recentSessions">
+
+          <!-- ══ ENCABEZADO: fecha apertura + estado global ══ -->
+          <div class="session-header neutral">
+            <div class="session-type-pill">
+              <i class="bi bi-calendar2-event me-1"></i>
+              Sesión · {{ s.openingDate | date:'dd/MM/yy' }}
+            </div>
+            <div class="session-meta">
+              <div class="session-date">Abrió {{ s.openingDate | date:'HH:mm' }}</div>
+              <div class="session-user">{{ s.openedBy?.username || '—' }}</div>
+            </div>
+            <!-- Badge estado global -->
+            <span class="session-badge"
+              [ngClass]="{
+                'ok':      s.openingStatus === 'ok'        && (s.closingStatus === 'ok' || s.closingStatus === null),
+                'info':    s.openingStatus === 'explained',
+                'danger':  s.openingStatus === 'warning'   || s.closingStatus === 'double-warning' || s.closingStatus === 'count-warning',
+                'warn':    s.closingStatus === 'delivery-warning'
+              }">
+              <ng-container [ngSwitch]="true">
+                <ng-container *ngSwitchCase="s.status === 'open'">
+                  <i class="bi bi-unlock"></i> Abierta
+                </ng-container>
+                <ng-container *ngSwitchCase="s.closingStatus === 'ok' && s.openingStatus === 'ok'">
+                  <i class="bi bi-check-circle"></i> Todo OK
+                </ng-container>
+                <ng-container *ngSwitchCase="s.openingStatus === 'explained'">
+                  <i class="bi bi-info-circle"></i> Apertura explicada
+                </ng-container>
+                <ng-container *ngSwitchCase="s.closingStatus === 'double-warning'">
+                  <i class="bi bi-exclamation-circle"></i> 2 alertas
+                </ng-container>
+                <ng-container *ngSwitchCase="s.openingStatus === 'warning' || s.closingStatus === 'count-warning'">
+                  <i class="bi bi-exclamation-circle"></i> Discrepancia
+                </ng-container>
+                <ng-container *ngSwitchCase="s.closingStatus === 'delivery-warning'">
+                  <i class="bi bi-exclamation-triangle"></i> Entrega no cuadra
+                </ng-container>
+              </ng-container>
+            </span>
+          </div>
+
+          <!-- ══ BODY ══ -->
+          <div class="session-body">
+
+            <!-- ── Bloque APERTURA ── -->
+            <div class="session-section-title">
+              <i class="bi bi-door-open"></i> Apertura
+            </div>
+
+            <div class="session-row">
+              <span class="session-label">Fondo anterior esperado</span>
+              <span class="session-val">${{ s.expectedOpeningAmount | number:'1.2-2' }}</span>
+            </div>
+            <div class="session-row" *ngIf="s.orphanSalesCount > 0">
+              <span class="session-label">Ventas con caja cerrada</span>
+              <span class="session-val">+${{ s.orphanCashTotal | number:'1.2-2' }} ({{ s.orphanSalesCount }})</span>
+            </div>
+            <div class="session-row">
+              <span class="session-label">Declarado al abrir</span>
+              <span class="session-val">${{ s.declaredOpeningAmount | number:'1.2-2' }}</span>
+            </div>
+
+            <div *ngIf="s.openingStatus === 'ok'" class="session-alert success">
+              <i class="bi bi-check-circle-fill"></i> Sin novedad en apertura.
+            </div>
+            <div *ngIf="s.openingStatus === 'explained'" class="session-alert success">
+              <i class="bi bi-check-circle-fill"></i>
+              Diferencia de <strong>${{ s.openingDifference | number:'1.2-2' }}</strong>
+              explicada por ventas con caja cerrada. ✓
+            </div>
+            <div *ngIf="s.openingStatus === 'warning'" class="session-alert danger">
+              <i class="bi bi-exclamation-circle-fill"></i>
+              {{ s.openingDifference < 0 ? 'Faltan' : 'Sobran' }}
+              <strong>${{ s.openingDifference | number:'1.2-2' }}</strong>
+              al abrir. No hay ventas que lo expliquen.
+            </div>
+
+            <!-- ── Bloque CIERRE (solo si cerrada) ── -->
+            <ng-container *ngIf="s.status === 'closed'">
+              <div class="session-divider"></div>
+              <div class="session-section-title">
+                <i class="bi bi-door-closed"></i> Cierre
+                <small class="text-muted ms-2">
+                  {{ s.closingDate | date:'HH:mm' }} · {{ s.closedBy?.username || '—' }}
+                </small>
+              </div>
+
+              <div class="session-row">
+                <span class="session-label">Efectivo esperado</span>
+                <span class="session-val">${{ s.expectedCashAmount | number:'1.2-2' }}</span>
+              </div>
+              <div class="session-row">
+                <span class="session-label">Contado</span>
+                <span class="session-val">${{ s.countedAmount | number:'1.2-2' }}</span>
+              </div>
+
+              <div *ngIf="s.closingAlert" class="session-alert danger">
+                <i class="bi bi-exclamation-circle-fill"></i>
+                El conteo difiere en
+                <strong>{{ s.closingDifference > 0 ? '+' : '' }}${{ s.closingDifference | number:'1.2-2' }}</strong>.
+              </div>
+
+              <div class="session-divider"></div>
+
+              <div class="session-row">
+                <span class="session-label">Entregado</span>
+                <span class="session-val">${{ s.cashDelivered | number:'1.2-2' }}</span>
+              </div>
+              <div class="session-row">
+                <span class="session-label">Fondo para mañana</span>
+                <span class="session-val">${{ s.cashLeftForNextDay | number:'1.2-2' }}</span>
+              </div>
+              <div class="session-row">
+                <span class="session-label" style="font-size:10px; color: var(--bs-secondary-color)">
+                  {{ s.cashDelivered | number:'1.2-2' }} + {{ s.cashLeftForNextDay | number:'1.2-2' }}
+                  = {{ (s.cashDelivered + s.cashLeftForNextDay) | number:'1.2-2' }}
+                </span>
+                <span *ngIf="!s.deliveryMismatch" class="session-badge ok" style="font-size:10px; padding:1px 6px">
+                  <i class="bi bi-check"></i> Entrega OK
+                </span>
+              </div>
+
+              <div *ngIf="s.deliveryMismatch" class="session-alert warn">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                Entregado + fondo (${{ (s.cashDelivered + s.cashLeftForNextDay) | number:'1.2-2' }})
+                no coincide con lo contado (${{ s.countedAmount | number:'1.2-2' }}).
+                Diferencia: <strong>{{ s.deliveryMismatchAmount > 0 ? '+' : '' }}${{ s.deliveryMismatchAmount | number:'1.2-2' }}</strong>.
+              </div>
+            </ng-container>
+
+            <!-- ── Si aún está abierta ── -->
+            <ng-container *ngIf="s.status === 'open'">
+              <div class="session-divider"></div>
+              <div class="session-alert info" style="opacity: 0.6">
+                <i class="bi bi-hourglass-split"></i> Sesión activa — pendiente de cierre.
+              </div>
+            </ng-container>
+
+          </div><!-- /session-body -->
+        </div><!-- /session-card -->
+      </div>
+
+      <ng-template #noSessions>
+        <span class="text-muted small">Sin sesiones registradas.</span>
+      </ng-template>
+    </div>
+  </div>
+</div>
+      <!-- Últimos movimientos -->
+      <div class="col-12 col-xl-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-body p-3">
+            <p class="text-muted small mb-2">
+              <i class="bi bi-receipt me-1"></i>Últimos movimientos de caja
+            </p>
+
+            <div class="report-list" *ngIf="recentMovements.length; else noMovements">
+              <div class="report-row clickable" *ngFor="let m of recentMovements" (click)="viewMovementDetail(m._id)">
+                <div class="report-main">
+                  <span class="fw-semibold text-truncate">{{ m.description }}</span>
+                  <small class="text-muted d-block">{{ m.createdAt | date:'dd/MM/yy HH:mm' }} · {{ m.createdBy?.username || '—' }}</small>
+                </div>
+                <span [ngClass]="m.type === 'income' ? 'text-success fw-bold' : 'text-danger fw-bold'">
+                  {{ m.type === 'income' ? '+' : '-' }}${{ m.amount | number:'1.2-2' }}
+                </span>
+              </div>
+            </div>
+
+            <ng-template #noMovements>
+              <span class="text-muted small">Sin movimientos registrados.</span>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Gráficos generales -->
+    <div class="row g-2 mb-2 mt-1">
+      <div class="col-12 col-xl-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-body p-2">
+            <app-custom-chart
+              [series]="[
+                { name: 'Semana Actual', color: '#1f77b4', data: getSemanaSalesData() },
+                { name: 'Semana Anterior', color: '#ff7f0e', data: getSemanaAnteriorData() }
+              ]"
+              [type]="'bar'"
+              [title]="'Ventas Semanales'">
+            </app-custom-chart>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-xl-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-body p-2">
+            <app-custom-chart
+              [series]="[
+                { name: 'Semana Actual', color: '#1f77b4', data: summarizedData },
+                { name: 'Semana Anterior', color: '#ff7f0e', data: summarizedDatalastweek }
+              ]"
+              [type]="'bar'"
+              [title]="'Ventas por Barbero'">
+            </app-custom-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detalle por barbero -->
+    <div class="row g-2 mb-2">
+      <div class="col-12 col-xl-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-body p-2">
+            <app-custom-chart
+              [series]="transformedData"
+              [type]="'bar'"
+              [title]="'Detalle Barberos — Semana Actual'">
+            </app-custom-chart>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-xl-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-body p-2">
+            <app-custom-chart
+              [series]="transformedDatalastweek"
+              [type]="'bar'"
+              [title]="'Detalle Barberos — Semana Anterior'">
+            </app-custom-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Servicios -->
+    <div class="row g-2">
+      <div class="col-12 col-xl-6">
+        <div class="card shadow-sm h-100">
+          <div class="card-body p-2">
+            <app-custom-chart
+              [series]="[
+                { name: 'Servicios', color: '#2ca02c', data: summarizedDataservices }
+              ]"
+              [type]="'bar'"
+              [title]="'Servicios — Semana Actual'">
+            </app-custom-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ng-container>
+
+<!-- Vista para otros roles (Barbero / Usuario estándar) -->
+<ng-template #userView>
+  <div class="container-fluid p-4 text-center">
+    <h3>Bienvenido al Panel</h3>
+    <p class="text-muted">Vista estándar para usuarios sin privilagios administrativos.</p>
+  </div>
+</ng-template>

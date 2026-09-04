@@ -1,0 +1,91 @@
+<h2 mat-dialog-title>Editar usuario</h2>
+
+<mat-dialog-content [formGroup]="form" class="edit-user-form">
+
+  <div class="error-banner" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <div class="form-row">
+    <mat-form-field appearance="outline" class="flex-1">
+      <mat-label>Usuario</mat-label>
+      <input matInput formControlName="username">
+      <mat-error *ngIf="form.get('username')?.hasError('required')">Requerido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="flex-1">
+      <mat-label>Correo</mat-label>
+      <input matInput formControlName="email" type="email">
+    </mat-form-field>
+  </div>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Roles</mat-label>
+    <mat-select formControlName="roles" multiple [disabled]="isLoadingRoles">
+      <mat-option *ngFor="let role of roles" [value]="role._id">{{ role.name }}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('roles')?.hasError('required')">Debe asignar al menos un rol</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nueva contraseña (opcional)</mat-label>
+    <input matInput formControlName="password" type="password" placeholder="Dejar en blanco para no cambiarla">
+  </mat-form-field>
+
+  <div class="section-divider">Datos personales</div>
+
+  <div formGroupName="personalData">
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>Cédula</mat-label>
+        <input matInput formControlName="dni">
+        <mat-error *ngIf="form.get('personalData.dni')?.hasError('required')">Requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="phone">
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>Primer nombre</mat-label>
+        <input matInput formControlName="firstnames">
+        <mat-error *ngIf="form.get('personalData.firstnames')?.hasError('required')">Requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>Segundo nombre</mat-label>
+        <input matInput formControlName="firstnames1">
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>Primer apellido</mat-label>
+        <input matInput formControlName="lastnames">
+        <mat-error *ngIf="form.get('personalData.lastnames')?.hasError('required')">Requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="flex-1">
+        <mat-label>Segundo apellido</mat-label>
+        <input matInput formControlName="lastnames1">
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Fecha de nacimiento</mat-label>
+      <input matInput type="date" formControlName="dateOfBirth">
+    </mat-form-field>
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()" [disabled]="isSaving">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="save()" [disabled]="isSaving">
+    <mat-spinner *ngIf="isSaving" diameter="18" class="btn-spinner"></mat-spinner>
+    <span *ngIf="!isSaving">Guardar</span>
+  </button>
+</mat-dialog-actions>

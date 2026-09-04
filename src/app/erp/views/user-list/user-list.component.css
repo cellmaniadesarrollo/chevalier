@@ -1,0 +1,49 @@
+.user-list-container {
+  padding: 16px;
+}
+
+.user-list-toolbar {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+
+  .search-field {
+    flex: 1 1 280px;
+  }
+
+  .status-field {
+    flex: 0 0 180px;
+  }
+}
+
+.table-wrapper {
+  position: relative;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.status-active {
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+.status-inactive {
+  color: #c62828;
+  font-weight: 500;
+}
+
+.no-results {
+  padding: 24px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.loading-overlay {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
