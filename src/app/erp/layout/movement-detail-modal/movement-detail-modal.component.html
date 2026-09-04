@@ -1,0 +1,70 @@
+<h2 mat-dialog-title>Detalle del movimiento</h2>
+
+<mat-dialog-content>
+  <div class="loading-overlay" *ngIf="loading">
+    <mat-spinner diameter="36"></mat-spinner>
+  </div>
+
+  <ng-container *ngIf="movement && !loading">
+    <div class="detail-row">
+      <span class="label">Tipo</span>
+      <mat-chip [ngClass]="movement.type === 'income' ? 'chip-income' : 'chip-expense'" [disabled]="true">
+        {{ movement.type === 'income' ? 'Ingreso' : 'Egreso' }}
+      </mat-chip>
+    </div>
+
+    <div class="detail-row">
+      <span class="label">Monto</span>
+      <span>${{ movement.amount | number:'1.2-2' }}</span>
+    </div>
+
+    <div class="detail-row">
+      <span class="label">Descripción</span>
+      <span>{{ movement.description }}</span>
+    </div>
+
+    <div class="detail-row">
+      <span class="label">Registrado por</span>
+      <span>{{ movement.createdBy?.username }} ({{ movement.createdBy?.email }})</span>
+    </div>
+
+    <div class="detail-row">
+      <span class="label">Fecha</span>
+      <span>{{ movement.createdAt | date:'dd/MM/yy HH:mm' }}</span>
+    </div>
+
+    <div class="detail-row">
+      <span class="label">Sesión</span>
+      <span>
+        {{ movement.session?.status === 'open' ? 'Abierta' : 'Cerrada' }} —
+        abierta por {{ movement.session?.openedBy?.username || '—' }}
+      </span>
+    </div>
+
+<div class="detail-row attachments-row" *ngIf="movement.attachments?.length">
+  <span class="label">Comprobantes</span>
+  <div class="attachments-grid">
+    <div class="thumb" *ngFor="let url of movement.attachments">
+
+      <ng-container *ngIf="isImage(url); else fileBlock">
+        <img [src]="url" alt="comprobante" />
+        <button mat-mini-fab color="primary" class="view-btn" matTooltip="Ver imagen" (click)="viewImage(url)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+      </ng-container>
+
+      <ng-template #fileBlock>
+        <a [href]="url" target="_blank" mat-icon-button matTooltip="Abrir archivo" class="file-link">
+          <mat-icon>description</mat-icon>
+        </a>
+      </ng-template>
+
+    </div>
+  </div>
+</div>
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Cerrar</button>
+</mat-dialog-actions>

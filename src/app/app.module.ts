@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,16 +11,16 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';  
+import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Importante para la animación de despliegue 
-import { MatCardModule } from '@angular/material/card'; 
+import { MatCardModule } from '@angular/material/card';
 
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 
-import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FooterComponent } from './layout/footer/footer.component';
 import { AboutusComponent } from './views/aboutus/aboutus.component';
 import { BannerComponent } from './layout/banner/banner.component';
@@ -39,14 +39,14 @@ import { FeedbackFormComponent } from './views/feedback-form/feedback-form.compo
 import { TermsComponent } from './views/terms/terms.component';
 import { SocialMediaLinksComponent } from './views/social-media-links/social-media-links.component';
 import { TeamMembersComponent } from './layout/team-members/team-members.component';
-import { LoginComponent } from './views/login/login.component';   
+import { LoginComponent } from './views/login/login.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { QueriesComponent } from './views/queries/queries.component';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { RelativeDatePipe } from './pipe/relative-date/relative-date.pipe';
 import { RegiterClientComponent } from './views/regiter-client/regiter-client.component';
 
- 
+
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -80,39 +80,38 @@ export function HttpLoaderFactory(http: HttpClient) {
     SocialMediaLinksComponent,
     TeamMembersComponent,
     LoginComponent,
-    QueriesComponent,RelativeDatePipe, RegiterClientComponent,
-    
+    QueriesComponent, RelativeDatePipe, RegiterClientComponent,
+
   ],
   imports: [
-     
+
     BrowserModule,
     AppRoutingModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatSelectModule, 
+    MatSelectModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule ,
+    ReactiveFormsModule,
     HttpClientModule,
-    MatCardModule, 
+    MatCardModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    }), 
+    }),
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
   ],
   providers: [
-    provideClientHydration(),
-    provideAnimationsAsync(), 
-    provideNativeDateAdapter() 
+    provideAnimationsAsync(),
+    provideNativeDateAdapter()
   ],
   bootstrap: [AppComponent]
 })

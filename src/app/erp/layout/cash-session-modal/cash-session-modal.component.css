@@ -1,0 +1,65 @@
+.pending-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #fff3cd;
+  border: 1px solid #ffe69c;
+  border-radius: 8px;
+  padding: 14px;
+  color: #664d03;
+  font-size: 0.9rem;
+}
+
+.pending-icon {
+  color: #dc3545;
+  flex-shrink: 0;
+}
+
+.pending-detail {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: #856404;
+}
+
+.preview-loading {
+  color: #6c757d;
+  font-size: 0.9rem;
+  padding: 8px 0;
+}
+
+.preview-box {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 0.9rem;
+  color: #495057;
+  margin-bottom: 14px;
+}
+
+.preview-box hr {
+  margin: 10px 0;
+  border-color: #dee2e6;
+}
+
+.preview-total {
+  font-size: 1rem;
+  color: #212529;
+}
+
+.expected-amount-box {
+  background: #e7f1ff;
+  border: 1px solid #b6d4fe;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  color: #084298;
+  font-size: 0.95rem;
+}
+
+.error-text {
+  color: #dc3545;
+  font-size: 0.85rem;
+  margin-top: 8px;
+  margin-bottom: 0;
+}

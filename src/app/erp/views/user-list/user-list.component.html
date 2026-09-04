@@ -1,0 +1,107 @@
+<div class="user-list-container">
+
+  <div class="user-list-toolbar">
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label>Buscar por nombre o cédula</mat-label>
+      <input matInput (input)="onSearchInput($any($event.target).value)" placeholder="Ej. Juan o 12345678">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="status-field">
+      <mat-label>Estado</mat-label>
+      <mat-select [value]="status" (selectionChange)="onStatusChange($event.value)">
+        <mat-option value="active">Activos</mat-option>
+        <mat-option value="deleted">Eliminados</mat-option>
+        <mat-option value="all">Todos</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+<button mat-raised-button color="primary" (click)="openCreateModal()">
+  <mat-icon>add</mat-icon> Nuevo usuario
+</button>
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="users" class="mat-elevation-z2">
+
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef>Usuario</th>
+        <td mat-cell *matCellDef="let user">{{ user.username }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fullName">
+        <th mat-header-cell *matHeaderCellDef>Nombre completo</th>
+        <td mat-cell *matCellDef="let user">{{ fullName(user) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="dni">
+        <th mat-header-cell *matHeaderCellDef>Cédula</th>
+        <td mat-cell *matCellDef="let user">{{ user.personalData?.dni || '-' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="roles">
+        <th mat-header-cell *matHeaderCellDef>Roles</th>
+        <td mat-cell *matCellDef="let user">
+          <mat-chip-listbox>
+            <mat-chip-option *ngFor="let role of user.roles" [selectable]="false">
+              {{ role.name }}
+            </mat-chip-option>
+          </mat-chip-listbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <td mat-cell *matCellDef="let user">
+          <span [ngClass]="user.available ? 'status-active' : 'status-inactive'">
+            {{ user.available ? 'Activo' : 'Inactivo' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let user">
+          <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Opciones">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="edit(user)">
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button mat-menu-item *ngIf="user.available" (click)="softDelete(user)">
+              <mat-icon>block</mat-icon>
+              <span>Desactivar</span>
+            </button>
+            <button mat-menu-item *ngIf="!user.available" (click)="restore(user)">
+              <mat-icon>restore</mat-icon>
+              <span>Reactivar</span>
+            </button>
+            <button mat-menu-item *ngIf="roleNames(user).includes('HAIRDRESSER')" (click)="openCommissionsModal(user)">
+  <mat-icon>percent</mat-icon>
+  <span>Comisiones</span>
+</button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <div class="no-results" *ngIf="!isLoading && users.length === 0">
+      No se encontraron usuarios.
+    </div>
+
+    <div class="loading-overlay" *ngIf="isLoading">
+      <mat-spinner diameter="36"></mat-spinner>
+    </div>
+  </div>
+
+  <mat-paginator
+    [length]="totalUsers"
+    [pageSize]="limit"
+    [pageSizeOptions]="[10, 20, 50]"
+    (page)="onPageChange($event)">
+  </mat-paginator>
+
+</div>

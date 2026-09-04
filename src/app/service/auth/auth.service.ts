@@ -14,22 +14,26 @@ export class AuthService {
   // Método de login
   async login(data: any) {
     try {
-
       const response = await axios.post(`${this.API_URL}login`, data);
-
       const { accessToken, user } = response.data;
 
-      // Guardar el token en el localStorage o sessionStorage
+      // Limpiar sesiones previas antes de guardar las nuevas
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('user');
+
+      // Guardar según la opción de rememberMe
       if (data.rememberMe) {
-        localStorage.setItem('token', accessToken); // Token persistente
-        localStorage.setItem('user', JSON.stringify(user)); // Datos del usuario persistentes
+        localStorage.setItem('token', accessToken);
+        localStorage.setItem('user', JSON.stringify(user));
       } else {
-        sessionStorage.setItem('token', accessToken); // Token temporal
-        sessionStorage.setItem('user', JSON.stringify(user)); // Datos del usuario temporales
+        sessionStorage.setItem('token', accessToken);
+        sessionStorage.setItem('user', JSON.stringify(user));
       }
-      // Establecer roles desde user.roles
+
       this.setRoles(user.roles);
-      return user; // Retornar los datos del usuario
+      return user;
     } catch (error) {
       throw new Error('Login failed: ' + error);
     }
@@ -85,7 +89,7 @@ export class AuthService {
 
 
 
-// Método para enviar los datos del cliente al backend
+  // Método para enviar los datos del cliente al backend
   async saveClient(clientData: any): Promise<any> {
     try {
       const response = await axios.post(`${this.API_URL}saveclientspublic`, clientData);
@@ -105,6 +109,6 @@ export class AuthService {
       throw error;
     }
   }
- 
+
 
 }

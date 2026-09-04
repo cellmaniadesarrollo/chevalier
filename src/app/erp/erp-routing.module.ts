@@ -12,6 +12,10 @@ import { ProductInputComponent } from './views/product-input/product-input.compo
 import { AssignmentListComponent } from './views/assignment-list/assignment-list.component';
 import { ClientsListComponent } from './views/clients-list/clients-list.component';
 import { DicountsListComponent } from './views/dicounts-list/dicounts-list.component';
+import { CashSessionsListComponent } from './views/cash-sessions-list/cash-sessions-list.component'; // 🔹 nuevo
+import { CashMovementsListComponent } from './views/cash-movements-list/cash-movements-list.component'; // 🔹 nuevo
+import { UserListComponent } from './views/user-list/user-list.component';
+
 const routes: Routes = [{
   path: '', component: ErpComponent,
   canActivate: [authGuard], // Proteger todas las rutas del ERP
@@ -26,7 +30,7 @@ const routes: Routes = [{
       canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
       data: { allowedRoles: ['ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos
     },
-        {
+    {
       path: 'discounts',
       component: DicountsListComponent,
       canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
@@ -50,11 +54,31 @@ const routes: Routes = [{
       canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
       data: { allowedRoles: ['CASHIER', 'ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos assignment-list
     },
-        {
+    {
       path: 'clients-list',
       component: ClientsListComponent,
       canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
       data: { allowedRoles: ['CASHIER', 'ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos assignment-list
+    },
+    // 🔹 Caja
+    {
+      path: 'cash-sessions',
+      component: CashSessionsListComponent,
+      canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
+      data: { allowedRoles: ['ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos
+    },
+    {
+      path: 'cash-movements',
+      component: CashMovementsListComponent,
+      canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
+      data: { allowedRoles: ['CASHIER', 'ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos
+    },
+
+    {
+      path: 'usuarios-admin',
+      component: UserListComponent,
+      canActivate: [authGuardrol],  // Utiliza el guard para proteger la ruta
+      data: { allowedRoles: ['ADMIN', 'SUPERVISOR'] }  // Especifica los roles permitidos
     },
   ]
 }];

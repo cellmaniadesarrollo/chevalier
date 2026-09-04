@@ -64,6 +64,22 @@ import { PrintIncomeDocumentComponent } from './containers/print-income-document
 import { DicountsListComponent } from './views/dicounts-list/dicounts-list.component';
 import { EditDiscountModalComponent } from './layout/edit-discount-modal/edit-discount-modal.component';
 import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { CashSessionModalComponent } from './layout/cash-session-modal/cash-session-modal.component';
+import { CashSessionCloseModalComponent } from './layout/cash-session-close-modal/cash-session-close-modal.component';
+import { CashMovementModalComponent } from './layout/cash-movement-modal/cash-movement-modal.component';
+import { CameraCaptureModalComponent } from './layout/camera-capture-modal/camera-capture-modal.component';
+import { CashSessionsListComponent } from './views/cash-sessions-list/cash-sessions-list.component';
+import { CashMovementsListComponent } from './views/cash-movements-list/cash-movements-list.component';
+import { CashMovementsModalComponent } from './layout/cash-movements-modal/cash-movements-modal.component';
+import { MovementDetailModalComponent } from './layout/movement-detail-modal/movement-detail-modal.component';
+import { ImageViewerModalComponentComponent } from './layout/image-viewer-modal.component/image-viewer-modal.component.component';
+import { AdminDashboardComponent } from './layout/admin-dashboard/admin-dashboard.component';
+import { CashierDashboardComponent } from './layout/cashier-dashboard/cashier-dashboard.component';
+import { BarberDashboardComponent } from './layout/barber-dashboard/barber-dashboard.component';
+import { UserListComponent } from './views/user-list/user-list.component';
+import { UserEditModalComponent } from './layout/user-edit-modal/user-edit-modal.component';
+import { UserCreateModalComponent } from './layout/user-create-modal/user-create-modal.component';
+import { UserCommissionsModalComponent } from './layout/user-commissions-modal/user-commissions-modal.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +95,7 @@ import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2
     DashboardComponent,
     DiscountModalComponent,
     SearchAutocompleteComponent,
-    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent, RelativeDatePipe, EtiquetasCantidadDialogComponent, ProductOptionsModalComponent, BarberSuppliesTrackerComponent, AssignmentListComponent, ClientsListComponent, EditClientComponent, PrintIncomeDocumentComponent, DicountsListComponent, EditDiscountModalComponent
+    ProductsAdminComponent, ProductCreateModalComponent, MobileSidebarComponent, ProductInputComponent, AddSupplierModalComponent, DynamicModalInputComponent, NewInputModalComponent, RelativeDatePipe, EtiquetasCantidadDialogComponent, ProductOptionsModalComponent, BarberSuppliesTrackerComponent, AssignmentListComponent, ClientsListComponent, EditClientComponent, PrintIncomeDocumentComponent, DicountsListComponent, EditDiscountModalComponent, CashSessionModalComponent, CashSessionCloseModalComponent, CashMovementModalComponent, CameraCaptureModalComponent, CashSessionsListComponent, CashMovementsListComponent, CashMovementsModalComponent, MovementDetailModalComponent, ImageViewerModalComponentComponent, AdminDashboardComponent, CashierDashboardComponent, BarberDashboardComponent, UserListComponent, UserEditModalComponent, UserCreateModalComponent, UserCommissionsModalComponent
   ],
   imports: [
 

@@ -1,0 +1,114 @@
+<div class="p-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Movimientos de caja</h2>
+
+    <mat-form-field appearance="outline" style="width: 280px;">
+      <mat-label>Sesión de caja</mat-label>
+      <mat-select [(ngModel)]="sessionId" (selectionChange)="onSessionChange()">
+        <mat-option *ngFor="let s of sessions" [value]="s._id">
+          {{ s.openingDate | date:'dd/MM/yy HH:mm' }} — {{ s.status === 'open' ? 'Abierta' : 'Cerrada' }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="table-wrapper mat-elevation-z2">
+
+    <div class="loading-overlay" *ngIf="loading">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+
+    <table mat-table [dataSource]="movements" class="w-100">
+
+      <!-- Fecha -->
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef>Fecha</th>
+        <td mat-cell *matCellDef="let m">{{ m.createdAt | date:'dd/MM/yy HH:mm' }}</td>
+      </ng-container>
+
+      <!-- Tipo -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>Tipo</th>
+        <td mat-cell *matCellDef="let m">
+          <mat-chip-listbox>
+            <mat-chip [ngClass]="m.type === 'income' ? 'chip-income' : 'chip-expense'" [disabled]="true">
+              <mat-icon class="chip-icon">{{ m.type === 'income' ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
+              {{ m.type === 'income' ? 'Entrada' : 'Salida' }}
+            </mat-chip>
+          </mat-chip-listbox>
+        </td>
+      </ng-container>
+
+      <!-- Monto -->
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef>Monto</th>
+        <td mat-cell *matCellDef="let m">
+          <span [ngClass]="m.type === 'income' ? 'text-success fw-bold' : 'text-danger fw-bold'">
+            {{ m.type === 'income' ? '+' : '-' }}${{ m.amount | number:'1.2-2' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Descripción -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Descripción</th>
+        <td mat-cell *matCellDef="let m" class="description-cell">{{ m.description }}</td>
+      </ng-container>
+
+      <!-- Registrado por -->
+      <ng-container matColumnDef="createdBy">
+        <th mat-header-cell *matHeaderCellDef>Registrado por</th>
+        <td mat-cell *matCellDef="let m">{{ m.createdBy?.name || m.createdBy?.username || '—' }}</td>
+      </ng-container>
+
+      <!-- Adjuntos -->
+      <ng-container matColumnDef="attachments">
+        <th mat-header-cell *matHeaderCellDef>Comprobantes</th>
+        <td mat-cell *matCellDef="let m">
+          <div class="attachments-thumbs" *ngIf="m.attachments?.length; else noAttachments">
+            <img *ngFor="let url of m.attachments" [src]="url" class="thumb"
+              (click)="openAttachment(url)" matTooltip="Ver comprobante" />
+          </div>
+          <ng-template #noAttachments>
+            <span class="text-muted small">—</span>
+          </ng-template>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell text-center py-4 text-muted" [attr.colspan]="displayedColumns.length">
+          <span *ngIf="!sessionId">Seleccioná una sesión de caja para ver sus movimientos.</span>
+          <span *ngIf="sessionId">No hay movimientos registrados en esta sesión.</span>
+        </td>
+      </tr>
+<ng-container matColumnDef="actions">
+  <th mat-header-cell *matHeaderCellDef></th>
+  <td mat-cell *matCellDef="let m">
+    <button mat-icon-button color="primary" matTooltip="Ver detalle" (click)="viewDetail(m._id)">
+      <mat-icon>visibility</mat-icon>
+    </button>
+  </td>
+</ng-container>
+    </table>
+  </div>
+
+  <!-- Paginación custom -->
+  <div class="d-flex justify-content-between align-items-center mt-3" *ngIf="totalDocs > 0">
+    <span class="text-muted small">{{ totalDocs }} movimientos en total</span>
+
+    <div class="d-flex align-items-center gap-2">
+      <button mat-icon-button [disabled]="page <= 1" (click)="goToPage(page - 1)">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <span class="small">Página {{ page }} de {{ totalPages }}</span>
+      <button mat-icon-button [disabled]="page >= totalPages" (click)="goToPage(page + 1)">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </div>
+
+</div>

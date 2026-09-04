@@ -1,0 +1,26 @@
+.table-wrapper {
+  position: relative;
+  border-radius: 8px;
+  overflow-x: auto;
+  background: #fff;
+}
+
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+::ng-deep .chip-open {
+  background-color: #d1e7dd !important;
+  color: #0f5132 !important;
+}
+
+::ng-deep .chip-closed {
+  background-color: #e2e3e5 !important;
+  color: #41464b !important;
+}

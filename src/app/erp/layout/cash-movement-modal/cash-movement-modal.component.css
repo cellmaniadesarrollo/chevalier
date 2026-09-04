@@ -1,0 +1,99 @@
+.type-toggle {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-type {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.btn-type.active {
+  border-color: #198754;
+  background: #d1e7dd;
+  color: #0f5132;
+}
+
+.btn-type-expense.active {
+  border-color: #dc3545;
+  background: #f8d7da;
+  color: #842029;
+}
+
+.dropzone {
+  border: 2px dashed #ced4da;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.15s ease;
+  background: #fafafa;
+}
+
+.dropzone.dragging {
+  border-color: #0d6efd;
+  background: #e7f1ff;
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.preview-item {
+  position: relative;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+
+.preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.file-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

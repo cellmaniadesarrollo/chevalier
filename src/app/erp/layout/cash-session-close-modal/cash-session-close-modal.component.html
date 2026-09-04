@@ -1,0 +1,53 @@
+<h2 mat-dialog-title>Cerrar caja</h2>
+
+<mat-dialog-content>
+  <div class="expected-amount-box">
+    Monto esperado en caja: <strong>${{ data.currentExpectedCash | number:'1.2-2' }}</strong>
+  </div>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Monto contado físicamente</mat-label>
+    <input matInput type="number" [(ngModel)]="countedAmount"
+      (ngModelChange)="onCountedAmountChange()" (focus)="selectAll($event)" />
+  </mat-form-field>
+
+  <div *ngIf="manualDifference !== null" class="difference-hint"
+    [ngClass]="{ 'text-danger': manualDifference !== 0, 'text-success': manualDifference === 0 }">
+    {{ manualDifference === 0 ? 'Cuadra exacto.' :
+       (manualDifference > 0 ? 'Sobrante: $' + (manualDifference | number:'1.2-2') :
+                                'Faltante: $' + (manualDifference * -1 | number:'1.2-2')) }}
+  </div>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Monto a entregar</mat-label>
+    <input matInput type="number" [(ngModel)]="cashDelivered"
+      [disabled]="countedAmount === null"
+      (ngModelChange)="onCashDeliveredChange()" (focus)="selectAll($event)" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Fondo para el día siguiente</mat-label>
+    <input matInput type="number" [(ngModel)]="cashLeftForNextDay"
+      [disabled]="countedAmount === null"
+      (ngModelChange)="onCashLeftForNextDayChange()" (focus)="selectAll($event)" />
+    <mat-hint>Se calcula automático (contado − entregado), pero podés editarlo si hace falta.</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Observaciones (opcional)</mat-label>
+    <textarea matInput [(ngModel)]="notes" rows="2"></textarea>
+  </mat-form-field>
+
+  <p *ngIf="deliveryMismatchWarning" class="warning-text">
+    ⚠ El monto entregado + el fondo dejado no coincide con lo contado. Se guardó de todas formas.
+  </p>
+
+  <p *ngIf="errorMessage" class="error-text">{{ errorMessage }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()" [disabled]="loading">Cancelar</button>
+  <button mat-raised-button color="warn" [disabled]="loading" (click)="confirmClose()">
+    Confirmar cierre
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,55 @@
+.table-wrapper {
+  position: relative;
+  border-radius: 8px;
+  overflow-x: auto;
+  background: #fff;
+}
+
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.description-cell {
+  max-width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.attachments-thumbs {
+  display: flex;
+  gap: 4px;
+}
+
+.thumb {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid #dee2e6;
+}
+
+::ng-deep .chip-income {
+  background-color: #d1e7dd !important;
+  color: #0f5132 !important;
+}
+
+::ng-deep .chip-expense {
+  background-color: #f8d7da !important;
+  color: #842029 !important;
+}
+
+.chip-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+  vertical-align: middle;
+  margin-right: 2px;
+}

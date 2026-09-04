@@ -1,0 +1,79 @@
+<h2 mat-dialog-title>Movimiento de caja</h2>
+
+<mat-dialog-content>
+
+  <!-- Tipo de movimiento -->
+  <div class="type-toggle mb-3">
+    <button type="button" class="btn-type" [class.active]="type === 'income'" (click)="type = 'income'">
+      <i class="bi bi-arrow-down-circle-fill me-1"></i> Entrada
+    </button>
+    <button type="button" class="btn-type btn-type-expense" [class.active]="type === 'expense'" (click)="type = 'expense'">
+      <i class="bi bi-arrow-up-circle-fill me-1"></i> Salida
+    </button>
+  </div>
+
+  <!-- Monto -->
+  <mat-form-field appearance="outline" class="w-100 mb-2">
+    <mat-label>Monto</mat-label>
+    <input matInput type="number" min="0.01" step="0.01" [(ngModel)]="amount" placeholder="0.00" />
+    <span matPrefix>$&nbsp;</span>
+  </mat-form-field>
+
+  <!-- Descripción -->
+  <mat-form-field appearance="outline" class="w-100 mb-3">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput rows="2" maxlength="300" [(ngModel)]="description"
+      placeholder="Ej: Compra de insumos de limpieza"></textarea>
+  </mat-form-field>
+
+  <!-- Zona de adjuntos -->
+  <label class="d-block mb-1 fw-bold">Comprobantes (opcional)</label>
+
+  <div class="dropzone" [class.dragging]="isDragging" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)">
+    <i class="bi bi-cloud-arrow-up-fill fs-2 text-muted"></i>
+    <p class="mb-1 small text-muted">Arrastrá archivos aquí o</p>
+
+    <div class="d-flex gap-2 justify-content-center">
+      <button type="button" mat-stroked-button color="primary" (click)="fileInput.click()">
+        <i class="bi bi-folder2-open me-1"></i> Elegir archivo
+      </button>
+
+<button type="button" mat-stroked-button color="accent" (click)="openCameraModal()">
+  <i class="bi bi-camera-fill me-1"></i> Tomar foto
+</button>
+    </div>
+
+    <!-- input normal, múltiple -->
+    <input #fileInput type="file" hidden multiple accept="image/*,application/pdf"
+      (change)="onFileInputChange($event)" />
+
+    <!-- input con cámara trasera en mobile -->
+    <input #cameraInput type="file" hidden accept="image/*" capture="environment"
+      (change)="onFileInputChange($event)" />
+  </div>
+
+  <!-- Previews -->
+  <div class="preview-grid mt-3" *ngIf="files.length">
+    <div class="preview-item" *ngFor="let f of files; let i = index">
+      <img [src]="f.previewUrl" alt="preview" />
+      <button type="button" class="remove-btn" (click)="removeFile(i)">
+        <i class="bi bi-x-lg"></i>
+      </button>
+      <span class="file-name">{{ f.file.name }}</span>
+    </div>
+  </div>
+
+  <div class="alert alert-danger mt-3 py-2 small" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()" [disabled]="submitting">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="submit()" [disabled]="!isValid || submitting">
+    <span *ngIf="!submitting">Registrar</span>
+    <span *ngIf="submitting"><i class="bi bi-arrow-repeat spin me-1"></i> Guardando...</span>
+  </button>
+</mat-dialog-actions>

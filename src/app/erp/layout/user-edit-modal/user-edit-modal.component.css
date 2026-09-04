@@ -1,0 +1,38 @@
+.edit-user-form {
+  min-width: 480px;
+  max-width: 600px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+
+  .flex-1 {
+    flex: 1;
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+.section-divider {
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 8px 0 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  padding-top: 12px;
+}
+
+.error-banner {
+  background: #ffebee;
+  color: #c62828;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.btn-spinner {
+  display: inline-block;
+}
