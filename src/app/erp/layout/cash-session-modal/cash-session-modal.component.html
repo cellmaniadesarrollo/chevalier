@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Abrir caja</h2>
+<h2 mat-dialog-title>Caja</h2>
 
 <mat-dialog-content>
 
@@ -14,8 +14,30 @@
     </div>
   </div>
 
-  <!-- Caso normal: apertura de caja -->
-  <ng-container *ngIf="!data.needsToClosePending">
+  <!-- Ya se abrió y cerró hoy -->
+  <div *ngIf="data.alreadyClosedToday" class="pending-alert">
+    <span class="pending-icon">ℹ</span>
+    <div>
+      La caja ya fue abierta y cerrada el día de hoy.
+      <p class="pending-detail">
+        No es posible abrir una nueva sesión hasta el siguiente día.
+      </p>
+    </div>
+  </div>
+
+  <!-- Fuera de horario -->
+  <div *ngIf="data.outsideWindow" class="pending-alert">
+    <span class="pending-icon">⏰</span>
+    <div>
+      Fuera del horario permitido para abrir caja.
+      <p class="pending-detail">
+        La apertura de caja solo está disponible entre las 8:00 a.m. y las 8:00 p.m.
+      </p>
+    </div>
+  </div>
+
+  <!-- Caso normal: apertura de caja (NO se muestra si isInfoOnly) -->
+  <ng-container *ngIf="!data.needsToClosePending && !isInfoOnly">
 
     <div *ngIf="previewLoading" class="preview-loading">
       Cargando información de apertura...
@@ -48,15 +70,25 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button (click)="cancel()" [disabled]="loading">Cancelar</button>
 
-  <button *ngIf="data.needsToClosePending" mat-raised-button color="warn"
-    (click)="openCloseModal()">
-    Cerrar caja pendiente
+  <!-- Modo informativo: un solo botón "Aceptar" -->
+  <button *ngIf="isInfoOnly" mat-raised-button color="primary" (click)="cancel()">
+    Aceptar
   </button>
 
-  <button *ngIf="!data.needsToClosePending" mat-raised-button color="primary"
-    [disabled]="loading" (click)="confirmOpen()">
-    Confirmar apertura
-  </button>
+  <!-- Modo normal / pendiente de cierre: botones originales -->
+  <ng-container *ngIf="!isInfoOnly">
+    <button mat-button (click)="cancel()" [disabled]="loading">Cancelar</button>
+
+    <button *ngIf="data.needsToClosePending" mat-raised-button color="warn"
+      (click)="openCloseModal()">
+      Cerrar caja pendiente
+    </button>
+
+    <button *ngIf="!data.needsToClosePending" mat-raised-button color="primary"
+      [disabled]="loading" (click)="confirmOpen()">
+      Confirmar apertura
+    </button>
+  </ng-container>
+
 </mat-dialog-actions>

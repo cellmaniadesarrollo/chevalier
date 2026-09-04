@@ -27,9 +27,11 @@ export class AuthService {
       if (data.rememberMe) {
         localStorage.setItem('token', accessToken);
         localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('rememberedIdentifier', data.email); // 🔹 nuevo
       } else {
         sessionStorage.setItem('token', accessToken);
         sessionStorage.setItem('user', JSON.stringify(user));
+        localStorage.removeItem('rememberedIdentifier'); // 🔹 nuevo: si no marca recordar, se olvida el anterior
       }
 
       this.setRoles(user.roles);
@@ -37,6 +39,11 @@ export class AuthService {
     } catch (error) {
       throw new Error('Login failed: ' + error);
     }
+  }
+
+  // 🔹 nuevo: helper para que el componente lo lea sin acceder a localStorage directamente
+  getRememberedIdentifier(): string | null {
+    return localStorage.getItem('rememberedIdentifier');
   }
 
   // Método de logout

@@ -7,10 +7,10 @@
         </div>
         <h3 class="mb-1 text-center text-white">Login</h3>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <div class="form-group mb-3">
-            <label for="email" class="text-white">Email</label>
-            <input type="email" id="email" class="form-control" formControlName="email" placeholder="Ingrese su correo">
-          </div>
+<div class="form-group mb-3">
+  <label for="identifier" class="text-white">Usuario o Email</label>
+  <input type="text" id="identifier" class="form-control" formControlName="email" placeholder="Ingrese su usuario o correo">
+</div>
           <div class="form-group mb-3 position-relative">
             <label for="password" class="text-white">Password</label>
             <input [type]="hide ? 'password' : 'text'" id="password" class="form-control" formControlName="password" placeholder="Ingrese su contraseña">
@@ -25,7 +25,9 @@
             <label class="form-check-label text-white" for="rememberMe">Recuérdame</label>
           </div>
   
-          <button type="submit" class="btn btn-primary w-100">Login</button>
+          <button type="submit" class="btn btn-primary w-100" [disabled]="loading">
+  {{ loading ? 'Ingresando...' : 'Login' }}
+</button>
         </form>
       </div>
     </div>
