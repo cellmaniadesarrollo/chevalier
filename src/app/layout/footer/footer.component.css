@@ -63,3 +63,15 @@
   .contact-info p {
     font-size: 0.7rem; /* Ajusta el tamaño de las letras aquí */
   }
+  .staff-login-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  color: #f0d19a;
+}
+
+.staff-login-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
