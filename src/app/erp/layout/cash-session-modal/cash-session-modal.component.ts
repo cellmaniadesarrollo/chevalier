@@ -19,13 +19,23 @@ export class CashSessionModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<CashSessionModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { needsToClosePending: boolean; pendingSession?: any },
+    @Inject(MAT_DIALOG_DATA) public data: {
+      needsToClosePending: boolean;
+      pendingSession?: any;
+      alreadyClosedToday?: boolean; // 🔹 nuevo
+      outsideWindow?: boolean;      // 🔹 nuevo
+    },
     private cashSessionService: CashSessionService,
-    private dialog: MatDialog // 🔹 nuevo
+    private dialog: MatDialog
   ) { }
 
+  // 🔹 nuevo: helper para saber si es modo puramente informativo
+  get isInfoOnly(): boolean {
+    return !!(this.data.alreadyClosedToday || this.data.outsideWindow);
+  }
+
   async ngOnInit(): Promise<void> {
-    if (this.data.needsToClosePending) return;
+    if (this.data.needsToClosePending || this.isInfoOnly) return; // 🔹 no cargar preview en modo info
 
     try {
       this.preview = await this.cashSessionService.getOpeningPreview();

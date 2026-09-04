@@ -4,7 +4,7 @@ import { SidebarService } from '../../service/sidebar/sidebar.service';
 import { AuthService } from '../../../service/auth/auth.service';
 import { ProductsService } from '../../service/products/products.service';
 import { CashSessionService } from '../../service/cash-session/cash-session.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CashSessionModalComponent } from '../cash-session-modal/cash-session-modal.component';
 import { CashSessionCloseModalComponent } from '../cash-session-close-modal/cash-session-close-modal.component';
 import { Subscription } from 'rxjs';
@@ -22,7 +22,7 @@ export class TopbarComponent {
   cashSessionStatus: any = null;
   private statusSub!: Subscription;
   private issueSub!: Subscription;
-
+  private activeCashModalRef: MatDialogRef<any> | null = null;
   constructor(
     private sidebarService: SidebarService,
     private authService: AuthService,
@@ -42,7 +42,6 @@ export class TopbarComponent {
       this.loadNotifications();
     }
 
-    // 🔹 Si es barbero puro, ni siquiera cargamos ni escuchamos el estado de caja
     if (this.isOnlyHairdresser()) {
       return;
     }
@@ -50,7 +49,7 @@ export class TopbarComponent {
     this.statusSub = this.cashSessionService.status$.subscribe((status) => {
       this.cashSessionStatus = status;
 
-      if (this.needsToOpenCash || this.needsToClosePendingSession) {
+      if (this.needsToOpenCash || this.needsToClosePendingSession || this.alreadyClosedTodayInfo) {
         this.openCashModal();
       }
     });
@@ -125,24 +124,52 @@ export class TopbarComponent {
     return this.cashSessionStatus &&
       !this.cashSessionStatus.hasActiveSession &&
       !this.cashSessionStatus.needsToClosePending &&
+      !this.cashSessionStatus.alreadyClosedToday && // 🔹 nuevo: bloquea el modal de apertura normal
       this.cashSessionStatus.isWithinMandatoryWindow;
   }
 
   get needsToClosePendingSession(): boolean {
     return !!this.cashSessionStatus?.needsToClosePending;
   }
+  // 🔹 nuevo
+  get alreadyClosedTodayInfo(): boolean {
+    return this.cashSessionStatus &&
+      !this.cashSessionStatus.hasActiveSession &&
+      !this.cashSessionStatus.needsToClosePending &&
+      !!this.cashSessionStatus.alreadyClosedToday;
+  }
+
+  // 🔹 nuevo: útil si hay un botón manual de "Abrir caja" en el menú
+  get outsideWindowInfo(): boolean {
+    return this.cashSessionStatus &&
+      !this.cashSessionStatus.hasActiveSession &&
+      !this.cashSessionStatus.needsToClosePending &&
+      !this.cashSessionStatus.alreadyClosedToday &&
+      !this.cashSessionStatus.isWithinMandatoryWindow;
+  }
 
   openCashModal(): void {
+    // 🔹 nuevo: si ya hay uno abierto, no abrir otro
+    if (this.activeCashModalRef) {
+      return;
+    }
+
     const dialogRef = this.dialog.open(CashSessionModalComponent, {
       width: '400px',
       disableClose: this.needsToClosePendingSession,
       data: {
         needsToClosePending: this.needsToClosePendingSession,
-        pendingSession: this.cashSessionStatus?.pendingSession
+        pendingSession: this.cashSessionStatus?.pendingSession,
+        alreadyClosedToday: this.alreadyClosedTodayInfo,
+        outsideWindow: this.outsideWindowInfo,
       }
     });
 
+    this.activeCashModalRef = dialogRef; // 🔹 nuevo
+
     dialogRef.afterClosed().subscribe(async (result) => {
+      this.activeCashModalRef = null; // 🔹 nuevo: liberar la referencia siempre, se haya confirmado o cancelado
+
       if (result) {
         await this.loadCashSessionStatus();
       }
