@@ -1,27 +1,41 @@
+/* ==========================================
+   ESTRUCTURA PRINCIPAL DEL SIDEBAR
+   ========================================== */
 .sidebar {
   width: 250px;
   background-color: #333;
   color: #d4af37;
   transition: width 0.3s ease, box-shadow 0.3s ease;
   height: 100vh;
+  max-height: 100vh; /* Asegura el límite vertical absoluto */
   position: fixed;
-  z-index: 1000; /* Aseguramos que esté encima del contenido */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Sombra elegante */
+  z-index: 1000;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* evita doble scroll en todo el bloque */
+  overflow: hidden; /* Evita desbordamientos generales */
 
+  /* Estado minimizado */
   &.minimized {
     width: 80px;
     overflow: hidden;
   }
 
+  /* Maximizar al pasar el mouse si está minimizado */
+  &.minimized:hover {
+    width: 250px;
+    transition: width 0.3s ease;
+  }
+
+  /* ----------------------------------------
+     SECCIÓN DE USUARIO (FIJA EN LA PARTE SUPERIOR)
+     ---------------------------------------- */
   .user-section {
     display: flex;
     align-items: center;
     padding: 15px;
     border-bottom: 1px solid #444;
-    flex-shrink: 0; /* la cabecera nunca se comprime ni se scrollea */
+    flex-shrink: 0; /* Impide que la cabecera se comprima */
 
     .user-image {
       height: 40px;
@@ -34,6 +48,9 @@
     }
   }
 
+  /* ----------------------------------------
+     ESTILOS DE BOTONES DEL SIDEBAR
+     ---------------------------------------- */
   .sidebar-button {
     padding: 15px;
     color: #d4af37;
@@ -42,6 +59,8 @@
     display: flex;
     align-items: center;
     cursor: pointer;
+    border: none;
+    background: transparent;
 
     &:hover {
       background-color: #444;
@@ -54,13 +73,17 @@
   }
 }
 
+/* ==========================================
+   CONTENEDOR CON SCROLLBAR (NAVEGACIÓN)
+   ========================================== */
 .sidebar-nav {
-  flex: 1 1 auto;
+  flex: 1;
+  min-height: 0; /* CLAVE: Permite a flexbox activar el scrollbar en pantallas cortas */
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-/* Scrollbar delgado y acorde al tema oscuro/dorado */
+/* Personalización del Scrollbar */
 .sidebar-nav::-webkit-scrollbar {
   width: 6px;
 }
@@ -72,54 +95,48 @@
   border-radius: 3px;
 }
 
-.sidebar.minimized:hover {
-  width: 250px; /* Maximiza al pasar el mouse */
-  transition: width 0.3s ease;
+/* ==========================================
+   SUBMENÚS DESPLEGABLES (PRODUCTOS, CAJA, ETC.)
+   ========================================== */
+.submenu {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease-out;
 }
 
-@media (max-width: 768px) {
-  .sidebar {
-    position: fixed;
-    width: 80px; /* Predeterminado a minimizada en pantallas pequeñas */
-    z-index: 1000;
-
-    &.minimized {
-      width: 80px;
-    }
-  }
-
-  .sidebar.minimized:hover {
-    width: 250px; /* Maximiza temporalmente al hover en pantallas pequeñas */
-  }
+.submenu.show {
+  max-height: 500px; /* Altura máxima suficiente para desplegar opciones */
+  transition: max-height 0.3s ease-in;
 }
 
-
+/* ==========================================
+   CONTENIDO PRINCIPAL ERP (AJUSTE DE MARGEN)
+   ========================================== */
 .erp-content {
-  margin-left: 250px; /* Espacio para el contenido cuando la sidebar está maximizada */
+  margin-left: 250px;
   padding: 20px;
   transition: margin-left 0.3s ease;
 }
 
 .sidebar.minimized + .erp-content {
-  margin-left: 80px; /* Ajuste cuando la sidebar está minimizada */
+  margin-left: 80px;
 }
 
+/* ==========================================
+   RESPONSIVE (PANTALLAS PEQUEÑAS)
+   ========================================== */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    width: 80px;
+    z-index: 1000;
 
-.sidebar-button {
-  text-align: left;
-  border: none;
-  background: transparent;
-  color: white;
-  &:hover {
-    background-color: #343a40;
+    &.minimized {
+      width: 80px;
+    }
+
+    &.minimized:hover {
+      width: 250px;
+    }
   }
-}
-.submenu {
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.3s ease;
-}
-
-.submenu.show {
-  max-height: 500px; 
 }
