@@ -49,35 +49,6 @@
         <i class="bi bi-cash-stack me-3"></i>
         <span *ngIf="!sidebarService.isMinimized()">Descuentos</span>
       </button>
-
-      <!-- Botón Caja con colapso -->
-      <div class="w-100">
-        <button class="btn btn-dark sidebar-button d-flex align-items-center justify-content-between p-3 w-100"
-          type="button" (click)="toggleCash()">
-          <div class="d-flex align-items-center">
-            <i class="bi bi-cash-coin me-3"></i>
-            <span *ngIf="!sidebarService.isMinimized()">Caja</span>
-          </div>
-          <i class="bi" *ngIf="!sidebarService.isMinimized()"
-            [ngClass]="{ 'bi-chevron-down': isCashOpen, 'bi-chevron-right': !isCashOpen }">
-          </i>
-        </button>
-
-        <div class="submenu ps-4" [class.show]="isCashOpen"
-          [style.display]="sidebarService.isMinimized() ? 'none' : 'block'">
-          <button routerLink="/erp/cash-sessions"
-            class="btn btn-dark sidebar-button d-flex align-items-center p-2 w-100 mt-1">
-            <i class="bi bi-clock-history me-2"></i>
-            <span>Sesiones de caja</span>
-          </button>
-          <button routerLink="/erp/cash-movements"
-            class="btn btn-dark sidebar-button d-flex align-items-center p-2 w-100 mt-1">
-            <i class="bi bi-arrow-left-right me-2"></i>
-            <span>Movimientos de caja</span>
-          </button>
-        </div>
-      </div>
-
       <!-- Botón Productos con colapso -->
       <div class="w-100">
         <button class="btn btn-dark sidebar-button d-flex align-items-center justify-content-between p-3 w-100"
@@ -110,6 +81,35 @@
           </button>
         </div>
       </div>
+      <!-- Botón Caja con colapso -->
+      <div class="w-100">
+        <button class="btn btn-dark sidebar-button d-flex align-items-center justify-content-between p-3 w-100"
+          type="button" (click)="toggleCash()">
+          <div class="d-flex align-items-center">
+            <i class="bi bi-cash-coin me-3"></i>
+            <span *ngIf="!sidebarService.isMinimized()">Caja</span>
+          </div>
+          <i class="bi" *ngIf="!sidebarService.isMinimized()"
+            [ngClass]="{ 'bi-chevron-down': isCashOpen, 'bi-chevron-right': !isCashOpen }">
+          </i>
+        </button>
+
+        <div class="submenu ps-4" [class.show]="isCashOpen"
+          [style.display]="sidebarService.isMinimized() ? 'none' : 'block'">
+          <button routerLink="/erp/cash-sessions"
+            class="btn btn-dark sidebar-button d-flex align-items-center p-2 w-100 mt-1">
+            <i class="bi bi-clock-history me-2"></i>
+            <span>Sesiones de caja</span>
+          </button>
+          <button routerLink="/erp/cash-movements"
+            class="btn btn-dark sidebar-button d-flex align-items-center p-2 w-100 mt-1">
+            <i class="bi bi-arrow-left-right me-2"></i>
+            <span>Movimientos de caja</span>
+          </button>
+        </div>
+      </div>
+
+
 
     </ng-container>
 
