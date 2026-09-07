@@ -50,37 +50,39 @@
         <span *ngIf="!sidebarService.isMinimized()">Descuentos</span>
       </button>
       <!-- Botón Productos con colapso -->
-      <div class="w-100">
-        <button class="btn btn-dark sidebar-button d-flex align-items-center justify-content-between p-3 w-100"
-          type="button" (click)="toggleProducts()">
-          <div class="d-flex align-items-center">
-            <i class="bi bi-box-seam me-3"></i>
-            <span *ngIf="!sidebarService.isMinimized()">Productos</span>
-          </div>
-          <i class="bi" *ngIf="!sidebarService.isMinimized()"
-            [ngClass]="{ 'bi-chevron-down': isProductsOpen, 'bi-chevron-right': !isProductsOpen }">
-          </i>
-        </button>
+<!-- Botón Productos con colapso -->
+<div class="w-100" *ngIf="isUserAdminOrSupervisor()">
+  <button class="btn btn-dark sidebar-button d-flex align-items-center justify-content-between p-3 w-100"
+    type="button" (click)="toggleProducts()">
+    <div class="d-flex align-items-center">
+      <i class="bi bi-box-seam me-3"></i>
+      <span *ngIf="!sidebarService.isMinimized()">Productos</span>
+    </div>
+    <i class="bi" *ngIf="!sidebarService.isMinimized()"
+      [ngClass]="{ 'bi-chevron-down': isProductsOpen, 'bi-chevron-right': !isProductsOpen }">
+    </i>
+  </button>
 
-        <div class="submenu ps-4" [class.show]="isProductsOpen"
-          [style.display]="sidebarService.isMinimized() ? 'none' : 'block'">
-          <button routerLink="/erp/products-admin"
-            class="btn btn-dark sidebar-button d-flex align-items-center p-2 w-100 mt-1">
-            <i class="bi bi-list me-2"></i>
-            <span>Lista de Productos</span>
-          </button>
-          <button *ngIf="isUserAdminOrSupervisor()" routerLink="/erp/products-input"
-            class="btn btn-dark sidebar-button d-flex align-items-center p-2 w-100 mt-1">
-            <i class="bi bi-plus-circle me-2"></i>
-            <span>Ingreso de Productos</span>
-          </button>
-          <button routerLink="/erp/assignment-list"
-            class="btn btn-dark sidebar-button d-flex align-items-center p-2 w-100 mt-1">
-            <i class="bi bi-plus-circle me-2"></i>
-            <span>Asignaciones</span>
-          </button>
-        </div>
-      </div>
+  <div class="submenu ps-4" *ngIf="isProductsOpen && !sidebarService.isMinimized()">
+    <button routerLink="/erp/products-admin"
+      class="btn btn-dark sidebar-button d-flex align-items-center p-2 w-100 mt-1">
+      <i class="bi bi-list me-2"></i>
+      <span>Lista de Productos</span>
+    </button>
+
+    <button routerLink="/erp/products-input"
+      class="btn btn-dark sidebar-button d-flex align-items-center p-2 w-100 mt-1">
+      <i class="bi bi-plus-circle me-2"></i>
+      <span>Ingreso de Productos</span>
+    </button>
+
+    <button routerLink="/erp/assignment-list"
+      class="btn btn-dark sidebar-button d-flex align-items-center p-2 w-100 mt-1">
+      <i class="bi bi-plus-circle me-2"></i>
+      <span>Asignaciones</span>
+    </button>
+  </div>
+</div>
       <!-- Botón Caja con colapso -->
       <div class="w-100">
         <button class="btn btn-dark sidebar-button d-flex align-items-center justify-content-between p-3 w-100"
