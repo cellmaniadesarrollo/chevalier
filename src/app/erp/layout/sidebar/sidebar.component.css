@@ -7,18 +7,19 @@
   color: #d4af37;
   transition: width 0.3s ease, box-shadow 0.3s ease;
   height: 100vh;
-  max-height: 100vh; /* Asegura el límite vertical absoluto */
+  height: 100dvh; /* Adaptación a pantallas pequeñas o móviles */
+  max-height: 100vh;
   position: fixed;
+  top: 0;
+  left: 0;
   z-index: 1000;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Evita desbordamientos generales */
 
   /* Estado minimizado */
   &.minimized {
     width: 80px;
-    overflow: hidden;
   }
 
   /* Maximizar al pasar el mouse si está minimizado */
@@ -36,15 +37,21 @@
     padding: 15px;
     border-bottom: 1px solid #444;
     flex-shrink: 0; /* Impide que la cabecera se comprima */
+    background-color: #333;
 
     .user-image {
       height: 40px;
+      width: 40px;
+      object-fit: cover;
       border-radius: 50%;
     }
 
     .user-name {
       font-size: 1.2rem;
       margin-left: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
@@ -61,14 +68,17 @@
     cursor: pointer;
     border: none;
     background: transparent;
+    white-space: nowrap;
 
     &:hover {
       background-color: #444;
+      color: #fff;
     }
 
     i {
       font-size: 1.2rem;
-      margin-right: 10px;
+      min-width: 24px;
+      text-align: center;
     }
   }
 }
@@ -77,10 +87,11 @@
    CONTENEDOR CON SCROLLBAR (NAVEGACIÓN)
    ========================================== */
 .sidebar-nav {
-  flex: 1;
-  min-height: 0; /* CLAVE: Permite a flexbox activar el scrollbar en pantallas cortas */
-  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0; /* Permite activar el scrollbar cuando el contenido excede la pantalla */
+  overflow-y: auto !important;
   overflow-x: hidden;
+  padding-bottom: 20px; /* Espacio de cortesía al final de la lista */
 }
 
 /* Personalización del Scrollbar */
@@ -88,25 +99,31 @@
   width: 6px;
 }
 .sidebar-nav::-webkit-scrollbar-track {
-  background: #333;
+  background: #222;
 }
 .sidebar-nav::-webkit-scrollbar-thumb {
   background-color: #d4af37;
-  border-radius: 3px;
+  border-radius: 4px;
+}
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background-color: #f1c40f;
 }
 
 /* ==========================================
    SUBMENÚS DESPLEGABLES (PRODUCTOS, CAJA, ETC.)
    ========================================== */
 .submenu {
-  overflow: hidden;
   max-height: 0;
-  transition: max-height 0.3s ease-out;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+  background-color: #2b2b2b;
 }
 
 .submenu.show {
-  max-height: 500px; /* Altura máxima suficiente para desplegar opciones */
-  transition: max-height 0.3s ease-in;
+  max-height: 500px; /* Altura máxima para permitir que se desplieguen los botones */
+  opacity: 1;
+  transition: max-height 0.3s ease-in, opacity 0.3s ease-in;
 }
 
 /* ==========================================
@@ -138,5 +155,9 @@
     &.minimized:hover {
       width: 250px;
     }
+  }
+
+  .erp-content {
+    margin-left: 80px;
   }
 }
